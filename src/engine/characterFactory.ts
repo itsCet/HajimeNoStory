@@ -17,7 +17,7 @@ import { STAT_KEYS } from '../data/stats'
 import { SHOP_PERK_MAP } from '../data/shopPerks'
 
 const BASE_STAT_VALUE = 25
-const STARTING_EVENTS_PER_YEAR = 10
+const STARTING_EVENTS_PER_YEAR = 5
 const STARTING_AGE = 16
 
 export interface CreationChoices {

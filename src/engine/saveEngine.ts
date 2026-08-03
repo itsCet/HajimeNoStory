@@ -4,7 +4,9 @@ const KEY_CAREER = 'hajime-no-story:career'
 const KEY_DESTINY_CAREER = 'hajime-no-story:destiny-career'
 const KEY_META = 'hajime-no-story:meta'
 
-const SAVE_VERSION = 1
+// v2 : rééquilibrage à 5 évènements/an (seuils de rang, points à répartir).
+// Les sauvegardes v1 sont invalidées plutôt que migrées à moitié.
+const SAVE_VERSION = 2
 const META_VERSION = 1
 
 function safeParse<T>(raw: string | null): T | null {

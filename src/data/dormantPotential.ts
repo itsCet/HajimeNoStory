@@ -6,7 +6,7 @@ import type { DormantPotentialDef } from '../engine/types'
 export const DORMANT_POTENTIAL: DormantPotentialDef = {
   id: 'dormant-le-fauve',
   name: 'Le Fauve',
-  triggerEventCount: 55,
+  triggerEventCount: 28,
   revealCardId: 'card-fauve-reveal',
   choiceCardId: 'card-fauve-choice',
   masteredEffect: {

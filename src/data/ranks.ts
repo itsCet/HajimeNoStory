@@ -20,7 +20,7 @@ export const RANKS: RankDef[] = [
     shortLabel: 'Amateur',
     badgeLetter: 'D',
     badgeColor: '#78909c',
-    requirement: { minCareerPoints: 15 },
+    requirement: { minCareerPoints: 8 },
   },
   {
     id: 'rank-aspirant-pro',
@@ -38,7 +38,7 @@ export const RANKS: RankDef[] = [
     shortLabel: 'Pro C',
     badgeLetter: 'C',
     badgeColor: '#3a7bd5',
-    requirement: { minCareerPoints: 35 },
+    requirement: { minCareerPoints: 18 },
   },
   {
     id: 'rank-pro-b',
@@ -47,7 +47,7 @@ export const RANKS: RankDef[] = [
     shortLabel: 'Pro B',
     badgeLetter: 'C+',
     badgeColor: '#2f6fb0',
-    requirement: { minCareerPoints: 65 },
+    requirement: { minCareerPoints: 33 },
   },
   {
     id: 'rank-pro-a',
@@ -56,7 +56,7 @@ export const RANKS: RankDef[] = [
     shortLabel: 'Pro A',
     badgeLetter: 'B',
     badgeColor: '#a35bc9',
-    requirement: { minCareerPoints: 100 },
+    requirement: { minCareerPoints: 50 },
   },
   {
     id: 'rank-classe-nationale',
@@ -65,7 +65,7 @@ export const RANKS: RankDef[] = [
     shortLabel: 'Classé',
     badgeLetter: 'B+',
     badgeColor: '#8e44ad',
-    requirement: { minCareerPoints: 145 },
+    requirement: { minCareerPoints: 73 },
   },
   {
     id: 'rank-champion-japon',
@@ -92,7 +92,7 @@ export const RANKS: RankDef[] = [
     shortLabel: 'Éliminatoire',
     badgeLetter: 'S-',
     badgeColor: '#d92418',
-    requirement: { minCareerPoints: 210 },
+    requirement: { minCareerPoints: 105 },
   },
   {
     id: 'rank-challenger-mondial',

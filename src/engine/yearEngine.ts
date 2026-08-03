@@ -35,8 +35,10 @@ export function buildYearSummary(character: CharacterState): YearSummary {
 }
 
 export function computeYearPointsToAllocate(character: CharacterState): number {
+  // Coefficients doublés par rapport à un rythme à 10 évènements/an, pour que la
+  // croissance de stats par ANNÉE reste comparable malgré deux fois moins de tirages.
   const { successes, failures } = character.yearStats
-  return Math.max(3, 4 + successes * 2 - failures)
+  return Math.max(4, 5 + successes * 4 - failures)
 }
 
 /** À appeler une fois l'année écoulée : construit le bilan et crédite les points à répartir. */
