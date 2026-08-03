@@ -1,0 +1,68 @@
+import type { Trophy } from '../../engine/types'
+
+export const TITLE_TROPHIES: Trophy[] = [
+  {
+    id: 'trophy-title-supreme',
+    category: 'title',
+    name: 'Titre Suprême',
+    emoji: '🏅',
+    description: "Cinq défenses de titre mondial réussies : plus personne ne conteste ta place.",
+    unlockCondition: "Réussir 5 défenses du titre mondial.",
+  },
+  {
+    id: 'trophy-title-legende-retiree',
+    category: 'title',
+    name: 'Légende retirée au sommet',
+    emoji: '🕊️',
+    description: "Tu as su t'arrêter au meilleur moment possible, ceinture encore autour de la taille.",
+    unlockCondition: "Terminer la carrière par une retraite volontaire en étant Champion du monde ou Légende du ring.",
+  },
+  {
+    id: 'trophy-title-figure-dechue',
+    category: 'title',
+    name: 'Figure déchue',
+    emoji: '💔',
+    description: "Un dernier round a décidé pour toi, sans te laisser le choix du moment.",
+    unlockCondition: "Terminer la carrière par une fin tragique.",
+  },
+  {
+    id: 'trophy-title-menace-ultime',
+    category: 'title',
+    name: 'Menace ultime',
+    emoji: '☠️',
+    description: "Ta seule réputation suffit désormais à faire hésiter un adversaire avant la première cloche.",
+    unlockCondition: "Atteindre 90 de réputation externe.",
+  },
+  {
+    id: 'trophy-title-coeur-de-champion',
+    category: 'title',
+    name: 'Cœur de champion',
+    emoji: '❤️‍🔥',
+    description: "Donné pour fini lors de ta première tentative de titre mondial, tu es revenu chercher ta couronne.",
+    unlockCondition: "Remporter le titre mondial après avoir échoué à une première tentative.",
+  },
+  {
+    id: 'trophy-title-fantome-du-ring',
+    category: 'title',
+    name: 'Fantôme du ring',
+    emoji: '👻',
+    description: "Cinq combats d'affilée où l'adversaire n'a jamais eu la moindre chance.",
+    unlockCondition: "Enchaîner 5 victoires en combat, toutes par réussite critique.",
+  },
+  {
+    id: 'trophy-title-roi-sans-couronne',
+    category: 'title',
+    name: 'Roi sans couronne',
+    emoji: '🎗️',
+    description: "Tu as perdu ta première tentative de titre mondial, mais le milieu entier a retenu ton nom ce soir-là.",
+    unlockCondition: "Perdre une première tentative de titre mondial tout en restant Champion OPBF.",
+  },
+  {
+    id: 'trophy-title-veteran',
+    category: 'title',
+    name: 'Le Vétéran',
+    emoji: '🧓',
+    description: "Douze ans sur les rings, et tu portes encore les gants.",
+    unlockCondition: "Atteindre 12 années de carrière.",
+  },
+]

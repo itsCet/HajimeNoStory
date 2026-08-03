@@ -1,0 +1,84 @@
+import type { CareerStoreState } from '../../store/careerStoreFactory'
+import type { StoreApi, UseBoundStore } from 'zustand'
+import { useNavStore } from '../../store/navStore'
+import { CharacterSheet } from '../character/CharacterSheet'
+import { EventCard } from './EventCard'
+import { GestureFightCard } from './GestureFightCard'
+import { DormantPotentialCardView } from './DormantPotentialCardView'
+import { TechniqueDiscoveryPrompt } from './TechniqueDiscoveryPrompt'
+import { ResultBanner } from './ResultBanner'
+import { YearSummaryScreen } from './YearSummaryScreen'
+import { PointAllocationScreen } from './PointAllocationScreen'
+import { GameOverScreen } from './GameOverScreen'
+import { TechniquesButton } from './TechniquesPanel'
+
+export function GameScreen({ useStore }: { useStore: UseBoundStore<StoreApi<CareerStoreState>> }) {
+  const goTo = useNavStore((s) => s.goTo)
+  const state = useStore()
+  const { character, phase } = state
+
+  if (!character) {
+    goTo('home')
+    return null
+  }
+
+  if (phase === 'game-over' && state.endingType) {
+    return <GameOverScreen character={character} endingType={state.endingType} onBackHome={() => goTo('home')} />
+  }
+
+  return (
+    <div className="min-h-screen px-4 py-6 flex flex-col items-center gap-4 pb-24">
+      <div className="w-full max-w-xl flex justify-between items-center">
+        <button onClick={() => goTo('home')} className="text-xs opacity-50 hover:opacity-90">
+          ← Accueil
+        </button>
+      </div>
+
+      <div className="w-full max-w-xl">
+        <CharacterSheet character={character} />
+      </div>
+
+      <div className="w-full max-w-xl">
+        {phase === 'resolution' && state.lastResolution && (
+          <ResultBanner result={state.lastResolution} onContinue={state.acknowledgeResolution} />
+        )}
+
+        {phase === 'technique-discovery' && state.pendingDiscoveryTechniqueId && (
+          <TechniqueDiscoveryPrompt
+            techniqueId={state.pendingDiscoveryTechniqueId}
+            onChoose={state.chooseTechniqueDiscovery}
+          />
+        )}
+
+        {phase === 'card' && state.currentCard && state.currentCard.type === 'fight' && (
+          <GestureFightCard card={state.currentCard} character={character} onResolve={state.chooseGesture} />
+        )}
+
+        {phase === 'card' &&
+          state.currentCard &&
+          (state.currentCard.type === 'life-moment' ||
+            state.currentCard.type === 'training' ||
+            state.currentCard.type === 'lineage-exclusive') && (
+            <EventCard card={state.currentCard} character={character} onChoose={state.chooseCardOption} />
+          )}
+
+        {phase === 'card' && state.currentCard && state.currentCard.type === 'dormant-potential' && (
+          <DormantPotentialCardView card={state.currentCard} onChoose={state.chooseDormantDoor} />
+        )}
+
+        {phase === 'year-summary' && state.yearSummary && (
+          <YearSummaryScreen
+            summary={state.yearSummary}
+            character={character}
+            onContinue={state.confirmYearSummary}
+            onRetire={state.retireNow}
+          />
+        )}
+
+        {phase === 'point-allocation' && <PointAllocationScreen character={character} onValidate={state.allocatePoints} />}
+      </div>
+
+      <TechniquesButton character={character} />
+    </div>
+  )
+}

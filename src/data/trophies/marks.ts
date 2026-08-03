@@ -1,0 +1,68 @@
+import type { Trophy } from '../../engine/types'
+
+export const MARK_TROPHIES: Trophy[] = [
+  {
+    id: 'mark-retine-fragile',
+    category: 'mark',
+    name: 'Rétine fragile',
+    emoji: '🩹',
+    description: "Un œil marqué à vie par un combat de trop.",
+    unlockCondition: "Subir un échec critique en Réflexes lors d'un combat à partir du rang Champion national.",
+  },
+  {
+    id: 'mark-statut-heroique',
+    category: 'mark',
+    name: 'Statut héroïque',
+    emoji: '🦸',
+    description: "Un geste, en dehors du ring, que ton quartier n'a jamais oublié.",
+    unlockCondition: "Réussir un moment de vie marquant lié à l'entourage.",
+  },
+  {
+    id: 'mark-sauveur-salle',
+    category: 'mark',
+    name: 'Sauveur de la salle',
+    emoji: '🏚️',
+    description: "Sans toi, le club où tu as tout appris aurait fermé ses portes.",
+    unlockCondition: "Réussir le moment de vie du sauvetage financier du club.",
+  },
+  {
+    id: 'mark-premier-ko',
+    category: 'mark',
+    name: 'Premier KO',
+    emoji: '💫',
+    description: "Le tout premier adversaire que tu as envoyé au tapis pour de bon.",
+    unlockCondition: "Remporter un combat par réussite critique.",
+  },
+  {
+    id: 'mark-invaincu',
+    category: 'mark',
+    name: 'Invaincu',
+    emoji: '🔟',
+    description: "Dix combats. Dix victoires. Pas une seule fois le dos au tapis.",
+    unlockCondition: "Enchaîner 10 victoires en combat sans aucune défaite.",
+  },
+  {
+    id: 'mark-combat-legendaire',
+    category: 'mark',
+    name: 'Combat légendaire',
+    emoji: '🎇',
+    description: "Un combat que les commentateurs citent encore des années plus tard.",
+    unlockCondition: "Aller au bout d'un combat de championnat face à un adversaire de rang supérieur.",
+  },
+  {
+    id: 'mark-sacrifice',
+    category: 'mark',
+    name: 'Le prix du sacrifice',
+    emoji: '🩸',
+    description: "Une défense de titre payée bien au-delà de ce que ton corps aurait dû accepter.",
+    unlockCondition: "Remporter une défense de titre en utilisant Le Fauve déchaîné.",
+  },
+  {
+    id: 'mark-resurrection',
+    category: 'mark',
+    name: 'Résurrection',
+    emoji: '🌅',
+    description: "Donné pour fini après une santé au plus bas, tu es remonté sur un ring quand même.",
+    unlockCondition: "Remporter un combat l'année suivant un passage sous 20 de santé.",
+  },
+]
