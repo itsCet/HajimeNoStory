@@ -229,6 +229,7 @@ export function resolveDormantPotentialDoor(character: CharacterState, doorId: '
   const dp = character.dormantPotential
   if (doorId === 'decline') {
     dp.path = 'declined'
+    dp.mode = null
     const chips = applyReward(character, { coolness: -15 })
     return { chips, mode: null as 'mastered' | 'unleashed' | null, tier: null as RollTier | null }
   }
@@ -262,9 +263,18 @@ export function markCardSeen(character: CharacterState, card: GameCard) {
   if (!character.flags.includes(seenFlag)) character.flags.push(seenFlag)
 }
 
+const DORMANT_SPECIAL_CARD_IDS = new Set([DORMANT_POTENTIAL.revealCardId, DORMANT_POTENTIAL.choiceCardId])
+
 export function advanceAfterCard(character: CharacterState, card: GameCard) {
+  const isDormantSpecialCard = DORMANT_SPECIAL_CARD_IDS.has(card.id)
+
   character.totalEventsSeen += 1
-  character.eventsRemainingThisYear = Math.max(0, character.eventsRemainingThisYear - 1)
+  // Les deux cartes du Fauve (révélation + choix) ne consomment pas d'évènement de
+  // l'année : sinon, tomber sur la révélation en tout dernier évènement décale le
+  // choix des 3 portes à l'année suivante, ce qui donne l'impression d'un blocage.
+  if (!isDormantSpecialCard) {
+    character.eventsRemainingThisYear = Math.max(0, character.eventsRemainingThisYear - 1)
+  }
   if (!character.dormantPotential.revealed) character.dormantPotential.eventsSinceStart += 1
   if (card.id === DORMANT_POTENTIAL.revealCardId) character.dormantPotential.revealed = true
 
@@ -280,9 +290,11 @@ export function advanceAfterCard(character: CharacterState, card: GameCard) {
     }
   }
 
-  if (card.type === 'life-moment') character.yearStats.lifeMoments += 1
-  if (card.type === 'training') character.yearStats.trainings += 1
-  if (card.type === 'fight') character.yearStats.fights += 1
+  if (!isDormantSpecialCard) {
+    if (card.type === 'life-moment') character.yearStats.lifeMoments += 1
+    if (card.type === 'training') character.yearStats.trainings += 1
+    if (card.type === 'fight') character.yearStats.fights += 1
+  }
 }
 
 export function markTechniqueDiscovered(character: CharacterState, techniqueId: string, unlock: boolean) {

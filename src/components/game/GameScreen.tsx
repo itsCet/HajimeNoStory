@@ -51,7 +51,12 @@ export function GameScreen({ useStore }: { useStore: UseBoundStore<StoreApi<Care
         )}
 
         {phase === 'card' && state.currentCard && state.currentCard.type === 'fight' && (
-          <GestureFightCard card={state.currentCard} character={character} onResolve={state.chooseGesture} />
+          <GestureFightCard
+            key={state.currentCard.id}
+            card={state.currentCard}
+            character={character}
+            onResolve={state.chooseGesture}
+          />
         )}
 
         {phase === 'card' &&
@@ -59,11 +64,11 @@ export function GameScreen({ useStore }: { useStore: UseBoundStore<StoreApi<Care
           (state.currentCard.type === 'life-moment' ||
             state.currentCard.type === 'training' ||
             state.currentCard.type === 'lineage-exclusive') && (
-            <EventCard card={state.currentCard} character={character} onChoose={state.chooseCardOption} />
+            <EventCard key={state.currentCard.id} card={state.currentCard} character={character} onChoose={state.chooseCardOption} />
           )}
 
         {phase === 'card' && state.currentCard && state.currentCard.type === 'dormant-potential' && (
-          <DormantPotentialCardView card={state.currentCard} onChoose={state.chooseDormantDoor} />
+          <DormantPotentialCardView key={state.currentCard.id} card={state.currentCard} onChoose={state.chooseDormantDoor} />
         )}
 
         {phase === 'year-summary' && state.yearSummary && (
