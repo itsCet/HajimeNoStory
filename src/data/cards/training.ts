@@ -266,4 +266,172 @@ const EARLY_TRAINING: TrainingCard[] = [
   },
 ]
 
-export const TRAINING_CARDS: TrainingCard[] = [...EARLY_TRAINING]
+// ─────────────────────────────────────────────────────────────────────────
+// MILIEU DE CARRIÈRE (paliers 4-8 : pro classe B → Champion OPBF)
+// ─────────────────────────────────────────────────────────────────────────
+const MID_TRAINING: TrainingCard[] = [
+  {
+    id: 'card-training-esquive-laterale',
+    type: 'training',
+    title: 'Le pivot qui sauve',
+    narrativeText:
+      "Un partenaire enchaîne les directs à vitesse réelle. La seule consigne : ne jamais bloquer, seulement dévier le buste au bon moment.",
+    requirement: { minRankOrder: 4, maxRankOrder: 8, excludedFlags: ['discovered:tech-generic-esquive-laterale'], weight: 2 },
+    approaches: [
+      {
+        id: 'approach-pivot',
+        label: 'Travailler le pivot du buste',
+        statTested: 'reflexes',
+        difficulty: 50,
+        outcomes: {
+          criticalFailure: { text: "Le timing est constamment en retard d'une fraction de seconde.", reward: { health: -3 } },
+          failure: { text: "Le pivot fonctionne parfois, pas assez souvent.", reward: { fatigue: 5 } },
+          success: {
+            text: "Le geste devient fluide, presque automatique — le poing passe systématiquement à côté.",
+            reward: { stats: { reflexes: 2 }, unlockTechniqueIds: ['tech-generic-esquive-laterale'], setFlags: ['discovered:tech-generic-esquive-laterale'] },
+          },
+          criticalSuccess: {
+            text: "Ton partenaire finit la séance frustré de n'avoir jamais réussi à te toucher une seule fois.",
+            reward: { stats: { reflexes: 3 }, unlockTechniqueIds: ['tech-generic-esquive-laterale'], setFlags: ['discovered:tech-generic-esquive-laterale'], reputationInternal: 2 },
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-training-relance',
+    type: 'training',
+    title: 'Répondre au coup encaissé',
+    narrativeText:
+      "L'exercice est brutal dans sa simplicité : encaisser un coup léger, puis répliquer immédiatement, sans laisser passer le moindre instant d'hésitation.",
+    requirement: { minRankOrder: 4, maxRankOrder: 8, excludedFlags: ['discovered:tech-generic-relance'], weight: 2 },
+    approaches: [
+      {
+        id: 'approach-relance',
+        label: 'Répliquer sans réfléchir',
+        statTested: 'mental',
+        difficulty: 50,
+        outcomes: {
+          criticalFailure: { text: "Chaque coup encaissé te fige un instant de trop.", reward: { coolness: -5 } },
+          failure: { text: "La relance arrive, mais toujours un peu tard.", reward: { fatigue: 5 } },
+          success: {
+            text: "Le coup encaissé ne t'arrête plus une seconde. La réplique part presque avant que la douleur n'arrive.",
+            reward: { stats: { mental: 2 }, unlockTechniqueIds: ['tech-generic-relance'], setFlags: ['discovered:tech-generic-relance'] },
+          },
+          criticalSuccess: {
+            text: "Ton partenaire hésite maintenant avant de frapper, sachant ce qui revient systématiquement derrière.",
+            reward: { stats: { mental: 3 }, unlockTechniqueIds: ['tech-generic-relance'], setFlags: ['discovered:tech-generic-relance'], reputationInternal: 2 },
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-training-feinte-double',
+    type: 'training',
+    title: 'Deux mensonges, un vrai coup',
+    narrativeText:
+      "{{mentor}} t'apprend à construire une double feinte — deux gestes trompeurs avant le geste qui compte vraiment.",
+    requirement: { minRankOrder: 4, maxRankOrder: 8, excludedFlags: ['discovered:tech-generic-feinte-double'], weight: 2 },
+    approaches: [
+      {
+        id: 'approach-feinte',
+        label: 'Enchaîner les deux feintes avant le vrai coup',
+        statTested: 'strategie',
+        difficulty: 50,
+        outcomes: {
+          criticalFailure: { text: "Les feintes sont trop lisibles, ton partenaire ne mord jamais.", reward: { coolness: -4 } },
+          failure: { text: "Une des deux feintes fonctionne, pas les deux.", reward: { fatigue: 5 } },
+          success: {
+            text: "La séquence complète fonctionne : les deux feintes trompent, et le vrai coup passe.",
+            reward: { stats: { strategie: 2 }, unlockTechniqueIds: ['tech-generic-feinte-double'], setFlags: ['discovered:tech-generic-feinte-double'] },
+          },
+          criticalSuccess: {
+            text: "La séquence devient si naturelle que même {{mentor}} met un instant à comprendre ce qui vient de se passer.",
+            reward: { stats: { strategie: 3 }, unlockTechniqueIds: ['tech-generic-feinte-double'], setFlags: ['discovered:tech-generic-feinte-double'], reputationInternal: 2 },
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-train-cardio-intensif',
+    type: 'training',
+    title: "Cardio à la limite",
+    narrativeText:
+      "Une séance de fractionné pensée pour repousser le seuil au-delà duquel le corps commence habituellement à lâcher.",
+    requirement: { minRankOrder: 4, maxRankOrder: 8, weight: 2 },
+    approaches: [
+      {
+        id: 'approach-fractionne',
+        label: 'Pousser chaque intervalle au maximum',
+        statTested: 'endurance',
+        difficulty: 52,
+        outcomes: {
+          criticalFailure: { text: "Le corps cède avant la fin de la séance.", reward: { fatigue: 14, health: -4 } },
+          failure: { text: "Tu termines, épuisé, sans grand gain net.", reward: { fatigue: 10 } },
+          success: { text: "Le seuil recule nettement. Tu tiens plus longtemps qu'avant, sans y penser.", reward: { stats: { endurance: 3 } } },
+          criticalSuccess: { text: "Le préparateur physique note un temps qu'il n'a vu chez personne d'autre dans la salle cette année.", reward: { stats: { endurance: 4 }, reputationInternal: 3 } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-train-strategie-adversaire',
+    type: 'training',
+    title: "Étude vidéo poussée",
+    narrativeText:
+      "Des heures de montage vidéo, ralenti après ralenti, pour décortiquer les habitudes du prochain adversaire au niveau du détail.",
+    requirement: { minRankOrder: 4, maxRankOrder: 8, weight: 2 },
+    approaches: [
+      {
+        id: 'approach-video',
+        label: 'Décortiquer chaque habitude adverse',
+        statTested: 'strategie',
+        difficulty: 50,
+        outcomes: {
+          criticalFailure: { text: "Tu te perds dans les détails sans en tirer une vraie conclusion utile.", reward: { fatigue: 4 } },
+          failure: { text: "Quelques pistes générales, sans grande précision.", reward: {} },
+          success: { text: "Un plan de combat clair se dessine, basé sur des habitudes bien réelles.", reward: { stats: { strategie: 3 } } },
+          criticalSuccess: { text: "Tu repères une habitude si spécifique que le plan de combat en devient presque une évidence.", reward: { stats: { strategie: 4 }, careerPoints: 3 } },
+        },
+      },
+    ],
+  },
+]
+
+// ─────────────────────────────────────────────────────────────────────────
+// FIN DE CARRIÈRE (paliers 9-11 : éliminatoire mondial → champion du monde)
+// ─────────────────────────────────────────────────────────────────────────
+const LATE_TRAINING: TrainingCard[] = [
+  {
+    id: 'card-training-radar-combat',
+    type: 'training',
+    title: "Des années condensées en un instinct",
+    narrativeText:
+      "{{mentor}} ne te montre plus grand-chose de nouveau, à ce stade. Il se contente de te regarder combattre, et de pointer, après coup, ce que tu as anticipé sans même t'en rendre compte.",
+    requirement: { minRankOrder: 9, maxRankOrder: 11, excludedFlags: ['discovered:tech-generic-radar-combat'], weight: 2 },
+    approaches: [
+      {
+        id: 'approach-radar',
+        label: 'Laisser parler des années de combats',
+        statTested: 'strategie',
+        difficulty: 66,
+        outcomes: {
+          criticalFailure: { text: "Aujourd'hui, rien ne vient. L'instinct reste silencieux.", reward: { coolness: -4 } },
+          failure: { text: "Quelques éclairs de lucidité, sans grande constance.", reward: {} },
+          success: {
+            text: "Tu sens l'enchaînement adverse venir deux coups à l'avance, sans effort conscient.",
+            reward: { stats: { strategie: 3 }, unlockTechniqueIds: ['tech-generic-radar-combat'], setFlags: ['discovered:tech-generic-radar-combat'] },
+          },
+          criticalSuccess: {
+            text: "{{mentor}} pose enfin les mots dessus : « Voilà. Ça, ça ne s'enseigne pas. Ça se gagne. »",
+            reward: { stats: { strategie: 4 }, unlockTechniqueIds: ['tech-generic-radar-combat'], setFlags: ['discovered:tech-generic-radar-combat'], reputationInternal: 3 },
+          },
+        },
+      },
+    ],
+  },
+]
+
+export const TRAINING_CARDS: TrainingCard[] = [...EARLY_TRAINING, ...MID_TRAINING, ...LATE_TRAINING]

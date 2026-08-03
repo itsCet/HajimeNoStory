@@ -25,7 +25,7 @@ const EARLY_FIGHTS: FightCard[] = [
           criticalFailure: { text: "Le coup part dans le vide, et tu perds l'équilibre un instant.", reward: { coolness: -5 } },
           failure: { text: "Le coup touche, mais sans grande conviction. L'échange continue, incertain.", reward: { fatigue: 4 } },
           success: { text: "Le direct touche net. L'arbitre lève la main de ton côté à la fin de l'assaut.", reward: { careerPoints: 6, reputationExternal: 2 } },
-          criticalSuccess: { text: "Le coup surprend complètement ton adversaire, qui recule, déstabilisé pour de bon.", reward: { careerPoints: 9, reputationExternal: 3, reputationInternal: 2 } },
+          criticalSuccess: { text: "Le coup surprend complètement ton adversaire, qui recule, déstabilisé pour de bon.", reward: { careerPoints: 9, reputationExternal: 3, reputationInternal: 2, unlockTrophyIds: ['mark-premier-ko'] } },
         },
       },
       {
@@ -38,7 +38,7 @@ const EARLY_FIGHTS: FightCard[] = [
           criticalFailure: { text: "Tu anticipes mal, et le coup adverse arrive en premier.", reward: { health: -3, coolness: -4 } },
           failure: { text: "Le contre part trop tard pour vraiment compter.", reward: { fatigue: 4 } },
           success: { text: "Tu laisses venir, puis places ton contre au bon moment.", reward: { careerPoints: 6, reputationExternal: 2 } },
-          criticalSuccess: { text: "Le contre est si net que l'arbitre marque une pause pour vérifier que tout va bien pour ton adversaire.", reward: { careerPoints: 9, reputationExternal: 3, reputationInternal: 2 } },
+          criticalSuccess: { text: "Le contre est si net que l'arbitre marque une pause pour vérifier que tout va bien pour ton adversaire.", reward: { careerPoints: 9, reputationExternal: 3, reputationInternal: 2, unlockTrophyIds: ['mark-premier-ko'] } },
         },
       },
     ],
@@ -216,4 +216,203 @@ const EARLY_FIGHTS: FightCard[] = [
   },
 ]
 
-export const FIGHT_CARDS: FightCard[] = [...EARLY_FIGHTS]
+// ─────────────────────────────────────────────────────────────────────────
+// MILIEU DE CARRIÈRE (paliers 4-8 : pro classe B → Champion OPBF)
+// ─────────────────────────────────────────────────────────────────────────
+const MID_FIGHTS: FightCard[] = [
+  {
+    id: 'card-fight-mid-jeu-coude',
+    type: 'fight',
+    title: 'Corps-à-corps serré',
+    narrativeText:
+      "Ton adversaire cherche systématiquement le clinch dès que la distance se referme, rendant le combat haché et physique.",
+    opponentName: 'Un habitué du corps-à-corps',
+    opponentTagline: 'Redoutable à bout portant.',
+    requirement: { minRankOrder: 4, maxRankOrder: 7, excludedFlags: ['discovered:tech-generic-jeu-coude'], weight: 2 },
+    gestures: [
+      {
+        id: 'g-corps-a-corps',
+        label: 'Travailler la distance courte plutôt que la fuir',
+        statTested: 'technique',
+        difficulty: 52,
+        eligibleTechniqueIds: GESTURE_TECHNIQUES.technique,
+        outcomes: {
+          criticalFailure: { text: "Le corps-à-corps tourne à ton désavantage complet.", reward: { health: -6 } },
+          failure: { text: "Tu subis plus que tu ne contrôles cette distance.", reward: { fatigue: 6 } },
+          success: {
+            text: "Tu places chaque coup au millimètre dans cet espace réduit — il n'a pas la place de répondre.",
+            reward: { careerPoints: 12, reputationExternal: 4, unlockTechniqueIds: ['tech-generic-jeu-coude'], setFlags: ['discovered:tech-generic-jeu-coude'] },
+          },
+          criticalSuccess: {
+            text: "Tu domines totalement le corps-à-corps. L'arbitre doit intervenir tant l'écart devient net.",
+            reward: { careerPoints: 17, reputationExternal: 7, unlockTechniqueIds: ['tech-generic-jeu-coude'], setFlags: ['discovered:tech-generic-jeu-coude'] },
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-fight-mid-uppercut-ferme',
+    type: 'fight',
+    title: 'Garde impénétrable',
+    narrativeText:
+      "Ton adversaire garde une garde haute et fermée tout le combat, ne laissant aucune ouverture visible au visage.",
+    opponentName: 'Une garde de fer',
+    opponentTagline: 'Personne ne l\'a touché au visage depuis six combats.',
+    requirement: { minRankOrder: 5, maxRankOrder: 8, excludedFlags: ['discovered:tech-generic-uppercut-ferme'], weight: 2 },
+    gestures: [
+      {
+        id: 'g-uppercut',
+        label: 'Chercher un angle court, depuis en dessous',
+        statTested: 'puissance',
+        difficulty: 55,
+        eligibleTechniqueIds: GESTURE_TECHNIQUES.puissance,
+        outcomes: {
+          criticalFailure: { text: "Le coup s'écrase contre l'avant-bras, sans effet.", reward: { fatigue: 8 } },
+          failure: { text: "L'angle reste trop ouvert pour vraiment passer.", reward: { fatigue: 6 } },
+          success: {
+            text: "Le coup remonte de nulle part, pile sous la garde. Sa garde impénétrable vient de trouver sa limite.",
+            reward: { careerPoints: 13, reputationExternal: 5, unlockTechniqueIds: ['tech-generic-uppercut-ferme'], setFlags: ['discovered:tech-generic-uppercut-ferme'] },
+          },
+          criticalSuccess: {
+            text: "Le coup le surprend complètement. Six combats sans être touché au visage — la série s'arrête net ce soir.",
+            reward: { careerPoints: 18, reputationExternal: 8, unlockTechniqueIds: ['tech-generic-uppercut-ferme'], setFlags: ['discovered:tech-generic-uppercut-ferme'] },
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-fight-opbf-contre-corps',
+    type: 'fight',
+    title: 'Guerre au corps',
+    narrativeText:
+      "Un combat continental de préparation, contre un adversaire connu pour user ses opposants coup après coup aux côtes.",
+    opponentName: 'Un spécialiste du travail au corps',
+    opponentTagline: 'Il use ses adversaires, round après round.',
+    requirement: { minRankOrder: 6, maxRankOrder: 8, excludedFlags: ['discovered:tech-generic-contre-corps'], weight: 2 },
+    gestures: [
+      {
+        id: 'g-contre-corps',
+        label: 'Contrer au corps plutôt que défendre',
+        statTested: 'endurance',
+        difficulty: 56,
+        eligibleTechniqueIds: GESTURE_TECHNIQUES.endurance,
+        outcomes: {
+          criticalFailure: { text: "Ses coups au corps te coupent complètement le souffle.", reward: { health: -8, fatigue: 8 } },
+          failure: { text: "Tu encaisses plus que tu ne rends.", reward: { fatigue: 8 } },
+          success: {
+            text: "Tu laisses passer son coup et places le tien, pile aux côtes. Sa garde redescend, prudente, dès le round suivant.",
+            reward: { careerPoints: 14, reputationExternal: 5, unlockTechniqueIds: ['tech-generic-contre-corps'], setFlags: ['discovered:tech-generic-contre-corps'] },
+          },
+          criticalSuccess: {
+            text: "Le rôle s'inverse complètement : c'est lui qui use, maintenant, contre son propre jeu.",
+            reward: { careerPoints: 19, reputationExternal: 8, unlockTechniqueIds: ['tech-generic-contre-corps'], setFlags: ['discovered:tech-generic-contre-corps'] },
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-fight-classe-a',
+    type: 'fight',
+    title: 'Combat de classement',
+    narrativeText:
+      "Un affrontement direct pour les places du classement national, contre un adversaire déterminé à te doubler.",
+    opponentName: 'Un concurrent direct au classement',
+    opponentTagline: 'Il joue sa place autant que toi.',
+    requirement: { minRankOrder: 4, maxRankOrder: 6, weight: 2 },
+    gestures: [
+      {
+        id: 'g-classement-puissance',
+        label: "Prendre l'ascendant physique",
+        statTested: 'puissance',
+        difficulty: 50,
+        eligibleTechniqueIds: GESTURE_TECHNIQUES.puissance,
+        outcomes: {
+          criticalFailure: { text: "Il retourne ton agressivité contre toi sans ménagement.", reward: { health: -8 } },
+          failure: { text: "L'échange reste équilibré.", reward: { fatigue: 6 } },
+          success: { text: "Tu prends clairement l'ascendant physique sur l'ensemble du combat.", reward: { careerPoints: 12, reputationExternal: 4 } },
+          criticalSuccess: { text: "Le combat tourne complètement en ta faveur. Ta place au classement n'est plus contestable.", reward: { careerPoints: 17, reputationExternal: 7 } },
+        },
+      },
+      {
+        id: 'g-classement-tactique',
+        label: 'Jouer un combat tactique',
+        statTested: 'strategie',
+        difficulty: 50,
+        eligibleTechniqueIds: GESTURE_TECHNIQUES.strategie,
+        outcomes: {
+          criticalFailure: { text: "Ton plan se heurte à un adversaire plus imprévisible que prévu.", reward: { coolness: -6 } },
+          failure: { text: "Le combat reste indécis.", reward: { fatigue: 6 } },
+          success: { text: "Ton approche tactique fait clairement la différence sur la carte des juges.", reward: { careerPoints: 12, reputationExternal: 4 } },
+          criticalSuccess: { text: "Le plan fonctionne à la perfection, round après round. Aucun doute possible sur le vainqueur.", reward: { careerPoints: 17, reputationExternal: 7 } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-fight-classe-nationale',
+    type: 'fight',
+    title: "Aux portes du top national",
+    narrativeText:
+      "Une victoire ici, et ton nom entre enfin dans le classement national. L'adversaire, qui joue exactement la même chose, ne l'ignore pas.",
+    opponentName: 'Un aspirant tout aussi affamé',
+    opponentTagline: 'Cette place, il la veut autant que toi.',
+    requirement: { minRankOrder: 5, maxRankOrder: 7, weight: 2 },
+    gestures: [
+      {
+        id: 'g-national-vitesse',
+        label: 'Imposer un rythme rapide',
+        statTested: 'vitesse',
+        difficulty: 52,
+        eligibleTechniqueIds: GESTURE_TECHNIQUES.vitesse,
+        outcomes: {
+          criticalFailure: { text: "Le rythme t'épuise plus qu'il ne le déstabilise.", reward: { fatigue: 12 } },
+          failure: { text: "Le rythme reste soutenable pour lui aussi.", reward: { fatigue: 8 } },
+          success: { text: "Le rythme imposé fait clairement la différence sur la durée.", reward: { careerPoints: 14, reputationExternal: 5 } },
+          criticalSuccess: { text: "Il ne suit jamais vraiment la cadence. Ton nom entre au classement national dès le lendemain.", reward: { careerPoints: 19, reputationExternal: 8 } },
+        },
+      },
+    ],
+  },
+]
+
+// ─────────────────────────────────────────────────────────────────────────
+// FIN DE CARRIÈRE (paliers 9-10 : éliminatoire mondial → challenger mondial)
+// ─────────────────────────────────────────────────────────────────────────
+const LATE_FIGHTS: FightCard[] = [
+  {
+    id: 'card-fight-eliminatoire-double-jab',
+    type: 'fight',
+    title: "Combat de préparation mondiale",
+    narrativeText:
+      "Un combat de préparation face à un boxeur rapide, connu pour une garde qui ne s'ouvre presque jamais deux fois de la même manière.",
+    opponentName: 'Un boxeur rapide et insaisissable',
+    opponentTagline: "Sa garde ne s'ouvre jamais deux fois pareil.",
+    requirement: { minRankOrder: 9, maxRankOrder: 10, excludedFlags: ['discovered:tech-generic-double-jab'], weight: 2 },
+    gestures: [
+      {
+        id: 'g-double-jab',
+        label: 'Doubler le jab pour ouvrir la garde',
+        statTested: 'vitesse',
+        difficulty: 64,
+        eligibleTechniqueIds: GESTURE_TECHNIQUES.vitesse,
+        outcomes: {
+          criticalFailure: { text: "Les deux jabs partent trop proches l'un de l'autre. Il bloque les deux du même geste.", reward: { fatigue: 8 } },
+          failure: { text: "Le premier jab fait descendre sa garde, le second arrive trop tard pour compter vraiment.", reward: { fatigue: 8 } },
+          success: {
+            text: "Le premier jab fait descendre sa garde d'un rien. Le second, une fraction plus tard, trouve l'ouverture exacte.",
+            reward: { careerPoints: 16, reputationExternal: 8, unlockTechniqueIds: ['tech-generic-double-jab'], setFlags: ['discovered:tech-generic-double-jab'] },
+          },
+          criticalSuccess: {
+            text: "La combinaison est si rapide qu'elle semble n'être qu'un seul geste. Sa garde, réputée insaisissable, cède complètement.",
+            reward: { careerPoints: 22, reputationExternal: 12, unlockTechniqueIds: ['tech-generic-double-jab'], setFlags: ['discovered:tech-generic-double-jab'] },
+          },
+        },
+      },
+    ],
+  },
+]
+
+export const FIGHT_CARDS: FightCard[] = [...EARLY_FIGHTS, ...MID_FIGHTS, ...LATE_FIGHTS]

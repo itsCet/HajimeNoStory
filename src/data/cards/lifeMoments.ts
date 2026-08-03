@@ -466,4 +466,372 @@ const EARLY_LIFE_MOMENTS: LifeMomentCard[] = [
   },
 ]
 
-export const LIFE_MOMENT_CARDS: LifeMomentCard[] = [...EARLY_LIFE_MOMENTS]
+// ─────────────────────────────────────────────────────────────────────────
+// MILIEU DE CARRIÈRE (paliers 4-8 : pro classe B → Champion OPBF)
+// ─────────────────────────────────────────────────────────────────────────
+const MID_LIFE_MOMENTS: LifeMomentCard[] = [
+  {
+    id: 'card-life-premiere-defaite-pro',
+    type: 'life-moment',
+    title: 'La première vraie défaite',
+    narrativeText:
+      "Le décompte de dix secondes résonne encore dans ta tête bien après être rentré au vestiaire. Ce n'est pas la douleur qui reste — c'est le silence, après.",
+    requirement: { minRankOrder: 3, maxRankOrder: 6, onceOnly: true, weight: 2 },
+    choices: [
+      {
+        id: 'choice-analyser-defaite',
+        label: "Décortiquer froidement ce qui a manqué",
+        statTested: 'strategie',
+        difficulty: 48,
+        outcomes: {
+          criticalFailure: { text: "Tu tournes en rond sans jamais vraiment identifier ce qui a cloché.", reward: { coolness: -6 } },
+          failure: { text: "Quelques pistes, sans certitude.", reward: {} },
+          success: { text: "Tu identifies précisément ce qui t'a manqué ce soir-là. Une défaite qui devient, déjà, un outil.", reward: { stats: { strategie: 2 }, careerPoints: 3 } },
+          criticalSuccess: { text: "L'analyse est si lucide que {{mentor}} te demande de la reformuler pour les plus jeunes de la salle.", reward: { stats: { strategie: 3 }, reputationInternal: 4, careerPoints: 4 } },
+        },
+      },
+      {
+        id: 'choice-encaisser-mentalement',
+        label: "Simplement encaisser, sans trop réfléchir",
+        statTested: 'mental',
+        difficulty: 48,
+        outcomes: {
+          criticalFailure: { text: "Le doute s'installe plus profondément que tu ne l'aurais cru possible.", reward: { coolness: -8 } },
+          failure: { text: "Tu encaisses tant bien que mal.", reward: { coolness: -2 } },
+          success: { text: "Tu laisses la déception passer sans qu'elle ne s'incruste. Demain, il faudra de toute façon continuer.", reward: { coolness: 3 } },
+          criticalSuccess: { text: "Tu ressors de cette défaite étrangement plus solide qu'avant, comme si elle avait confirmé que tu pouvais encaisser n'importe quoi.", reward: { coolness: 6, stats: { mental: 2 } } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-life-argent-qui-rentre',
+    type: 'life-moment',
+    title: "Le premier vrai chèque",
+    narrativeText:
+      "La bourse de ton dernier combat dépasse largement tout ce que tu as pu gagner jusque-là. Pour la première fois, une vraie question se pose : qu'en faire ?",
+    requirement: { minRankOrder: 4, maxRankOrder: 7, weight: 2 },
+    choices: [
+      {
+        id: 'choice-investir',
+        label: 'Investir dans ta préparation',
+        statTested: 'strategie',
+        difficulty: 45,
+        outcomes: {
+          criticalFailure: { text: "Le matériel acheté à la hâte se révèle être un mauvais choix.", reward: {} },
+          failure: { text: "L'investissement reste correct, sans grand effet immédiat.", reward: {} },
+          success: { text: "Un meilleur équipement, un suivi médical plus sérieux — l'investissement se voit vite.", reward: { stats: { endurance: 1 }, health: 3 } },
+          criticalSuccess: { text: "Tu mets en place un vrai suivi professionnel. Ton corps t'en remerciera pendant des années.", reward: { stats: { endurance: 2 }, health: 5 } },
+        },
+      },
+      {
+        id: 'choice-famille-argent',
+        label: 'Aider ta famille en priorité',
+        statTested: 'mental',
+        difficulty: 45,
+        outcomes: {
+          criticalFailure: { text: "Le geste, bien qu'apprécié, crée une tension inattendue sur la manière dont l'argent devrait être utilisé.", reward: { loyalty: -2 } },
+          failure: { text: "Le geste passe sans grand commentaire.", reward: {} },
+          success: { text: "Le soulagement dans les yeux de tes proches vaut largement plus que n'importe quel équipement.", reward: { loyalty: 6, coolness: 3 } },
+          criticalSuccess: { text: "Ce geste change durablement la façon dont ta famille perçoit ce que tu fais sur ce ring.", reward: { loyalty: 10, coolness: 5 } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-life-media-attention',
+    type: 'life-moment',
+    title: 'Un micro tendu trop vite',
+    narrativeText:
+      "Un journaliste sportif national te coince à la sortie du vestiaire, caméra déjà allumée. Ce que tu vas dire dans les dix prochaines secondes sera cité toute la semaine.",
+    requirement: { minRankOrder: 5, maxRankOrder: 8, weight: 2 },
+    choices: [
+      {
+        id: 'choice-sobre',
+        label: 'Rester sobre et factuel',
+        statTested: 'mental',
+        difficulty: 50,
+        outcomes: {
+          criticalFailure: { text: "Une phrase mal formulée part de travers et sera découpée hors contexte toute la semaine.", reward: { reputationExternal: -4 } },
+          failure: { text: "L'interview reste plate, sans grand écho.", reward: {} },
+          success: { text: "Tu réponds avec calme et justesse. Le journaliste, presque déçu de ne rien avoir à sensationnaliser, hoche la tête.", reward: { reputationExternal: 4 } },
+          criticalSuccess: { text: "Ta réponse, mesurée et forte à la fois, tourne en boucle toute la semaine — pour les bonnes raisons.", reward: { reputationExternal: 8, coolness: 2 } },
+        },
+      },
+      {
+        id: 'choice-charisme-media',
+        label: 'Jouer le jeu du spectacle',
+        statTested: 'strategie',
+        difficulty: 50,
+        outcomes: {
+          criticalFailure: { text: "La punchline tombe complètement à plat, gênante plus qu'autre chose.", reward: { reputationExternal: -4 } },
+          failure: { text: "La punchline fait sourire poliment, sans plus.", reward: {} },
+          success: { text: "Ta punchline fait mouche. Les extraits circulent toute la journée.", reward: { reputationExternal: 5 } },
+          criticalSuccess: { text: "Ta phrase devient virale en quelques heures. Ton nom dépasse largement le cercle habituel de la boxe.", reward: { reputationExternal: 9 } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-life-rival-progresse',
+    type: 'life-moment',
+    title: 'Le miroir du rival',
+    narrativeText:
+      "{{rival}} vient d'enchaîner une nouvelle victoire remarquée. Vos chemins, partis du même endroit, ne cessent de se recroiser — chacun mesurant sa propre progression à celle de l'autre.",
+    requirement: { minRankOrder: 4, maxRankOrder: 8, weight: 2 },
+    choices: [
+      {
+        id: 'choice-feliciter',
+        label: 'Le féliciter sincèrement',
+        statTested: 'mental',
+        difficulty: 48,
+        outcomes: {
+          criticalFailure: { text: "Le compliment sonne faux, et {{rival}} le sent immédiatement.", reward: { entourageDelta: [{ role: 'Rival', delta: -1 }] } },
+          failure: { text: "Le message reste poli, sans grande chaleur.", reward: {} },
+          success: { text: "{{rival}} apprécie visiblement le geste. La rivalité reste entière, mais le respect grandit avec elle.", reward: { entourageDelta: [{ role: 'Rival', delta: 1 }], coolness: 3 } },
+          criticalSuccess: { text: "Un vrai moment de reconnaissance mutuelle s'installe entre vous, rare entre deux concurrents directs.", reward: { entourageDelta: [{ role: 'Rival', delta: 1 }], coolness: 5, loyalty: 3 } },
+        },
+      },
+      {
+        id: 'choice-comparer',
+        label: "Transformer ça en motivation pure",
+        statTested: 'strategie',
+        difficulty: 48,
+        outcomes: {
+          criticalFailure: { text: "La comparaison tourne à l'obsession malsaine, plus toxique qu'utile.", reward: { coolness: -6 } },
+          failure: { text: "La motivation reste diffuse.", reward: {} },
+          success: { text: "Sa progression devient un vrai repère pour calibrer la tienne.", reward: { stats: { strategie: 2 } } },
+          criticalSuccess: { text: "Tu transformes cette rivalité en carburant pur. Ton prochain camp d'entraînement s'en ressent immédiatement.", reward: { stats: { strategie: 3 }, careerPoints: 3 } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-life-blessure-chronique',
+    type: 'life-moment',
+    title: 'Une douleur qui revient',
+    narrativeText:
+      "La même douleur à l'épaule revient combat après combat maintenant. Le médecin de la fédération commence à froncer les sourcils à chaque contrôle.",
+    requirement: { minRankOrder: 4, maxRankOrder: 8, weight: 2 },
+    choices: [
+      {
+        id: 'choice-traiter-serieusement',
+        label: 'Suivre un vrai protocole de soin',
+        statTested: 'strategie',
+        difficulty: 48,
+        outcomes: {
+          criticalFailure: { text: "Le protocole s'avère plus contraignant que prévu, et te coûte un temps d'entraînement précieux.", reward: { fatigue: 6 } },
+          failure: { text: "Le suivi aide un peu, sans grand miracle.", reward: { health: 2 } },
+          success: { text: "La douleur régresse nettement grâce à un vrai encadrement médical.", reward: { health: 6 } },
+          criticalSuccess: { text: "Le protocole fonctionne au-delà de tes espérances. L'épaule n'a jamais été aussi solide.", reward: { health: 10, stats: { endurance: 1 } } },
+        },
+      },
+      {
+        id: 'choice-ignorer-douleur',
+        label: 'Serrer les dents et continuer comme avant',
+        statTested: 'mental',
+        difficulty: 48,
+        outcomes: {
+          criticalFailure: { text: "La douleur finit par s'aggraver sérieusement, forçant un vrai temps d'arrêt.", reward: { health: -12 } },
+          failure: { text: "Tu tiens, mais la gêne reste constante.", reward: { health: -4 } },
+          success: { text: "Tu apprends à composer avec, sans jamais que ça affecte vraiment ta performance.", reward: { stats: { mental: 1 } } },
+          criticalSuccess: { text: "Ta capacité à ignorer la douleur devient presque légendaire dans le vestiaire.", reward: { stats: { mental: 2 }, reputationInternal: 3 } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-life-tentation-abandon',
+    type: 'life-moment',
+    title: "L'envie de tout arrêter",
+    narrativeText:
+      "Un matin, en te levant pour l'entraînement, une pensée s'impose avec une clarté inhabituelle : et si tu arrêtais tout, là, maintenant ?",
+    requirement: { minRankOrder: 4, maxRankOrder: 7, weight: 1 },
+    choices: [
+      {
+        id: 'choice-persister',
+        label: 'Aller quand même à la salle',
+        statTested: 'mental',
+        difficulty: 50,
+        outcomes: {
+          criticalFailure: { text: "Tu y vas le corps présent, l'esprit ailleurs. La séance ne sert à rien.", reward: { coolness: -6 } },
+          failure: { text: "Tu t'y traînes, sans grande conviction.", reward: {} },
+          success: { text: "Le simple fait d'y retourner suffit à faire refluer le doute. Ce n'était qu'un mauvais matin.", reward: { coolness: 5 } },
+          criticalSuccess: { text: "Cette séance devient, avec le recul, un des tournants silencieux de ta carrière — le jour où tu as failli arrêter, et où tu ne l'as pas fait.", reward: { coolness: 8, stats: { mental: 2 } } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-life-acte-heroique',
+    type: 'life-moment',
+    title: "Un cri, dans la rue",
+    narrativeText:
+      "En rentrant de la salle, tu tombes sur une agression en pleine rue — deux hommes s'en prennent à un passant sans que personne n'ose intervenir. Personne, sauf peut-être toi.",
+    requirement: { minRankOrder: 3, maxRankOrder: 8, onceOnly: true, weight: 1 },
+    choices: [
+      {
+        id: 'choice-intervenir',
+        label: 'Intervenir directement',
+        statTested: 'puissance',
+        difficulty: 50,
+        outcomes: {
+          criticalFailure: {
+            text: "Tu interviens, mais le nombre joue contre toi. Tu t'en sors marqué, et le passant s'enfuit pendant la confusion.",
+            reward: { health: -10 },
+          },
+          failure: {
+            text: "Ton intervention suffit à faire fuir les agresseurs, mais tu encaisses quelques coups au passage.",
+            reward: { health: -5, reputationExternal: 2 },
+          },
+          success: {
+            text: "Les agresseurs, pris de court, prennent la fuite sans demander leur reste. Le passant, tremblant, ne trouve pas vraiment les mots pour te remercier.",
+            reward: { reputationExternal: 6, loyalty: 4, unlockTrophyIds: ['mark-statut-heroique'] },
+          },
+          criticalSuccess: {
+            text: "Tu neutralises la situation avec un calme qui surprend jusqu'à toi-même. L'histoire circule dans le quartier dès le lendemain.",
+            reward: { reputationExternal: 10, reputationInternal: 5, loyalty: 6, unlockTrophyIds: ['mark-statut-heroique'] },
+          },
+        },
+      },
+      {
+        id: 'choice-appeler-aide',
+        label: "Alerter les secours plutôt que t'exposer",
+        statTested: 'strategie',
+        difficulty: 46,
+        outcomes: {
+          criticalFailure: { text: "Le temps que les secours arrivent, la situation a déjà mal tourné.", reward: { coolness: -6 } },
+          failure: { text: "Les secours arrivent, un peu tard, mais arrivent.", reward: {} },
+          success: {
+            text: "Ton sang-froid permet une intervention rapide et efficace, sans que tu aies eu à te mettre en danger inutilement.",
+            reward: { coolness: 4, reputationExternal: 3, unlockTrophyIds: ['mark-statut-heroique'] },
+          },
+          criticalSuccess: {
+            text: "Ta gestion de la situation, calme et précise du début à la fin, impressionne jusqu'aux secours eux-mêmes.",
+            reward: { coolness: 6, reputationExternal: 6, unlockTrophyIds: ['mark-statut-heroique'] },
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-life-fierte-familiale',
+    type: 'life-moment',
+    title: 'Un regard différent, à table',
+    narrativeText:
+      "Pour la première fois, c'est ta famille qui amène le sujet de la boxe sur la table — sans réticence, presque avec fierté.",
+    requirement: { minRankOrder: 5, maxRankOrder: 8, weight: 2 },
+    choices: [
+      {
+        id: 'choice-partager',
+        label: "Partager vraiment ce que ça représente",
+        statTested: 'mental',
+        difficulty: 46,
+        outcomes: {
+          criticalFailure: { text: "Les mots ne sortent pas comme prévu, et le moment retombe maladroitement.", reward: {} },
+          failure: { text: "Tu restes en surface, par pudeur.", reward: {} },
+          success: { text: "Le moment est simple, sincère, et reste gravé longtemps après.", reward: { loyalty: 6, coolness: 3 } },
+          criticalSuccess: { text: "Ce dîner devient un souvenir que toute la famille racontera encore des années plus tard.", reward: { loyalty: 10, coolness: 5 } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-life-sponsor',
+    type: 'life-moment',
+    title: 'Une offre avec des conditions',
+    narrativeText:
+      "Une marque d'équipement sportif propose un contrat de sponsoring conséquent — à condition d'adapter ton image, tes déclarations publiques, et une partie de ton emploi du temps à leurs exigences.",
+    requirement: { minRankOrder: 5, maxRankOrder: 8, weight: 2 },
+    choices: [
+      {
+        id: 'choice-accepter-sponsor',
+        label: 'Accepter le contrat',
+        statTested: 'strategie',
+        difficulty: 48,
+        outcomes: {
+          criticalFailure: { text: "Les contraintes du contrat pèsent bien plus lourd que prévu sur ton temps d'entraînement.", reward: { fatigue: 8 } },
+          failure: { text: "Le contrat apporte un revenu correct, sans grand bouleversement.", reward: { reputationExternal: 2 } },
+          success: { text: "Le contrat t'apporte une vraie stabilité financière sans trop empiéter sur l'essentiel.", reward: { reputationExternal: 5 } },
+          criticalSuccess: { text: "Le partenariat dépasse largement les attentes des deux côtés. Ton visage commence à être reconnu bien au-delà des salles de boxe.", reward: { reputationExternal: 9 } },
+        },
+      },
+      {
+        id: 'choice-refuser-sponsor',
+        label: 'Refuser pour garder le contrôle',
+        statTested: 'mental',
+        difficulty: 48,
+        outcomes: {
+          criticalFailure: { text: "Le refus se répand dans le milieu comme un signe de mauvaise volonté commerciale.", reward: { reputationExternal: -3 } },
+          failure: { text: "Le refus passe sans grande conséquence.", reward: {} },
+          success: { text: "Tu gardes une liberté totale sur ton image et ton emploi du temps. Certains respectent le choix.", reward: { coolness: 4 } },
+          criticalSuccess: { text: "Ton indépendance affichée te vaut un respect inattendu, y compris de la part de sponsors potentiels futurs.", reward: { coolness: 6, reputationInternal: 4 } },
+        },
+      },
+    ],
+  },
+]
+
+// ─────────────────────────────────────────────────────────────────────────
+// FIN DE CARRIÈRE (paliers 9-13 : éliminatoire mondial → légende)
+// ─────────────────────────────────────────────────────────────────────────
+const LATE_LIFE_MOMENTS: LifeMomentCard[] = [
+  {
+    id: 'card-life-corps-qui-parle',
+    type: 'life-moment',
+    title: 'Ce que le corps commence à dire',
+    narrativeText:
+      "Les courbatures du lendemain durent un jour de plus qu'avant. Rien de grave, rien d'alarmant — juste un murmure, régulier désormais, que ton corps n'émettait pas il y a quelques années.",
+    requirement: { minRankOrder: 9, weight: 2 },
+    choices: [
+      {
+        id: 'choice-adapter-entrainement',
+        label: "Adapter ta préparation plutôt que la nier",
+        statTested: 'strategie',
+        difficulty: 55,
+        outcomes: {
+          criticalFailure: { text: "Les ajustements tâtonnés perturbent plus qu'ils n'aident ta préparation.", reward: { fatigue: 8 } },
+          failure: { text: "Les ajustements restent superficiels.", reward: {} },
+          success: { text: "Tu ajustes intelligemment ta charge d'entraînement. Le corps répond mieux qu'attendu.", reward: { health: 4, stats: { strategie: 1 } } },
+          criticalSuccess: { text: "Cette nouvelle approche, plus fine, plus à l'écoute, prolonge sans doute ta carrière de plusieurs années.", reward: { health: 7, stats: { strategie: 2 } } },
+        },
+      },
+      {
+        id: 'choice-ignorer-corps',
+        label: "Continuer exactement comme avant",
+        statTested: 'mental',
+        difficulty: 55,
+        outcomes: {
+          criticalFailure: { text: "Le corps finit par se rappeler à toi plus durement que prévu.", reward: { health: -10 } },
+          failure: { text: "Tu tiens, pour l'instant.", reward: { fatigue: 6 } },
+          success: { text: "Ta détermination suffit, pour cette fois, à faire taire le murmure.", reward: { coolness: 3 } },
+          criticalSuccess: { text: "Ta volonté semble, pour l'instant du moins, plus forte que le temps qui passe.", reward: { coolness: 5, stats: { mental: 1 } } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-life-question-heritage',
+    type: 'life-moment',
+    title: "Ce que tu laisseras derrière",
+    narrativeText:
+      "Un jeune boxeur de la salle, à peine plus âgé que tu ne l'étais à tes débuts, te demande un conseil avant son premier combat amateur. La question, anodine, en soulève une autre, plus large : qu'est-ce que tu es en train de transmettre, exactement ?",
+    requirement: { minRankOrder: 9, weight: 2 },
+    choices: [
+      {
+        id: 'choice-transmettre',
+        label: 'Prendre vraiment le temps de lui répondre',
+        statTested: 'mental',
+        difficulty: 50,
+        outcomes: {
+          criticalFailure: { text: "Les mots sortent maladroitement, plus embarrassants qu'utiles.", reward: {} },
+          failure: { text: "Le conseil reste générique.", reward: {} },
+          success: { text: "Tu lui offres exactement ce dont il avait besoin d'entendre. Il repart différent.", reward: { reputationInternal: 5, loyalty: 3 } },
+          criticalSuccess: { text: "Ce moment simple deviendra, tu le sens, un souvenir fondateur pour ce jeune boxeur — comme d'autres l'ont été pour toi.", reward: { reputationInternal: 8, loyalty: 5 } },
+        },
+      },
+    ],
+  },
+]
+
+export const LIFE_MOMENT_CARDS: LifeMomentCard[] = [...EARLY_LIFE_MOMENTS, ...MID_LIFE_MOMENTS, ...LATE_LIFE_MOMENTS]

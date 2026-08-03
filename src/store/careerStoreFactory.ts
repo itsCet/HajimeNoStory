@@ -180,8 +180,13 @@ export function createCareerStore(isDestiny: boolean) {
     chooseGesture: (gestureId, techniqueId, useDormant) => {
       const { character, currentCard } = get()
       if (!character || !currentCard || currentCard.type !== 'fight') return
+      const wasUnleashed = useDormant && character.dormantPotential.mode === 'unleashed'
+      const defensesBefore = character.titleDefenses
       const result = resolveGesture(character, currentCard, gestureId, techniqueId, useDormant)
       processResolution(character, currentCard, result, result.tier)
+      if (wasUnleashed && character.titleDefenses > defensesBefore) {
+        useMetaStore.getState().unlockTrophies(['mark-sacrifice'])
+      }
       saveCharacter(character, isDestiny)
       set({ character: { ...character }, lastResolution: result, phase: 'resolution' })
     },
