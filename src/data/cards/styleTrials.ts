@@ -29,6 +29,24 @@ export const STYLE_TRIAL_CARDS: TrainingCard[] = [
           },
         },
       },
+      {
+        id: 'approach-seisme-mental',
+        label: 'Viser le seul point exact plutôt que forcer',
+        statTested: 'mental',
+        difficulty: 62,
+        outcomes: {
+          criticalFailure: { text: "L'esprit s'éparpille, et le coup part n'importe où.", reward: { coolness: -5 } },
+          failure: { text: "La concentration tient un instant, puis se dérobe.", reward: { fatigue: 6 } },
+          success: {
+            text: "Tu vises un seul point précis, l'esprit totalement vide de tout le reste — et le sac se plie.",
+            reward: { careerPoints: 10, unlockTechniqueIds: ['tech-style-puncher-advanced'], setFlags: ['flag-learned-tech-style-puncher-advanced'] },
+          },
+          criticalSuccess: {
+            text: "Ta concentration est si totale que le coup semble se déclencher tout seul. {{mentor}} hoche la tête, satisfait.",
+            reward: { careerPoints: 14, unlockTechniqueIds: ['tech-style-puncher-advanced'], setFlags: ['flag-learned-tech-style-puncher-advanced'] },
+          },
+        },
+      },
     ],
   },
   {
@@ -53,6 +71,24 @@ export const STYLE_TRIAL_CARDS: TrainingCard[] = [
           },
           criticalSuccess: {
             text: "Les trois assistants n'arrivent plus à te surprendre, quel que soit l'ordre qu'ils tentent. Le geste est devenu instinctif.",
+            reward: { careerPoints: 14, unlockTechniqueIds: ['tech-style-boxeur-puncher-advanced'], setFlags: ['flag-learned-tech-style-boxeur-puncher-advanced'] },
+          },
+        },
+      },
+      {
+        id: 'approach-tempete-vitesse',
+        label: 'Aller plus vite que le changement d\'angle lui-même',
+        statTested: 'vitesse',
+        difficulty: 62,
+        outcomes: {
+          criticalFailure: { text: "Tu arrives toujours une mitaine en retard sur le changement d'angle.", reward: { fatigue: 8 } },
+          failure: { text: "Tu suis le rythme, mais jamais assez vite pour toutes les toucher.", reward: { fatigue: 6 } },
+          success: {
+            text: "Tu deviens plus rapide que le changement d'angle lui-même — chaque mitaine est touchée avant d'avoir fini de bouger.",
+            reward: { careerPoints: 10, unlockTechniqueIds: ['tech-style-boxeur-puncher-advanced'], setFlags: ['flag-learned-tech-style-boxeur-puncher-advanced'] },
+          },
+          criticalSuccess: {
+            text: "Les trois assistants renoncent à te surprendre par la vitesse : tu es déjà là avant qu'ils y pensent.",
             reward: { careerPoints: 14, unlockTechniqueIds: ['tech-style-boxeur-puncher-advanced'], setFlags: ['flag-learned-tech-style-boxeur-puncher-advanced'] },
           },
         },
@@ -85,6 +121,24 @@ export const STYLE_TRIAL_CARDS: TrainingCard[] = [
           },
         },
       },
+      {
+        id: 'approach-mirage-strategie',
+        label: 'Anticiper leur schéma plutôt que courir plus vite',
+        statTested: 'strategie',
+        difficulty: 62,
+        outcomes: {
+          criticalFailure: { text: "Le schéma que tu croyais voir n'existait pas. Ils te coupent la route sans effort.", reward: { coolness: -5 } },
+          failure: { text: "Tu perçois un début de logique, sans pouvoir vraiment l'exploiter.", reward: { fatigue: 6 } },
+          success: {
+            text: "Tu comprends l'ordre dans lequel ils vont bouger avant même qu'ils s'élancent.",
+            reward: { careerPoints: 10, unlockTechniqueIds: ['tech-style-out-boxer-advanced'], setFlags: ['flag-learned-tech-style-out-boxer-advanced'] },
+          },
+          criticalSuccess: {
+            text: "Tu sembles toujours avoir un coup d'avance sur leur plan. {{mentor}} note la scène pour la montrer aux futurs élèves.",
+            reward: { careerPoints: 14, unlockTechniqueIds: ['tech-style-out-boxer-advanced'], setFlags: ['flag-learned-tech-style-out-boxer-advanced'] },
+          },
+        },
+      },
     ],
   },
   {
@@ -113,6 +167,24 @@ export const STYLE_TRIAL_CARDS: TrainingCard[] = [
           },
         },
       },
+      {
+        id: 'approach-mur-mental',
+        label: 'Tenir par la tête quand le corps veut céder',
+        statTested: 'mental',
+        difficulty: 62,
+        outcomes: {
+          criticalFailure: { text: "Le doute s'installe dès la première vague, et les jambes suivent aussitôt.", reward: { coolness: -6 } },
+          failure: { text: "Tu tiens par volonté, mais ça se voit que ça coûte.", reward: { fatigue: 7 } },
+          success: {
+            text: "Tu refuses simplement, mentalement, l'idée même de reculer — et le corps suit.",
+            reward: { careerPoints: 10, unlockTechniqueIds: ['tech-style-presseur-advanced'], setFlags: ['flag-learned-tech-style-presseur-advanced'] },
+          },
+          criticalSuccess: {
+            text: "Rien ne semble pouvoir entamer ta détermination. Les deux partenaires cèdent avant toi, de loin.",
+            reward: { careerPoints: 14, unlockTechniqueIds: ['tech-style-presseur-advanced'], setFlags: ['flag-learned-tech-style-presseur-advanced'] },
+          },
+        },
+      },
     ],
   },
   {
@@ -137,6 +209,24 @@ export const STYLE_TRIAL_CARDS: TrainingCard[] = [
           },
           criticalSuccess: {
             text: "Tu le vois désormais avant même que {{mentor}} ne relance la vidéo. Le geste, en toi, est prêt à répondre.",
+            reward: { careerPoints: 14, unlockTechniqueIds: ['tech-style-contreur-advanced'], setFlags: ['flag-learned-tech-style-contreur-advanced'] },
+          },
+        },
+      },
+      {
+        id: 'approach-silence-strategie',
+        label: 'Décomposer la séquence complète plutôt qu\'un seul détail',
+        statTested: 'strategie',
+        difficulty: 62,
+        outcomes: {
+          criticalFailure: { text: "La séquence entière t'échappe, trop de détails à la fois.", reward: { coolness: -5 } },
+          failure: { text: "Tu identifies une partie du schéma, sans le tenir en entier.", reward: { fatigue: 4 } },
+          success: {
+            text: "Tu reconstruis toute la mécanique du geste, du premier appui jusqu'au poing. Rien ne t'échappe plus.",
+            reward: { careerPoints: 10, unlockTechniqueIds: ['tech-style-contreur-advanced'], setFlags: ['flag-learned-tech-style-contreur-advanced'] },
+          },
+          criticalSuccess: {
+            text: "Tu pourrais décrire le geste toi-même, à l'avance, mieux que {{mentor}} ne le fait sur l'écran.",
             reward: { careerPoints: 14, unlockTechniqueIds: ['tech-style-contreur-advanced'], setFlags: ['flag-learned-tech-style-contreur-advanced'] },
           },
         },

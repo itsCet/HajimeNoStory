@@ -52,6 +52,40 @@ export const LINEAGE_EXCLUSIVE_CARDS: LineageExclusiveCard[] = [
           },
         },
       },
+      {
+        id: 'choice-viser-point',
+        label: 'Viser un seul point précis plutôt que forcer',
+        statTested: 'mental',
+        difficulty: 55,
+        outcomes: {
+          criticalFailure: {
+            text: "L'esprit s'éparpille au dernier instant, et le coup part sans direction claire.",
+            reward: { health: -4 },
+          },
+          failure: {
+            text: "La planche plie sans se fendre. « Encore », répète Kurogane, imperturbable.",
+            reward: {},
+          },
+          success: {
+            text: "Tu vises un seul point, l'esprit vide de tout le reste — et le bois cède, net.",
+            reward: {
+              careerPoints: 14,
+              reputationInternal: 6,
+              unlockTechniqueIds: [tech('lin-kurogane')],
+              entourageDelta: [{ role: 'Mentor', delta: 1 }],
+            },
+          },
+          criticalSuccess: {
+            text: "Ta concentration est si totale que le coup semble se déclencher sans toi. Kurogane laisse échapper quelque chose qui ressemble à de la fierté.",
+            reward: {
+              careerPoints: 18,
+              reputationInternal: 10,
+              unlockTechniqueIds: [tech('lin-kurogane')],
+              entourageDelta: [{ role: 'Mentor', delta: 2 }],
+            },
+          },
+        },
+      },
     ],
   },
   {
@@ -89,6 +123,40 @@ export const LINEAGE_EXCLUSIVE_CARDS: LineageExclusiveCard[] = [
           },
           criticalSuccess: {
             text: "Le coup efface la ligne entière, sans déborder d'un millimètre. Fujimori referme son carnet et, pour une fois, sourit.",
+            reward: {
+              careerPoints: 18,
+              reputationInternal: 10,
+              unlockTechniqueIds: [tech('lin-fujimori')],
+              entourageDelta: [{ role: 'Mentor', delta: 2 }],
+            },
+          },
+        },
+      },
+      {
+        id: 'choice-timing',
+        label: "Attendre l'instant exact plutôt que répéter le geste",
+        statTested: 'reflexes',
+        difficulty: 55,
+        outcomes: {
+          criticalFailure: {
+            text: "Tu frappes trop tôt, avant que le sac ne se stabilise. Fujimori referme son carnet sans un mot.",
+            reward: { coolness: -4 },
+          },
+          failure: {
+            text: "Le timing reste approximatif. « Recommence », dit-elle, sans lever les yeux.",
+            reward: {},
+          },
+          success: {
+            text: "Tu attends que le sac s'immobilise exactement, et places le coup dans cette fraction de seconde parfaite.",
+            reward: {
+              careerPoints: 14,
+              reputationInternal: 6,
+              unlockTechniqueIds: [tech('lin-fujimori')],
+              entourageDelta: [{ role: 'Mentor', delta: 1 }],
+            },
+          },
+          criticalSuccess: {
+            text: "Ton timing est si exact que Fujimori vérifie deux fois son chronomètre. Elle referme son carnet et, pour une fois, sourit.",
             reward: {
               careerPoints: 18,
               reputationInternal: 10,
@@ -144,6 +212,40 @@ export const LINEAGE_EXCLUSIVE_CARDS: LineageExclusiveCard[] = [
           },
         },
       },
+      {
+        id: 'choice-reconstruire-plan',
+        label: 'Reconstruire un plan de combat complet, pas juste un portrait',
+        statTested: 'strategie',
+        difficulty: 55,
+        outcomes: {
+          criticalFailure: {
+            text: "Le plan que tu construis part dans tous les sens, sans queue ni tête. Otsuka referme le carnet sans un mot.",
+            reward: { coolness: -4 },
+          },
+          failure: {
+            text: "Le plan tient à moitié, avec des trous que tu ne sais pas combler.",
+            reward: {},
+          },
+          success: {
+            text: "Tu proposes un vrai plan, round par round, cohérent du début à la fin. Otsuka referme le carnet, presque impressionné.",
+            reward: {
+              careerPoints: 14,
+              reputationInternal: 6,
+              unlockTechniqueIds: [tech('lin-otsuka')],
+              entourageDelta: [{ role: 'Mentor', delta: 1 }],
+            },
+          },
+          criticalSuccess: {
+            text: "Ton plan anticipe même les ajustements que l'adversaire ferait en cours de combat. Otsuka te regarde différemment, à partir de maintenant.",
+            reward: {
+              careerPoints: 18,
+              reputationInternal: 10,
+              unlockTechniqueIds: [tech('lin-otsuka')],
+              entourageDelta: [{ role: 'Mentor', delta: 2 }],
+            },
+          },
+        },
+      },
     ],
   },
   {
@@ -181,6 +283,40 @@ export const LINEAGE_EXCLUSIVE_CARDS: LineageExclusiveCard[] = [
           },
           criticalSuccess: {
             text: "Tu doubles la vitesse demandée sans jamais dévier. Pour la première fois, Shirasagi peine à cacher sa surprise.",
+            reward: {
+              careerPoints: 18,
+              reputationInternal: 10,
+              unlockTechniqueIds: [tech('lin-shirasagi')],
+              entourageDelta: [{ role: 'Mentor', delta: 2 }],
+            },
+          },
+        },
+      },
+      {
+        id: 'choice-adapter-tracee',
+        label: "S'adapter aux virages plutôt que forcer le rythme",
+        statTested: 'reflexes',
+        difficulty: 55,
+        outcomes: {
+          criticalFailure: {
+            text: "Un virage inattendu te prend totalement de court, et tu sors largement de la ligne.",
+            reward: { health: -3 },
+          },
+          failure: {
+            text: "Tu t'adaptes, mais toujours un instant trop tard sur chaque virage.",
+            reward: {},
+          },
+          success: {
+            text: "Tu réagis à chaque virage l'instant où il se dessine, sans jamais anticiper à tort.",
+            reward: {
+              careerPoints: 14,
+              reputationInternal: 6,
+              unlockTechniqueIds: [tech('lin-shirasagi')],
+              entourageDelta: [{ role: 'Mentor', delta: 1 }],
+            },
+          },
+          criticalSuccess: {
+            text: "Tu sembles connaître le tracé avant même que Shirasagi ne le dessine. Il peine à cacher sa surprise.",
             reward: {
               careerPoints: 18,
               reputationInternal: 10,
@@ -236,6 +372,40 @@ export const LINEAGE_EXCLUSIVE_CARDS: LineageExclusiveCard[] = [
           },
         },
       },
+      {
+        id: 'choice-refuser-ceder',
+        label: 'Refuser mentalement l\'idée même de reculer',
+        statTested: 'mental',
+        difficulty: 55,
+        outcomes: {
+          criticalFailure: {
+            text: "Le doute s'installe avant même la fatigue, et tes jambes suivent aussitôt. Domon arrête sans un mot.",
+            reward: { fatigue: 12, health: -4 },
+          },
+          failure: {
+            text: "Tu tiens par volonté, mais deux pas trahissent ta fatigue.",
+            reward: { fatigue: 8 },
+          },
+          success: {
+            text: "Tu décides, simplement, que reculer n'est pas une option — et le corps suit la décision.",
+            reward: {
+              careerPoints: 14,
+              reputationInternal: 6,
+              unlockTechniqueIds: [tech('lin-domon')],
+              entourageDelta: [{ role: 'Mentor', delta: 1 }],
+            },
+          },
+          criticalSuccess: {
+            text: "Rien ne semble pouvoir entamer ta détermination. Domon baisse les gants le premier. « Bon », lâche-t-il.",
+            reward: {
+              careerPoints: 18,
+              reputationInternal: 10,
+              unlockTechniqueIds: [tech('lin-domon')],
+              entourageDelta: [{ role: 'Mentor', delta: 2 }],
+            },
+          },
+        },
+      },
     ],
   },
   {
@@ -273,6 +443,40 @@ export const LINEAGE_EXCLUSIVE_CARDS: LineageExclusiveCard[] = [
           },
           criticalSuccess: {
             text: "Tu le touches une fois, proprement. Akatsu recule, retire ses gants, et pour la première fois, te parle comme à un égal.",
+            reward: {
+              careerPoints: 18,
+              reputationInternal: 10,
+              unlockTechniqueIds: [tech('lin-akatsu')],
+              entourageDelta: [{ role: 'Mentor', delta: 2 }],
+            },
+          },
+        },
+      },
+      {
+        id: 'choice-imposer-force',
+        label: 'Imposer ta force brute, sans réfléchir',
+        statTested: 'puissance',
+        difficulty: 55,
+        outcomes: {
+          criticalFailure: {
+            text: "Tu fonces sans discernement, et Akatsu te le fait payer sans ménagement.",
+            reward: { health: -4 },
+          },
+          failure: {
+            text: "Tu pousses, mais Akatsu absorbe sans problème.",
+            reward: {},
+          },
+          success: {
+            text: "Ta force finit par peser dans l'échange, sans qu'aucune technique n'y soit vraiment pour quelque chose.",
+            reward: {
+              careerPoints: 14,
+              reputationInternal: 6,
+              unlockTechniqueIds: [tech('lin-akatsu')],
+              entourageDelta: [{ role: 'Mentor', delta: 1 }],
+            },
+          },
+          criticalSuccess: {
+            text: "Akatsu recule, surpris par la puissance brute. « Voilà, dit-il enfin, un truc qu'on n'enseigne pas. »",
             reward: {
               careerPoints: 18,
               reputationInternal: 10,
@@ -328,6 +532,40 @@ export const LINEAGE_EXCLUSIVE_CARDS: LineageExclusiveCard[] = [
           },
         },
       },
+      {
+        id: 'choice-preparer-piege',
+        label: "Préparer le piège à l'avance plutôt que compter sur le réflexe",
+        statTested: 'strategie',
+        difficulty: 55,
+        outcomes: {
+          criticalFailure: {
+            text: "Le piège que tu as préparé est trop lisible. Himura ne mord jamais.",
+            reward: { coolness: -4 },
+          },
+          failure: {
+            text: "L'idée est là, mais l'exécution reste maladroite.",
+            reward: {},
+          },
+          success: {
+            text: "Tu as pensé le piège trois coups à l'avance, et il se referme exactement comme prévu.",
+            reward: {
+              careerPoints: 14,
+              reputationInternal: 6,
+              unlockTechniqueIds: [tech('lin-himura')],
+              entourageDelta: [{ role: 'Mentor', delta: 1 }],
+            },
+          },
+          criticalSuccess: {
+            text: "Le piège est si bien pensé qu'Himura met un instant à comprendre qu'il vient de s'y faire prendre. « Voilà. C'est exactement ça. »",
+            reward: {
+              careerPoints: 18,
+              reputationInternal: 10,
+              unlockTechniqueIds: [tech('lin-himura')],
+              entourageDelta: [{ role: 'Mentor', delta: 2 }],
+            },
+          },
+        },
+      },
     ],
   },
   {
@@ -374,6 +612,40 @@ export const LINEAGE_EXCLUSIVE_CARDS: LineageExclusiveCard[] = [
           },
         },
       },
+      {
+        id: 'choice-executer-schema',
+        label: 'Exécuter le schéma à mains nues plutôt que sur papier',
+        statTested: 'technique',
+        difficulty: 55,
+        outcomes: {
+          criticalFailure: {
+            text: "Le geste ne correspond à rien de ce qui est écrit sur le papier. Nishikido replie le schéma sans un mot.",
+            reward: { coolness: -4 },
+          },
+          failure: {
+            text: "L'exécution reste approximative, loin de la précision du schéma.",
+            reward: {},
+          },
+          success: {
+            text: "Tu reproduis le schéma exactement, geste pour geste, jusqu'à la faille qu'il décrit.",
+            reward: {
+              careerPoints: 14,
+              reputationInternal: 6,
+              unlockTechniqueIds: [tech('lin-nishikido')],
+              entourageDelta: [{ role: 'Mentor', delta: 1 }],
+            },
+          },
+          criticalSuccess: {
+            text: "Ton exécution est si propre qu'elle semble sortie du carnet lui-même. Nishikido referme celui-ci, visiblement en train de recalculer quelque chose.",
+            reward: {
+              careerPoints: 18,
+              reputationInternal: 10,
+              unlockTechniqueIds: [tech('lin-nishikido')],
+              entourageDelta: [{ role: 'Mentor', delta: 2 }],
+            },
+          },
+        },
+      },
     ],
   },
   {
@@ -411,6 +683,40 @@ export const LINEAGE_EXCLUSIVE_CARDS: LineageExclusiveCard[] = [
           },
           criticalSuccess: {
             text: "La salle explose littéralement. Tsukimori lève les bras la première, ravie : « Voilà. C'est exactement ça, un champion. »",
+            reward: {
+              careerPoints: 18,
+              reputationExternal: 10,
+              unlockTechniqueIds: [tech('lin-tsukimori')],
+              entourageDelta: [{ role: 'Mentor', delta: 2 }],
+            },
+          },
+        },
+      },
+      {
+        id: 'choice-propre-spectaculaire',
+        label: 'Miser sur la propreté du geste plutôt que sur l\'effet',
+        statTested: 'technique',
+        difficulty: 55,
+        outcomes: {
+          criticalFailure: {
+            text: "Le geste, trop retenu, ne dit rien au public. Tsukimori grimace, plus pour toi que pour elle-même.",
+            reward: { coolness: -4 },
+          },
+          failure: {
+            text: "Le geste est correct, mais n'impressionne personne. « On peut mieux faire », glisse Tsukimori.",
+            reward: {},
+          },
+          success: {
+            text: "La propreté même du geste finit par électriser la salle, sans qu'il ait eu besoin d'en rajouter.",
+            reward: {
+              careerPoints: 14,
+              reputationExternal: 6,
+              unlockTechniqueIds: [tech('lin-tsukimori')],
+              entourageDelta: [{ role: 'Mentor', delta: 1 }],
+            },
+          },
+          criticalSuccess: {
+            text: "Le geste est si net que la salle comprend d'instinct qu'elle vient de voir quelque chose de rare. Tsukimori lève les bras la première.",
             reward: {
               careerPoints: 18,
               reputationExternal: 10,

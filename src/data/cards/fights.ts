@@ -249,6 +249,25 @@ const MID_FIGHTS: FightCard[] = [
           },
         },
       },
+      {
+        id: 'g-refuser-clinch',
+        label: 'Refuser le clinch et rester à distance',
+        statTested: 'reflexes',
+        difficulty: 52,
+        eligibleTechniqueIds: GESTURE_TECHNIQUES.reflexes,
+        outcomes: {
+          criticalFailure: { text: "Il t'accroche malgré toi à chaque tentative de fuite.", reward: { health: -6 } },
+          failure: { text: "Tu glisses hors du clinch, mais il te rattrape aussitôt.", reward: { fatigue: 6 } },
+          success: {
+            text: "Tu esquives chaque tentative de corps-à-corps et le forces à se battre là où il ne veut pas.",
+            reward: { careerPoints: 12, reputationExternal: 4, unlockTechniqueIds: ['tech-generic-jeu-coude'], setFlags: ['discovered:tech-generic-jeu-coude'] },
+          },
+          criticalSuccess: {
+            text: "Il ne t'accroche jamais une seule fois. Sa spécialité du corps-à-corps ne lui sert à rien ce soir.",
+            reward: { careerPoints: 17, reputationExternal: 7, unlockTechniqueIds: ['tech-generic-jeu-coude'], setFlags: ['discovered:tech-generic-jeu-coude'] },
+          },
+        },
+      },
     ],
   },
   {
@@ -280,6 +299,25 @@ const MID_FIGHTS: FightCard[] = [
           },
         },
       },
+      {
+        id: 'g-uppercut-technique',
+        label: 'Chercher la faille par la précision, pas la force',
+        statTested: 'technique',
+        difficulty: 55,
+        eligibleTechniqueIds: GESTURE_TECHNIQUES.technique,
+        outcomes: {
+          criticalFailure: { text: "Le geste part propre mais rate totalement l'angle visé.", reward: { fatigue: 8 } },
+          failure: { text: "Tu tournes autour de la garde sans jamais trouver le bon interstice.", reward: { fatigue: 6 } },
+          success: {
+            text: "Tu repères l'angle exact, minuscule, et places le coup sans jamais forcer.",
+            reward: { careerPoints: 13, reputationExternal: 5, unlockTechniqueIds: ['tech-generic-uppercut-ferme'], setFlags: ['discovered:tech-generic-uppercut-ferme'] },
+          },
+          criticalSuccess: {
+            text: "Le coup est si précis qu'il semble avoir traversé sa garde sans jamais la toucher.",
+            reward: { careerPoints: 18, reputationExternal: 8, unlockTechniqueIds: ['tech-generic-uppercut-ferme'], setFlags: ['discovered:tech-generic-uppercut-ferme'] },
+          },
+        },
+      },
     ],
   },
   {
@@ -307,6 +345,25 @@ const MID_FIGHTS: FightCard[] = [
           },
           criticalSuccess: {
             text: "Le rôle s'inverse complètement : c'est lui qui use, maintenant, contre son propre jeu.",
+            reward: { careerPoints: 19, reputationExternal: 8, unlockTechniqueIds: ['tech-generic-contre-corps'], setFlags: ['discovered:tech-generic-contre-corps'] },
+          },
+        },
+      },
+      {
+        id: 'g-fuir-corps',
+        label: 'Rester hors de portée plutôt que rendre coup pour coup',
+        statTested: 'reflexes',
+        difficulty: 56,
+        eligibleTechniqueIds: GESTURE_TECHNIQUES.reflexes,
+        outcomes: {
+          criticalFailure: { text: "Il te coupe la route à chaque tentative de fuite, et te punit aux côtes.", reward: { health: -8, fatigue: 8 } },
+          failure: { text: "Tu limites les dégâts sans jamais vraiment reprendre l'initiative.", reward: { fatigue: 8 } },
+          success: {
+            text: "Tu restes systématiquement hors de sa portée. Sa spécialité ne lui sert à rien s'il ne peut jamais s'approcher.",
+            reward: { careerPoints: 14, reputationExternal: 5, unlockTechniqueIds: ['tech-generic-contre-corps'], setFlags: ['discovered:tech-generic-contre-corps'] },
+          },
+          criticalSuccess: {
+            text: "Il finit le combat frustré, sans avoir pu placer une seule fois son coup au corps.",
             reward: { careerPoints: 19, reputationExternal: 8, unlockTechniqueIds: ['tech-generic-contre-corps'], setFlags: ['discovered:tech-generic-contre-corps'] },
           },
         },
@@ -374,6 +431,19 @@ const MID_FIGHTS: FightCard[] = [
           criticalSuccess: { text: "Il ne suit jamais vraiment la cadence. Ton nom entre au classement national dès le lendemain.", reward: { careerPoints: 19, reputationExternal: 8 } },
         },
       },
+      {
+        id: 'g-national-endurance',
+        label: "Le faire craquer à l'usure",
+        statTested: 'endurance',
+        difficulty: 52,
+        eligibleTechniqueIds: GESTURE_TECHNIQUES.endurance,
+        outcomes: {
+          criticalFailure: { text: "C'est toi qui craques le premier dans cette guerre d'usure.", reward: { health: -6, fatigue: 10 } },
+          failure: { text: "Le combat s'étire sans qu'aucun des deux ne cède.", reward: { fatigue: 8 } },
+          success: { text: "Tu tiens plus longtemps que lui, et ça finit par se voir sur la carte des juges.", reward: { careerPoints: 14, reputationExternal: 5 } },
+          criticalSuccess: { text: "Il craque nettement avant la fin. Ton nom entre au classement national dès le lendemain.", reward: { careerPoints: 19, reputationExternal: 8 } },
+        },
+      },
     ],
   },
 ]
@@ -407,6 +477,25 @@ const LATE_FIGHTS: FightCard[] = [
           },
           criticalSuccess: {
             text: "La combinaison est si rapide qu'elle semble n'être qu'un seul geste. Sa garde, réputée insaisissable, cède complètement.",
+            reward: { careerPoints: 22, reputationExternal: 12, unlockTechniqueIds: ['tech-generic-double-jab'], setFlags: ['discovered:tech-generic-double-jab'] },
+          },
+        },
+      },
+      {
+        id: 'g-double-jab-lecture',
+        label: 'Lire sa garde plutôt que la brusquer',
+        statTested: 'strategie',
+        difficulty: 64,
+        eligibleTechniqueIds: GESTURE_TECHNIQUES.strategie,
+        outcomes: {
+          criticalFailure: { text: "Sa garde change encore une fois, exactement au moment où tu croyais l'avoir percée.", reward: { fatigue: 8 } },
+          failure: { text: "Tu perçois un schéma, sans être sûr de pouvoir vraiment t'y fier.", reward: { fatigue: 8 } },
+          success: {
+            text: "Tu identifies le motif derrière ses changements de garde, et places ton double jab pile au bon instant.",
+            reward: { careerPoints: 16, reputationExternal: 8, unlockTechniqueIds: ['tech-generic-double-jab'], setFlags: ['discovered:tech-generic-double-jab'] },
+          },
+          criticalSuccess: {
+            text: "Tu as percé sa garde avant même le premier coup. Sa réputation d'insaisissable ne survit pas à ce combat.",
             reward: { careerPoints: 22, reputationExternal: 12, unlockTechniqueIds: ['tech-generic-double-jab'], setFlags: ['discovered:tech-generic-double-jab'] },
           },
         },

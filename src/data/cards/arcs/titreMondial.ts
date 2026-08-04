@@ -33,6 +33,18 @@ const ANNONCE: LifeMomentCard = {
         criticalSuccess: { text: "L'ampleur de l'évènement, loin de te peser, semble au contraire te porter. Tu n'as jamais été aussi centré.", reward: { coolness: 10, careerPoints: 9 } },
       },
     },
+    {
+      id: 'choice-vasquez-etude',
+      label: 'Étudier ses quatorze défenses une à une',
+      statTested: 'strategie',
+      difficulty: 62,
+      outcomes: {
+        criticalFailure: { text: "Six ans de combats, c'est trop à digérer d'un coup. Tu ressors de l'étude plus confus qu'éclairé.", reward: { coolness: -10 } },
+        failure: { text: "Des habitudes se dessinent vaguement, sans grande certitude.", reward: {} },
+        success: { text: "Un schéma clair ressort de ses dernières défenses — une prudence excessive dès qu'il est touché fort.", reward: { stats: { strategie: 2 }, careerPoints: 6 } },
+        criticalSuccess: { text: "Tu identifies une faille qu'aucun de ses quatorze adversaires précédents n'a su exploiter.", reward: { stats: { strategie: 3 }, careerPoints: 9 } },
+      },
+    },
   ],
 }
 

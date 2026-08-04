@@ -234,6 +234,24 @@ const EARLY_TRAINING: TrainingCard[] = [
           },
         },
       },
+      {
+        id: 'approach-jab-placement',
+        label: 'Travailler le placement plutôt que la vitesse pure',
+        statTested: 'technique',
+        difficulty: 40,
+        outcomes: {
+          criticalFailure: { text: "Le poing arrive systématiquement décentré, loin de la cible.", reward: { coolness: -3 } },
+          failure: { text: "Le placement reste correct, sans plus.", reward: {} },
+          success: {
+            text: "Le poing trouve la même cible exacte à chaque répétition — la vitesse suit naturellement la précision.",
+            reward: { stats: { technique: 2 }, unlockTechniqueIds: ['tech-generic-jab-eclair'], setFlags: ['discovered:tech-generic-jab-eclair'] },
+          },
+          criticalSuccess: {
+            text: "Le geste devient si propre qu'il semble ralenti, alors qu'il part plus vite que jamais.",
+            reward: { stats: { technique: 3 }, unlockTechniqueIds: ['tech-generic-jab-eclair'], setFlags: ['discovered:tech-generic-jab-eclair'], reputationInternal: 2 },
+          },
+        },
+      },
     ],
   },
   {
@@ -259,6 +277,24 @@ const EARLY_TRAINING: TrainingCard[] = [
           criticalSuccess: {
             text: "Ton partenaire finit par abandonner, incapable de trouver la moindre ouverture.",
             reward: { stats: { endurance: 3 }, unlockTechniqueIds: ['tech-generic-garde-fer'], setFlags: ['discovered:tech-generic-garde-fer'], reputationInternal: 2 },
+          },
+        },
+      },
+      {
+        id: 'approach-garde-mentale',
+        label: 'Tenir mentalement plutôt que par la seule force des bras',
+        statTested: 'mental',
+        difficulty: 42,
+        outcomes: {
+          criticalFailure: { text: "L'attention décroche à mi-exercice, et la garde s'ouvre sans même que tu le sentes venir.", reward: { coolness: -4 } },
+          failure: { text: "La concentration tient, mais s'effrite sur la durée.", reward: { fatigue: 4 } },
+          success: {
+            text: "Tu gardes l'esprit fixé sur la garde plutôt que sur la fatigue des bras — elle ne s'ouvre jamais.",
+            reward: { stats: { mental: 2 }, unlockTechniqueIds: ['tech-generic-garde-fer'], setFlags: ['discovered:tech-generic-garde-fer'] },
+          },
+          criticalSuccess: {
+            text: "Rien ne semble pouvoir entamer ta concentration. La garde tient comme si elle ne coûtait plus rien.",
+            reward: { stats: { mental: 3 }, unlockTechniqueIds: ['tech-generic-garde-fer'], setFlags: ['discovered:tech-generic-garde-fer'], reputationInternal: 2 },
           },
         },
       },
@@ -296,6 +332,24 @@ const MID_TRAINING: TrainingCard[] = [
           },
         },
       },
+      {
+        id: 'approach-pivot-vitesse',
+        label: 'Miser sur la vitesse pure du déplacement',
+        statTested: 'vitesse',
+        difficulty: 50,
+        outcomes: {
+          criticalFailure: { text: "Tu bouges trop tôt, avant même que le coup ne parte vraiment.", reward: { health: -3 } },
+          failure: { text: "Le déplacement arrive, mais pas toujours à temps.", reward: { fatigue: 5 } },
+          success: {
+            text: "Tu es déjà ailleurs quand le poing arrive à destination.",
+            reward: { stats: { vitesse: 2 }, unlockTechniqueIds: ['tech-generic-esquive-laterale'], setFlags: ['discovered:tech-generic-esquive-laterale'] },
+          },
+          criticalSuccess: {
+            text: "Ton partenaire abandonne, incapable de suivre un rythme pareil.",
+            reward: { stats: { vitesse: 3 }, unlockTechniqueIds: ['tech-generic-esquive-laterale'], setFlags: ['discovered:tech-generic-esquive-laterale'], reputationInternal: 2 },
+          },
+        },
+      },
     ],
   },
   {
@@ -321,6 +375,24 @@ const MID_TRAINING: TrainingCard[] = [
           criticalSuccess: {
             text: "Ton partenaire hésite maintenant avant de frapper, sachant ce qui revient systématiquement derrière.",
             reward: { stats: { mental: 3 }, unlockTechniqueIds: ['tech-generic-relance'], setFlags: ['discovered:tech-generic-relance'], reputationInternal: 2 },
+          },
+        },
+      },
+      {
+        id: 'approach-relance-reflexe',
+        label: 'Faire confiance au réflexe plutôt qu\'à la volonté',
+        statTested: 'reflexes',
+        difficulty: 50,
+        outcomes: {
+          criticalFailure: { text: "Le corps se fige au lieu de répondre, encore et encore.", reward: { coolness: -5 } },
+          failure: { text: "Le réflexe existe, mais reste inconstant.", reward: { fatigue: 5 } },
+          success: {
+            text: "La réplique part toute seule, sans passer par la moindre décision consciente.",
+            reward: { stats: { reflexes: 2 }, unlockTechniqueIds: ['tech-generic-relance'], setFlags: ['discovered:tech-generic-relance'] },
+          },
+          criticalSuccess: {
+            text: "Le geste est devenu si automatique qu'il te surprend toi-même à chaque fois.",
+            reward: { stats: { reflexes: 3 }, unlockTechniqueIds: ['tech-generic-relance'], setFlags: ['discovered:tech-generic-relance'], reputationInternal: 2 },
           },
         },
       },
@@ -352,6 +424,24 @@ const MID_TRAINING: TrainingCard[] = [
           },
         },
       },
+      {
+        id: 'approach-feinte-technique',
+        label: 'Peaufiner la propreté du geste plutôt que la ruse',
+        statTested: 'technique',
+        difficulty: 50,
+        outcomes: {
+          criticalFailure: { text: "Le geste part imprécis, et la feinte se voit à des kilomètres.", reward: { coolness: -4 } },
+          failure: { text: "Le geste reste un peu brut, pas encore assez propre pour tromper qui que ce soit.", reward: { fatigue: 5 } },
+          success: {
+            text: "La propreté du geste rend chaque feinte crédible, sans avoir besoin d'en faire trop.",
+            reward: { stats: { technique: 2 }, unlockTechniqueIds: ['tech-generic-feinte-double'], setFlags: ['discovered:tech-generic-feinte-double'] },
+          },
+          criticalSuccess: {
+            text: "Chaque geste est si net que ton partenaire ne sait plus du tout lequel croire.",
+            reward: { stats: { technique: 3 }, unlockTechniqueIds: ['tech-generic-feinte-double'], setFlags: ['discovered:tech-generic-feinte-double'], reputationInternal: 2 },
+          },
+        },
+      },
     ],
   },
   {
@@ -374,6 +464,18 @@ const MID_TRAINING: TrainingCard[] = [
           criticalSuccess: { text: "Le préparateur physique note un temps qu'il n'a vu chez personne d'autre dans la salle cette année.", reward: { stats: { endurance: 4 }, reputationInternal: 3 } },
         },
       },
+      {
+        id: 'approach-fractionne-mental',
+        label: "Tenir par la tête plutôt que forcer sur le corps",
+        statTested: 'mental',
+        difficulty: 52,
+        outcomes: {
+          criticalFailure: { text: "L'esprit lâche avant le corps, et tu abandonnes la séance en avance.", reward: { coolness: -5 } },
+          failure: { text: "Tu tiens tant bien que mal, l'esprit ailleurs.", reward: { fatigue: 8 } },
+          success: { text: "Tu déplaces ton attention loin de la douleur, et le seuil recule sans y penser.", reward: { stats: { mental: 3 } } },
+          criticalSuccess: { text: "Ta capacité à dissocier l'effort de l'inconfort impressionne le préparateur physique.", reward: { stats: { mental: 4 }, reputationInternal: 3 } },
+        },
+      },
     ],
   },
   {
@@ -394,6 +496,18 @@ const MID_TRAINING: TrainingCard[] = [
           failure: { text: "Quelques pistes générales, sans grande précision.", reward: {} },
           success: { text: "Un plan de combat clair se dessine, basé sur des habitudes bien réelles.", reward: { stats: { strategie: 3 } } },
           criticalSuccess: { text: "Tu repères une habitude si spécifique que le plan de combat en devient presque une évidence.", reward: { stats: { strategie: 4 }, careerPoints: 3 } },
+        },
+      },
+      {
+        id: 'approach-video-mental',
+        label: "Se projeter dans le combat plutôt qu'analyser froidement",
+        statTested: 'mental',
+        difficulty: 50,
+        outcomes: {
+          criticalFailure: { text: "Les scénarios imaginés tournent tous à l'angoisse plutôt qu'à la préparation.", reward: { coolness: -5 } },
+          failure: { text: "La projection reste vague, difficile à ancrer.", reward: {} },
+          success: { text: "Tu te projettes clairement dans le combat, calme, prêt pour ce qui vient.", reward: { stats: { mental: 3 } } },
+          criticalSuccess: { text: "Ta préparation mentale est si complète que le combat, une fois là, aura un air de déjà-vu.", reward: { stats: { mental: 4 }, careerPoints: 3 } },
         },
       },
     ],
@@ -427,6 +541,24 @@ const LATE_TRAINING: TrainingCard[] = [
           criticalSuccess: {
             text: "{{mentor}} pose enfin les mots dessus : « Voilà. Ça, ça ne s'enseigne pas. Ça se gagne. »",
             reward: { stats: { strategie: 4 }, unlockTechniqueIds: ['tech-generic-radar-combat'], setFlags: ['discovered:tech-generic-radar-combat'], reputationInternal: 3 },
+          },
+        },
+      },
+      {
+        id: 'approach-radar-reflexe',
+        label: "Laisser le corps réagir avant la tête",
+        statTested: 'reflexes',
+        difficulty: 66,
+        outcomes: {
+          criticalFailure: { text: "Rien ne vient. Le corps reste aussi lent qu'un débutant, aujourd'hui.", reward: { coolness: -4 } },
+          failure: { text: "Quelques réactions justes, sans grande constance.", reward: {} },
+          success: {
+            text: "Le corps répond avant que l'enchaînement adverse ne soit terminé, sans réflexion consciente.",
+            reward: { stats: { reflexes: 3 }, unlockTechniqueIds: ['tech-generic-radar-combat'], setFlags: ['discovered:tech-generic-radar-combat'] },
+          },
+          criticalSuccess: {
+            text: "{{mentor}} n'a plus rien à ajouter — le corps a fini par apprendre ce que les mots ne pouvaient plus enseigner.",
+            reward: { stats: { reflexes: 4 }, unlockTechniqueIds: ['tech-generic-radar-combat'], setFlags: ['discovered:tech-generic-radar-combat'], reputationInternal: 3 },
           },
         },
       },

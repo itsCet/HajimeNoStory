@@ -40,6 +40,27 @@ const ANNONCE: LifeMomentCard = {
         },
       },
     },
+    {
+      id: 'choice-annonce-calme',
+      label: "Encaisser la nouvelle sans t'y précipiter",
+      statTested: 'mental',
+      difficulty: 55,
+      outcomes: {
+        criticalFailure: {
+          text: "Le nom d'Oda, une fois lu, ne quitte plus ta tête — mal, et bien avant l'heure.",
+          reward: { coolness: -5 },
+        },
+        failure: { text: "Tu ranges la lettre, encore un peu secoué par la nouvelle.", reward: {} },
+        success: {
+          text: "Tu laisses l'information s'installer calmement. Un adversaire de plus, pas un mur infranchissable.",
+          reward: { coolness: 4, careerPoints: 5 },
+        },
+        criticalSuccess: {
+          text: "Tu ranges la lettre avec une clarté totale. Trois ans d'invincibilité ne sont, pour toi, qu'un chiffre parmi d'autres.",
+          reward: { coolness: 7, careerPoints: 8 },
+        },
+      },
+    },
   ],
 }
 

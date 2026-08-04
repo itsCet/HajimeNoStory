@@ -29,6 +29,27 @@ export const FAUVE_REVEAL_CARD: LifeMomentCard = {
         },
       },
     },
+    {
+      id: 'choice-ignorer-sensation',
+      label: "Ne pas y penser, et retourner t'entraîner",
+      statTested: 'strategie',
+      difficulty: 40,
+      outcomes: {
+        criticalFailure: {
+          text: "Tu essaies de l'ignorer, mais la sensation revient te chercher au pire moment, en plein entraînement.",
+          reward: { coolness: -5 },
+        },
+        failure: { text: "Tu détournes ton attention, sans grand succès.", reward: {} },
+        success: {
+          text: "Tu ranges la question pour plus tard, et te concentres sur ce que tu maîtrises déjà.",
+          reward: { coolness: 3 },
+        },
+        criticalSuccess: {
+          text: "Ta capacité à compartimenter impressionne même {{mentor}}, qui n'a pourtant rien vu de ce round-là.",
+          reward: { coolness: 5, stats: { strategie: 2 } },
+        },
+      },
+    },
   ],
 }
 

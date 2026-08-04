@@ -98,7 +98,6 @@ function computeNextStep(character: CharacterState): NextStep {
 
 function processResolution(character: CharacterState, card: GameCard, result: ResolutionResult, tier: RollTier | null) {
   advanceAfterCard(character, card)
-  tickCooldowns(character)
   checkPointProgression(character)
   if (tier) checkStoryGateProgression(character, card.id, tier)
   checkTitleDefenseProgression(character)
@@ -109,6 +108,11 @@ function processResolution(character: CharacterState, card: GameCard, result: Re
 }
 
 export function createCareerStore(isDestiny: boolean) {
+  // React.StrictMode invoke deux fois les effets au montage en développement ;
+  // resumeIfAny() a des effets de bord réels (elle peut clore l'année et sauver),
+  // donc on ne la laisse s'exécuter qu'une fois par instance de store.
+  let hasResumed = false
+
   function endCareer(character: CharacterState, endingType: CareerEndingType, set: (partial: Partial<CareerStoreState>) => void) {
     character.isRetired = true
     character.endingType = endingType
@@ -138,6 +142,8 @@ export function createCareerStore(isDestiny: boolean) {
     endingType: null,
 
     resumeIfAny: () => {
+      if (hasResumed) return
+      hasResumed = true
       const character = loadCharacter(isDestiny)
       if (!character || character.isRetired) {
         set({ character: null, phase: 'no-character' })
@@ -171,6 +177,7 @@ export function createCareerStore(isDestiny: boolean) {
       else return
       const choice = choices.find((c) => c.id === optionId)
       if (!choice) return
+      tickCooldowns(character)
       const result = resolveChoice(character, choice.statTested, choice.difficulty, choice.outcomes)
       processResolution(character, currentCard, result, result.tier)
       saveCharacter(character, isDestiny)
@@ -182,6 +189,7 @@ export function createCareerStore(isDestiny: boolean) {
       if (!character || !currentCard || currentCard.type !== 'fight') return
       const wasUnleashed = useDormant && character.dormantPotential.mode === 'unleashed'
       const defensesBefore = character.titleDefenses
+      tickCooldowns(character)
       const result = resolveGesture(character, currentCard, gestureId, techniqueId, useDormant)
       processResolution(character, currentCard, result, result.tier)
       if (wasUnleashed && character.titleDefenses > defensesBefore) {
@@ -194,6 +202,7 @@ export function createCareerStore(isDestiny: boolean) {
     chooseDormantDoor: (doorId) => {
       const { character, currentCard } = get()
       if (!character || !currentCard || currentCard.type !== 'dormant-potential') return
+      tickCooldowns(character)
       const { chips, tier } = resolveDormantPotentialDoor(character, doorId)
       processResolution(character, currentCard, { tier: tier ?? 'success', text: '', chips, newlyUnlockedTrophyIds: [], newlyUnlockedTechniqueIds: [] }, tier)
       const doorText = currentCard.doors.find((d) => d.id === doorId)?.resultText ?? ''

@@ -30,6 +30,18 @@ const ANNONCE: LifeMomentCard = {
         criticalSuccess: { text: "Rien de tout ça ne semble peser sur toi. C'est juste la suite logique de tout ce travail.", reward: { coolness: 8, careerPoints: 9 } },
       },
     },
+    {
+      id: 'choice-etudier-numero-3',
+      label: 'Te plonger immédiatement dans ses combats',
+      statTested: 'strategie',
+      difficulty: 60,
+      outcomes: {
+        criticalFailure: { text: "Tu accumules les vidéos sans qu'aucun plan cohérent n'en ressorte.", reward: { coolness: -8 } },
+        failure: { text: "Quelques pistes générales, sans grande précision encore.", reward: {} },
+        success: { text: "Un premier plan de combat se dessine déjà, avant même le début du vrai camp d'entraînement.", reward: { stats: { strategie: 2 }, careerPoints: 6 } },
+        criticalSuccess: { text: "Tu identifies une faiblesse nette dans son style, que personne ne semble avoir exploitée avant toi.", reward: { stats: { strategie: 3 }, careerPoints: 9 } },
+      },
+    },
   ],
 }
 

@@ -91,6 +91,18 @@ export const DEFI_CARITATIF_CARDS: LifeMomentCard[] = [
           criticalSuccess: { text: "Ta simple présence suffit à convaincre des sponsors hésitants depuis des mois.", reward: { reputationInternal: 7, reputationExternal: 4, careerPoints: 5 } },
         },
       },
+      {
+        id: 'choice-organisation',
+        label: "Structurer l'évènement méthodiquement",
+        statTested: 'strategie',
+        difficulty: 45,
+        outcomes: {
+          criticalFailure: { text: "Le planning s'effondre sous les imprévus, et il faut tout reprendre à la dernière minute.", reward: { fatigue: 5 } },
+          failure: { text: "L'organisation tient, à peine, avec quelques accrocs.", reward: {} },
+          success: { text: "Chaque détail logistique tombe en place, du lieu jusqu'aux horaires.", reward: { reputationInternal: 4, careerPoints: 3 } },
+          criticalSuccess: { text: "L'organisation est si fluide que les bénévoles eux-mêmes s'en étonnent. Rien n'est laissé au hasard.", reward: { reputationInternal: 7, reputationExternal: 4, careerPoints: 5 } },
+        },
+      },
     ],
   },
   {
@@ -127,6 +139,42 @@ export const DEFI_CARITATIF_CARDS: LifeMomentCard[] = [
           },
           criticalSuccess: {
             text: "La soirée devient un évènement dont tout le quartier parlera encore des années plus tard. La salle n'a jamais été aussi solide financièrement.",
+            reward: {
+              reputationInternal: 12,
+              reputationExternal: 10,
+              loyalty: 10,
+              setFlags: ['flag-side-quest-resolved'],
+              unlockTrophyIds: ['mark-sauveur-salle'],
+            },
+          },
+        },
+      },
+      {
+        id: 'choice-exhibition-technique',
+        label: 'Miser sur une exhibition technique et maîtrisée',
+        statTested: 'technique',
+        difficulty: 45,
+        outcomes: {
+          criticalFailure: {
+            text: "L'exhibition manque de rythme, mais l'affluence suffit à couvrir l'objectif malgré tout.",
+            reward: { setFlags: ['flag-side-quest-resolved'] },
+          },
+          failure: {
+            text: "L'exhibition se déroule proprement, sans marquer les esprits. La collecte atteint tout juste ce qu'il fallait.",
+            reward: { setFlags: ['flag-side-quest-resolved'] },
+          },
+          success: {
+            text: "La précision du duel impressionne les connaisseurs présents dans la salle — la collecte dépasse largement l'objectif fixé.",
+            reward: {
+              reputationInternal: 8,
+              reputationExternal: 6,
+              loyalty: 6,
+              setFlags: ['flag-side-quest-resolved'],
+              unlockTrophyIds: ['mark-sauveur-salle'],
+            },
+          },
+          criticalSuccess: {
+            text: "L'échange est d'une propreté si rare que des vidéos circuleront encore des mois après. La salle n'a jamais été aussi solide financièrement.",
             reward: {
               reputationInternal: 12,
               reputationExternal: 10,

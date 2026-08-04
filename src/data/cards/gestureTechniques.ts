@@ -42,6 +42,6 @@ export const GESTURE_TECHNIQUES: Record<StatKey, string[]> = {
     'tech-generic-esquive-laterale',
     'tech-generic-anticipation-parfaite',
   ],
-  mental: ['tech-lineage-tsukimori', 'tech-generic-relance', 'tech-generic-sang-froid-glacial'],
-  strategie: ['tech-lineage-otsuka', 'tech-lineage-nishikido', 'tech-generic-feinte-double', 'tech-generic-radar-combat'],
+  mental: ['tech-lineage-tsukimori', 'tech-lineage-otsuka', 'tech-generic-relance', 'tech-generic-sang-froid-glacial'],
+  strategie: ['tech-lineage-nishikido', 'tech-generic-feinte-double', 'tech-generic-radar-combat'],
 }

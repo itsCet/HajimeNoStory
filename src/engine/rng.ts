@@ -70,6 +70,10 @@ export interface RollResult {
 /**
  * Jet à 4 paliers. `bonus` vient d'une technique éventuellement engagée sur le geste ;
  * il déplace les seuils mais ne peut jamais transformer un jet raté en victoire garantie.
+ *
+ * Seuils calibrés pour qu'un match "à égalité" (statValue == difficulty) donne environ
+ * 66% de réussite ou mieux, la réussite simple restant l'issue la plus fréquente plutôt
+ * que l'échec — un jet à égalité pure ne devrait pas échouer une fois sur deux.
  */
 export function rollAgainstStat(
   rng: Rng,
@@ -80,8 +84,8 @@ export function rollAgainstStat(
   const roll = rng.intBetween(1, 100)
   const score = roll + statValue - difficulty + bonus
   let tier: RollTier
-  if (score < 15) tier = 'critical-failure'
-  else if (score < 50) tier = 'failure'
+  if (score < 10) tier = 'critical-failure'
+  else if (score < 35) tier = 'failure'
   else if (score < 90) tier = 'success'
   else tier = 'critical-success'
   return { tier, roll, score }

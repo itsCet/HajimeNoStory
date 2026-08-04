@@ -45,6 +45,27 @@ const INTRO: LifeMomentCard = {
         },
       },
     },
+    {
+      id: 'choice-etudier-nurdin',
+      label: 'Rassembler tout ce qui existe sur ses combats',
+      statTested: 'strategie',
+      difficulty: 55,
+      outcomes: {
+        criticalFailure: {
+          text: "Les images disponibles sont rares et contradictoires. Tu ressors plus confus qu'informé.",
+          reward: { coolness: -6 },
+        },
+        failure: { text: "Tu glanes quelques images, sans grand schéma clair.", reward: {} },
+        success: {
+          text: "Tu rassembles assez d'images pour cerner ses habitudes de garde, malgré la rareté du matériel.",
+          reward: { stats: { strategie: 2 }, careerPoints: 4 },
+        },
+        criticalSuccess: {
+          text: "Un vieux combat amateur, presque oublié, révèle une faiblesse que personne d'autre n'a remarquée.",
+          reward: { stats: { strategie: 3 }, careerPoints: 6 },
+        },
+      },
+    },
   ],
 }
 
@@ -77,6 +98,28 @@ const REVERS: FightCard = {
         },
         criticalSuccess: {
           text: "Tu le touches deux fois sans qu'il ne te touche une seule. Nurdin recule, visiblement surpris par ce qu'il vient de découvrir.",
+          reward: { careerPoints: 9, reputationExternal: 8 },
+        },
+      },
+    },
+    {
+      id: 'g-repondre-nurdin',
+      label: "Répondre coup pour coup, dès le premier round",
+      statTested: 'puissance',
+      difficulty: 58,
+      eligibleTechniqueIds: GESTURE_TECHNIQUES.puissance,
+      outcomes: {
+        criticalFailure: {
+          text: "L'échange de puissance tourne largement à son avantage. Tu comprends vite pourquoi il est invaincu.",
+          reward: { health: -8, coolness: -6 },
+        },
+        failure: { text: "L'échange reste risqué pour les deux, sans avantage net.", reward: { fatigue: 6 } },
+        success: {
+          text: "Tu tiens l'échange de puissance sans reculer. Nurdin, surpris, revoit son jugement sur toi.",
+          reward: { careerPoints: 6, reputationExternal: 5 },
+        },
+        criticalSuccess: {
+          text: "Tu le touches plus fort qu'il ne t'a touché. Pour la première fois depuis longtemps, Nurdin recule.",
           reward: { careerPoints: 9, reputationExternal: 8 },
         },
       },

@@ -17,8 +17,8 @@ export function Chip({ chip }: { chip: RewardChip }) {
       <span>{emoji}</span>
       <span>{label}</span>
       <span>
-        {chip.value > 0 ? '+' : ''}
-        {chip.value}
+        {positive ? '+' : '−'}
+        {Math.abs(chip.value)}
       </span>
     </span>
   )

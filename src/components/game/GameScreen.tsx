@@ -23,7 +23,19 @@ export function GameScreen({ useStore }: { useStore: UseBoundStore<StoreApi<Care
   }
 
   if (phase === 'game-over' && state.endingType) {
-    return <GameOverScreen character={character} endingType={state.endingType} onBackHome={() => goTo('home')} />
+    return (
+      <GameOverScreen
+        character={character}
+        endingType={state.endingType}
+        onBackHome={() => {
+          // La carrière est déjà retirée du localStorage à ce stade ; il faut aussi
+          // vider l'état en mémoire, sinon l'accueil propose de "reprendre" une
+          // carrière déjà terminée et on boucle indéfiniment sur cet écran.
+          state.abandonCareer()
+          goTo('home')
+        }}
+      />
+    )
   }
 
   return (

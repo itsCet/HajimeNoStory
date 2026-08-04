@@ -94,6 +94,30 @@ const EARLY_LIFE_MOMENTS: LifeMomentCard[] = [
           },
         },
       },
+      {
+        id: 'choice-esquiver',
+        label: 'Couper court, une autre fois peut-être',
+        statTested: 'strategie',
+        difficulty: 40,
+        outcomes: {
+          criticalFailure: {
+            text: "{{mentor}} referme la discussion d'un air déçu — le moment ne se représentera pas de sitôt.",
+            reward: { entourageDelta: [{ role: 'Mentor', delta: -1 }] },
+          },
+          failure: {
+            text: "{{mentor}} hausse les épaules et retourne à ses affaires, sans insister.",
+            reward: {},
+          },
+          success: {
+            text: "Tu expliques calmement que tu préfères y aller à ton rythme. {{mentor}} respecte la demande.",
+            reward: { stats: { strategie: 2 }, coolness: 3 },
+          },
+          criticalSuccess: {
+            text: "Ta franchise surprend {{mentor}}, qui promet de revenir avec la critique au moment que tu choisiras.",
+            reward: { stats: { strategie: 3 }, coolness: 4, entourageDelta: [{ role: 'Mentor', delta: 1 }] },
+          },
+        },
+      },
     ],
   },
   {
@@ -244,6 +268,30 @@ const EARLY_LIFE_MOMENTS: LifeMomentCard[] = [
           },
         },
       },
+      {
+        id: 'choice-distraire',
+        label: "Te changer les idées plutôt que d'y penser",
+        statTested: 'strategie',
+        difficulty: 42,
+        outcomes: {
+          criticalFailure: {
+            text: "La distraction ne prend jamais vraiment. Le doute revient, plus fort, juste avant de t'endormir.",
+            reward: { fatigue: 6, coolness: -6 },
+          },
+          failure: {
+            text: "Ça t'occupe l'esprit un moment, sans vraiment chasser le doute.",
+            reward: {},
+          },
+          success: {
+            text: "Tu détournes ton attention assez longtemps pour que le sommeil prenne le dessus sans forcer.",
+            reward: { coolness: 4 },
+          },
+          criticalSuccess: {
+            text: "Tu t'endors sans même t'en rendre compte, l'esprit ailleurs — la meilleure préparation possible, finalement.",
+            reward: { coolness: 6, fatigue: -4 },
+          },
+        },
+      },
     ],
   },
   {
@@ -274,6 +322,30 @@ const EARLY_LIFE_MOMENTS: LifeMomentCard[] = [
           },
           criticalSuccess: {
             text: "Ta sincérité change quelque chose dans la pièce. Pour la première fois, on te demande comment se passe l'entraînement — vraiment.",
+            reward: { coolness: 5, loyalty: 7 },
+          },
+        },
+      },
+      {
+        id: 'choice-rassurer-actes',
+        label: 'Répondre par les actes plutôt que les mots',
+        statTested: 'strategie',
+        difficulty: 42,
+        outcomes: {
+          criticalFailure: {
+            text: "Le silence que tu opposes est pris pour de l'indifférence, et ça envenime la soirée.",
+            reward: { coolness: -6 },
+          },
+          failure: {
+            text: "Tu changes de sujet, et le malaise reste entier sous la surface.",
+            reward: {},
+          },
+          success: {
+            text: "Tu proposes calmement de montrer plutôt que d'expliquer — venir voir un entraînement, par exemple. L'idée passe mieux que prévu.",
+            reward: { coolness: 3, loyalty: 4 },
+          },
+          criticalSuccess: {
+            text: "L'idée fait mouche : la moitié de la table promet de venir te voir sur le ring, un jour prochain.",
             reward: { coolness: 5, loyalty: 7 },
           },
         },
@@ -370,6 +442,30 @@ const EARLY_LIFE_MOMENTS: LifeMomentCard[] = [
           },
         },
       },
+      {
+        id: 'choice-partager-article',
+        label: "Partager l'article autour de toi",
+        statTested: 'strategie',
+        difficulty: 40,
+        outcomes: {
+          criticalFailure: {
+            text: "Le partage tombe à plat, et te donne un air un peu prétentieux aux yeux de certains.",
+            reward: { reputationInternal: -3 },
+          },
+          failure: {
+            text: "Quelques réactions polies, sans grand écho.",
+            reward: {},
+          },
+          success: {
+            text: "L'article circule un peu, et ton nom commence discrètement à se faire une place dans le quartier.",
+            reward: { reputationExternal: 3, reputationInternal: 2 },
+          },
+          criticalSuccess: {
+            text: "L'article fait le tour de la salle et au-delà. Pour deux lignes, l'effet est disproportionné.",
+            reward: { reputationExternal: 5, reputationInternal: 4 },
+          },
+        },
+      },
     ],
   },
   {
@@ -459,6 +555,30 @@ const EARLY_LIFE_MOMENTS: LifeMomentCard[] = [
           criticalSuccess: {
             text: "Ta préparation mentale est si complète que le combat, le lendemain, aura presque un air de déjà-vu.",
             reward: { coolness: 6, stats: { strategie: 2 } },
+          },
+        },
+      },
+      {
+        id: 'choice-deconnecter',
+        label: "Ne pas y penser, et dormir tout court",
+        statTested: 'mental',
+        difficulty: 42,
+        outcomes: {
+          criticalFailure: {
+            text: "Tu essaies de ne pas y penser, ce qui, bien sûr, ne fait qu'y penser davantage. Nuit blanche.",
+            reward: { coolness: -6, fatigue: 4 },
+          },
+          failure: {
+            text: "Tu t'endors tard, l'esprit encore un peu agité.",
+            reward: {},
+          },
+          success: {
+            text: "Tu coupes simplement le fil des pensées, sans chercher à tout anticiper. Le sommeil vient sans forcer.",
+            reward: { coolness: 4, stats: { mental: 1 } },
+          },
+          criticalSuccess: {
+            text: "Tu dors comme n'importe quelle autre nuit — la meilleure préparation qui soit, sans même y penser.",
+            reward: { coolness: 6, stats: { mental: 2 } },
           },
         },
       },
@@ -660,6 +780,18 @@ const MID_LIFE_MOMENTS: LifeMomentCard[] = [
           criticalSuccess: { text: "Cette séance devient, avec le recul, un des tournants silencieux de ta carrière — le jour où tu as failli arrêter, et où tu ne l'as pas fait.", reward: { coolness: 8, stats: { mental: 2 } } },
         },
       },
+      {
+        id: 'choice-pause-honnete',
+        label: "T'accorder une vraie journée de pause, sans culpabiliser",
+        statTested: 'strategie',
+        difficulty: 50,
+        outcomes: {
+          criticalFailure: { text: "La pause tourne à la rumination. Tu passes la journée à te sentir coupable plutôt que reposé.", reward: { coolness: -6 } },
+          failure: { text: "La journée passe, sans vraiment répondre à la question.", reward: {} },
+          success: { text: "Tu t'accordes la pause sans arrière-pensée, et reviens le lendemain avec l'envie intacte.", reward: { coolness: 5, fatigue: -6 } },
+          criticalSuccess: { text: "Cette pause assumée t'apprend à distinguer l'épuisement passager du vrai doute — une leçon qui te servira toute la carrière.", reward: { coolness: 8, stats: { strategie: 2 }, fatigue: -8 } },
+        },
+      },
     ],
   },
   {
@@ -732,6 +864,18 @@ const MID_LIFE_MOMENTS: LifeMomentCard[] = [
           failure: { text: "Tu restes en surface, par pudeur.", reward: {} },
           success: { text: "Le moment est simple, sincère, et reste gravé longtemps après.", reward: { loyalty: 6, coolness: 3 } },
           criticalSuccess: { text: "Ce dîner devient un souvenir que toute la famille racontera encore des années plus tard.", reward: { loyalty: 10, coolness: 5 } },
+        },
+      },
+      {
+        id: 'choice-inviter',
+        label: "Les inviter à venir voir un entraînement",
+        statTested: 'strategie',
+        difficulty: 46,
+        outcomes: {
+          criticalFailure: { text: "L'organisation tombe à l'eau au dernier moment, et personne ne vient finalement.", reward: {} },
+          failure: { text: "L'invitation reste vague, sans suite concrète.", reward: {} },
+          success: { text: "Tu organises la visite sans encombre. Les voir dans les gradins de la salle change quelque chose.", reward: { loyalty: 6, coolness: 3 } },
+          criticalSuccess: { text: "Toute la famille se déplace, et repart visiblement fière de ce qu'elle a vu.", reward: { loyalty: 10, coolness: 5 } },
         },
       },
     ],
@@ -828,6 +972,18 @@ const LATE_LIFE_MOMENTS: LifeMomentCard[] = [
           failure: { text: "Le conseil reste générique.", reward: {} },
           success: { text: "Tu lui offres exactement ce dont il avait besoin d'entendre. Il repart différent.", reward: { reputationInternal: 5, loyalty: 3 } },
           criticalSuccess: { text: "Ce moment simple deviendra, tu le sens, un souvenir fondateur pour ce jeune boxeur — comme d'autres l'ont été pour toi.", reward: { reputationInternal: 8, loyalty: 5 } },
+        },
+      },
+      {
+        id: 'choice-renvoyer-mentor',
+        label: "L'envoyer vers ton propre mentor plutôt que répondre toi-même",
+        statTested: 'strategie',
+        difficulty: 50,
+        outcomes: {
+          criticalFailure: { text: "Le jeune boxeur se sent un peu rejeté par ce renvoi, et n'ose plus revenir te voir.", reward: { reputationInternal: -3 } },
+          failure: { text: "Le conseil de te tourner vers {{mentor}} tombe un peu à plat.", reward: {} },
+          success: { text: "Tu reconnais que certaines réponses valent mieux venant de {{mentor}}. Le jeune boxeur apprécie l'honnêteté.", reward: { reputationInternal: 5, entourageDelta: [{ role: 'Mentor', delta: 1 }] } },
+          criticalSuccess: { text: "Tu organises même la rencontre toi-même. {{mentor}} salue ton geste, et le jeune boxeur n'oubliera ni l'un ni l'autre.", reward: { reputationInternal: 8, entourageDelta: [{ role: 'Mentor', delta: 1 }], loyalty: 3 } },
         },
       },
     ],

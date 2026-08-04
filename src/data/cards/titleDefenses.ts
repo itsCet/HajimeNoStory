@@ -37,6 +37,25 @@ export const TITLE_DEFENSE_CARDS: FightCard[] = [
           },
         },
       },
+      {
+        id: 'g-defense-encaisser-mental',
+        label: 'Refuser mentalement de céder, round après round',
+        statTested: 'mental',
+        difficulty: 74,
+        eligibleTechniqueIds: GESTURE_TECHNIQUES.mental,
+        outcomes: {
+          criticalFailure: { text: "Le doute s'installe avant même la moitié du combat, et le corps suit.", reward: { health: -16, fatigue: 14 } },
+          failure: { text: "Tu tiens par volonté pure, mais ça se fissure sur la fin.", reward: { fatigue: 14 } },
+          success: {
+            text: "Tu refuses simplement, round après round, l'idée même de céder. Sa légende de l'increvable s'arrête ce soir-là.",
+            reward: { careerPoints: 22, reputationExternal: 14, titleDefenseWin: true, unlockTechniqueIds: ['tech-generic-encaissement-total'], setFlags: ['discovered:tech-generic-encaissement-total'] },
+          },
+          criticalSuccess: {
+            text: "Ta détermination semble inépuisable. C'est lui qui craque le premier, incrédule.",
+            reward: { careerPoints: 30, reputationExternal: 20, titleDefenseWin: true, unlockTechniqueIds: ['tech-generic-encaissement-total'], setFlags: ['discovered:tech-generic-encaissement-total'] },
+          },
+        },
+      },
     ],
   },
   {
@@ -68,6 +87,25 @@ export const TITLE_DEFENSE_CARDS: FightCard[] = [
           },
         },
       },
+      {
+        id: 'g-defense-finir-precision',
+        label: "Chercher l'ouverture précise plutôt que l'échange direct",
+        statTested: 'technique',
+        difficulty: 76,
+        eligibleTechniqueIds: GESTURE_TECHNIQUES.technique,
+        outcomes: {
+          criticalFailure: { text: "Tu cherches trop la perfection et laisses passer sa fenêtre à lui.", reward: { health: -18, coolness: -8 } },
+          failure: { text: "L'ouverture existe, mais reste trop fine pour la saisir ce soir.", reward: { fatigue: 12, health: -6 } },
+          success: {
+            text: "Tu évites l'échange direct et places un coup d'une précision totale. La décision n'ira pas jusqu'aux juges.",
+            reward: { careerPoints: 24, reputationExternal: 16, titleDefenseWin: true, unlockTechniqueIds: ['tech-generic-poing-point-final'], setFlags: ['discovered:tech-generic-poing-point-final'] },
+          },
+          criticalSuccess: {
+            text: "Le coup arrive d'un endroit qu'il ne surveillait même pas. Un vrai point final, sans jamais avoir eu à forcer.",
+            reward: { careerPoints: 32, reputationExternal: 22, titleDefenseWin: true, unlockTechniqueIds: ['tech-generic-poing-point-final'], setFlags: ['discovered:tech-generic-poing-point-final'] },
+          },
+        },
+      },
     ],
   },
   {
@@ -95,6 +133,25 @@ export const TITLE_DEFENSE_CARDS: FightCard[] = [
           },
           criticalSuccess: {
             text: "Ton calme absolu devient, lui-même, la meilleure provocation possible. Il perd tous ses moyens avant même le milieu du combat.",
+            reward: { careerPoints: 30, reputationExternal: 20, titleDefenseWin: true, unlockTechniqueIds: ['tech-generic-sang-froid-glacial'], setFlags: ['discovered:tech-generic-sang-froid-glacial'] },
+          },
+        },
+      },
+      {
+        id: 'g-defense-calme-tactique',
+        label: 'Retourner sa propre provocation contre lui',
+        statTested: 'strategie',
+        difficulty: 74,
+        eligibleTechniqueIds: GESTURE_TECHNIQUES.strategie,
+        outcomes: {
+          criticalFailure: { text: "Ta réponse tombe à plat, et lui donne encore plus de terrain pour te déstabiliser.", reward: { coolness: -12, health: -10 } },
+          failure: { text: "L'échange verbal ne mène nulle part, et le combat reste chaotique.", reward: { coolness: -4, fatigue: 10 } },
+          success: {
+            text: "Tu retournes chaque provocation contre lui, calmement, jusqu'à ce qu'il perde le fil de son propre plan.",
+            reward: { careerPoints: 22, reputationExternal: 14, titleDefenseWin: true, unlockTechniqueIds: ['tech-generic-sang-froid-glacial'], setFlags: ['discovered:tech-generic-sang-froid-glacial'] },
+          },
+          criticalSuccess: {
+            text: "Il finit par se provoquer lui-même, tant tu as retourné son propre jeu contre lui. Une victoire presque méthodique.",
             reward: { careerPoints: 30, reputationExternal: 20, titleDefenseWin: true, unlockTechniqueIds: ['tech-generic-sang-froid-glacial'], setFlags: ['discovered:tech-generic-sang-froid-glacial'] },
           },
         },
@@ -133,6 +190,28 @@ export const TITLE_DEFENSE_CARDS: FightCard[] = [
           },
         },
       },
+      {
+        id: 'g-defense-lire-hypotheses',
+        label: 'Tester prudemment plusieurs hypothèses de style',
+        statTested: 'strategie',
+        difficulty: 76,
+        eligibleTechniqueIds: GESTURE_TECHNIQUES.strategie,
+        outcomes: {
+          criticalFailure: {
+            text: "Chaque hypothèse testée tombe à côté, et il te punit à chaque tâtonnement.",
+            reward: { health: -16, coolness: -8, unlockTrophyIds: ['mark-retine-fragile'] },
+          },
+          failure: { text: "Tu élimines quelques hypothèses, sans trouver la bonne à temps.", reward: { fatigue: 12 } },
+          success: {
+            text: "En testant patiemment, round après round, tu isoles enfin son vrai style — et t'y adaptes.",
+            reward: { careerPoints: 24, reputationExternal: 16, titleDefenseWin: true, unlockTechniqueIds: ['tech-generic-anticipation-parfaite'], setFlags: ['discovered:tech-generic-anticipation-parfaite'] },
+          },
+          criticalSuccess: {
+            text: "Tu perces son style dès le second round. Le mystère, pour tout le monde sauf toi, reste entier.",
+            reward: { careerPoints: 32, reputationExternal: 22, titleDefenseWin: true, unlockTechniqueIds: ['tech-generic-anticipation-parfaite'], setFlags: ['discovered:tech-generic-anticipation-parfaite'] },
+          },
+        },
+      },
     ],
   },
   {
@@ -158,6 +237,19 @@ export const TITLE_DEFENSE_CARDS: FightCard[] = [
           criticalSuccess: { text: "L'expérience ne suffit pas ce soir-là. Le vétéran salue, sportif, une nouvelle génération qui vient de s'imposer.", reward: { careerPoints: 30, reputationExternal: 20, titleDefenseWin: true } },
         },
       },
+      {
+        id: 'g-defense-veteran-usure',
+        label: "Miser sur ton corps plus jeune pour l'user",
+        statTested: 'endurance',
+        difficulty: 74,
+        eligibleTechniqueIds: GESTURE_TECHNIQUES.endurance,
+        outcomes: {
+          criticalFailure: { text: "Il gère son effort avec un métier que ton jeune corps ne suffit pas à compenser.", reward: { health: -14, coolness: -6 } },
+          failure: { text: "Le rythme te coûte autant qu'à lui, sans réel avantage.", reward: { fatigue: 10 } },
+          success: { text: "Ta fraîcheur physique finit par peser, round après round, sur ses jambes plus très jeunes.", reward: { careerPoints: 22, reputationExternal: 14, titleDefenseWin: true } },
+          criticalSuccess: { text: "Il ne suit plus le rythme dès le milieu du combat. Le vétéran salue, sportif, une nouvelle génération qui vient de s'imposer.", reward: { careerPoints: 30, reputationExternal: 20, titleDefenseWin: true } },
+        },
+      },
     ],
   },
   {
@@ -181,6 +273,19 @@ export const TITLE_DEFENSE_CARDS: FightCard[] = [
           failure: { text: "Tu compenses tant bien que mal le déficit de vitesse par l'expérience.", reward: { fatigue: 12 } },
           success: { text: "L'expérience finit par payer face à la fougue, aussi rapide soit-elle.", reward: { careerPoints: 24, reputationExternal: 16, titleDefenseWin: true } },
           criticalSuccess: { text: "Tu donnes ce soir-là une véritable leçon au prodige — celle que seule l'expérience peut enseigner.", reward: { careerPoints: 32, reputationExternal: 22, titleDefenseWin: true } },
+        },
+      },
+      {
+        id: 'g-defense-prodige-vitesse',
+        label: 'Accepter le duel de vitesse plutôt que le fuir',
+        statTested: 'vitesse',
+        difficulty: 76,
+        eligibleTechniqueIds: GESTURE_TECHNIQUES.vitesse,
+        outcomes: {
+          criticalFailure: { text: "Il est simplement plus rapide, et le combat sur son propre terrain tourne mal.", reward: { health: -16, coolness: -8 } },
+          failure: { text: "Le duel de vitesse reste indécis, chacun cherchant l'avantage.", reward: { fatigue: 12 } },
+          success: { text: "Tu égales sa vitesse, et ton métier fait la différence sur les échanges serrés.", reward: { careerPoints: 24, reputationExternal: 16, titleDefenseWin: true } },
+          criticalSuccess: { text: "Tu es aussi rapide que lui, et bien plus précis. Une véritable leçon, sur son propre terrain.", reward: { careerPoints: 32, reputationExternal: 22, titleDefenseWin: true } },
         },
       },
     ],
