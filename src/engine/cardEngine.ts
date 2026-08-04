@@ -5,6 +5,7 @@ import type {
   RollOutcomeSet,
   FightCard,
   StatKey,
+  TacticalApproachId,
 } from './types'
 import { Rng } from './rng'
 import { rollAgainstStat, type RollTier } from './rng'
@@ -18,6 +19,8 @@ import { LINEAGE_MAP } from '../data/lineages'
 import { applyReward, type RewardChip } from './statEngine'
 import { unlockTechnique, engageTechnique, isTechniqueReady, isTechniqueUnlocked } from './techniqueEngine'
 import { DORMANT_POTENTIAL } from '../data/dormantPotential'
+import { TACTICAL_APPROACHES, matchupModifier } from '../data/tacticalApproaches'
+import { ROUND_COMMENTARY } from '../data/roundCommentary'
 
 export function renderText(character: CharacterState, text: string): string {
   const rival = character.entourage.find((m) => m.role === 'Rival')?.npcName ?? 'ton rival'
@@ -137,7 +140,7 @@ export interface ResolutionResult {
   techniqueSceneText?: string
 }
 
-function finalizeResolution(
+export function finalizeResolution(
   character: CharacterState,
   outcomes: RollOutcomeSet,
   tier: RollTier,
@@ -189,14 +192,55 @@ export function resolveChoice(character: CharacterState, statTested: StatKey, di
   return finalizeResolution(character, outcomes, tier)
 }
 
-export function resolveGesture(
+// ── Combat round par round ─────────────────────────────────────────────
+
+const MOMENTUM_DELTA: Record<RollTier, number> = {
+  'critical-failure': -2,
+  failure: -1,
+  success: 1,
+  'critical-success': 2,
+}
+
+const ROUND_HEALTH_COST: Record<RollTier, number> = {
+  'critical-failure': -8,
+  failure: -3,
+  success: -1,
+  'critical-success': 0,
+}
+
+export type FightOutcomeKey = 'koLoss' | 'pointsLoss' | 'pointsWin' | 'koWin'
+
+const OUTCOME_KEY_TO_TIER: Record<FightOutcomeKey, RollTier> = {
+  koLoss: 'critical-failure',
+  pointsLoss: 'failure',
+  pointsWin: 'success',
+  koWin: 'critical-success',
+}
+
+export interface RoundResult {
+  tier: RollTier
+  momentum: number
+  momentumDelta: number
+  chips: RewardChip[]
+  text: string
+  techniqueSceneText?: string
+  fightOver: boolean
+  outcomeKey?: FightOutcomeKey
+}
+
+/** Résout UN round de combat : approche tactique + technique/Fauve optionnels. */
+export function resolveFightRound(
   character: CharacterState,
   card: FightCard,
-  gestureId: string,
+  approachId: TacticalApproachId,
+  currentMomentum: number,
+  roundIndex: number,
   techniqueId?: string,
   useDormant?: boolean,
-): ResolutionResult {
-  const gesture = card.gestures.find((g) => g.id === gestureId)!
+): RoundResult {
+  const approach = TACTICAL_APPROACHES[approachId]
+  const effectiveDifficulty = card.baseDifficulty + matchupModifier(card.opponentAggression, approachId)
+
   let bonus = techniqueId ? TECHNIQUE_MAP[techniqueId]?.rollBonus ?? 0 : 0
   let dormantHealthCost = 0
   if (useDormant && character.dormantPotential.mode) {
@@ -208,21 +252,82 @@ export function resolveGesture(
       dormantHealthCost = DORMANT_POTENTIAL.unleashedEffect.healthCostPerUse
     }
   }
+
   const rng = new Rng(character.seed)
-  const { tier } = rollAgainstStat(rng, character.stats[gesture.statTested], gesture.difficulty, bonus)
+  const { tier } = rollAgainstStat(rng, character.stats[approach.statTested], effectiveDifficulty, bonus)
   character.seed = rng.getState()
 
+  const chips: RewardChip[] = []
+
+  const fatigueCost = approach.fatigueCost + (tier === 'failure' || tier === 'critical-failure' ? 2 : 0)
+  character.fatigue = Math.min(100, character.fatigue + fatigueCost)
+  chips.push({ label: 'Fatigue', emoji: '🥱', value: -fatigueCost, positive: false })
+
+  const healthDelta = ROUND_HEALTH_COST[tier]
+  if (healthDelta !== 0) {
+    character.health = Math.max(0, character.health + healthDelta)
+    chips.push({ label: 'Santé', emoji: '❤️', value: healthDelta, positive: healthDelta > 0 })
+  }
+
+  if (dormantHealthCost > 0) {
+    character.health = Math.max(0, character.health - dormantHealthCost)
+    chips.push({ label: `${DORMANT_POTENTIAL.name} (déchaîné)`, emoji: '🐆', value: -dormantHealthCost, positive: false })
+  }
+
+  let techniqueSceneText: string | undefined
+  if (techniqueId) {
+    const technique = TECHNIQUE_MAP[techniqueId]
+    engageTechnique(character, techniqueId)
+    const success = tier === 'success' || tier === 'critical-success'
+    techniqueSceneText = success ? technique.successSceneText : technique.failureSceneText
+    const usedFlag = `used-success:${technique.id}`
+    if (success && !character.flags.includes(usedFlag)) character.flags.push(usedFlag)
+  }
+
+  const momentumDelta = MOMENTUM_DELTA[tier]
+  const momentum = currentMomentum + momentumDelta
+  const roundsExhausted = roundIndex + 1 >= card.totalRounds
+  const koHit = Math.abs(momentum) >= card.koThreshold
+  const healthOut = character.health <= 0
+
+  let fightOver = false
+  let outcomeKey: FightOutcomeKey | undefined
+  if (healthOut) {
+    fightOver = true
+    outcomeKey = 'koLoss'
+  } else if (koHit) {
+    fightOver = true
+    outcomeKey = momentum > 0 ? 'koWin' : 'koLoss'
+  } else if (roundsExhausted) {
+    fightOver = true
+    outcomeKey = momentum > 0 ? 'pointsWin' : 'pointsLoss'
+  }
+
+  const commentaryPool = ROUND_COMMENTARY[approachId][tier]
+  const commentaryRng = new Rng(character.seed)
+  const commentary = commentaryRng.pick(commentaryPool)
+  character.seed = commentaryRng.getState()
+
+  return {
+    tier,
+    momentum,
+    momentumDelta,
+    chips,
+    text: renderText(character, commentary),
+    techniqueSceneText,
+    fightOver,
+    outcomeKey,
+  }
+}
+
+/** Applique la résolution finale d'un combat (KO ou décision aux points). */
+export function concludeFight(character: CharacterState, card: FightCard, outcomeKey: FightOutcomeKey): ResolutionResult {
+  const tier = OUTCOME_KEY_TO_TIER[outcomeKey]
   if (tier === 'success' || tier === 'critical-success') character.fightWinStreak += 1
   else character.fightWinStreak = 0
   if (tier === 'critical-success') character.fightFlawlessStreak += 1
   else character.fightFlawlessStreak = 0
-
-  const result = finalizeResolution(character, gesture.outcomes, tier, techniqueId)
-  if (dormantHealthCost > 0) {
-    character.health = Math.max(0, character.health - dormantHealthCost)
-    result.chips.push({ label: `${DORMANT_POTENTIAL.name} (déchaîné)`, emoji: '🐆', value: -dormantHealthCost, positive: false })
-  }
-  return result
+  return finalizeResolution(character, card.outcomes, tier)
 }
 
 export function resolveDormantPotentialDoor(character: CharacterState, doorId: 'force' | 'negotiate' | 'decline') {

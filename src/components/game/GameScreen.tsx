@@ -3,7 +3,7 @@ import type { StoreApi, UseBoundStore } from 'zustand'
 import { useNavStore } from '../../store/navStore'
 import { CharacterSheet } from '../character/CharacterSheet'
 import { EventCard } from './EventCard'
-import { GestureFightCard } from './GestureFightCard'
+import { RoundFightCard } from './RoundFightCard'
 import { DormantPotentialCardView } from './DormantPotentialCardView'
 import { TechniqueDiscoveryPrompt } from './TechniqueDiscoveryPrompt'
 import { ResultBanner } from './ResultBanner'
@@ -63,11 +63,14 @@ export function GameScreen({ useStore }: { useStore: UseBoundStore<StoreApi<Care
         )}
 
         {phase === 'card' && state.currentCard && state.currentCard.type === 'fight' && (
-          <GestureFightCard
+          <RoundFightCard
             key={state.currentCard.id}
             card={state.currentCard}
             character={character}
-            onResolve={state.chooseGesture}
+            fightRound={state.fightRound}
+            lastRoundResult={state.lastRoundResult}
+            onChooseApproach={state.chooseTacticalApproach}
+            onAcknowledgeRound={state.acknowledgeRoundResult}
           />
         )}
 

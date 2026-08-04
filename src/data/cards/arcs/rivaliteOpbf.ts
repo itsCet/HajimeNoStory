@@ -1,5 +1,4 @@
 import type { CareerArc, LifeMomentCard, FightCard } from '../../../engine/types'
-import { GESTURE_TECHNIQUES } from '../gestureTechniques'
 
 // Trame obligatoire : l'ouverture à la scène continentale et la rivalité avec le
 // prétendant numéro 1 de l'OPBF. Démarre à l'entrée dans le rang "Champion du Japon".
@@ -77,54 +76,27 @@ const REVERS: FightCard = {
     "Un gala organisé conjointement par les deux fédérations vous met face à face pour la première fois, dans un format d'exhibition à trois rounds. Rien d'officiel n'est en jeu — sinon la première vraie impression que vous laisserez l'un sur l'autre.",
   opponentName: 'Wirawan Nurdin',
   opponentTagline: '« Vent de Fer » — invaincu en dix-huit combats.',
+  opponentAggression: 'aggressive',
+  totalRounds: 3,
+  koThreshold: 5,
+  baseDifficulty: 58,
   requirement: {},
   arcId: 'arc-rivalite-opbf',
-  gestures: [
-    {
-      id: 'g-tater',
-      label: 'Le jauger prudemment',
-      statTested: 'reflexes',
-      difficulty: 58,
-      eligibleTechniqueIds: GESTURE_TECHNIQUES.reflexes,
-      outcomes: {
-        criticalFailure: {
-          text: "Sa puissance dépasse tout ce que tu avais imaginé. Un coup au corps te coupe le souffle net.",
-          reward: { health: -8, coolness: -6 },
-        },
-        failure: { text: "Tu encaisses plus que tu n'aurais voulu, mais tu tiens debout.", reward: { fatigue: 6 } },
-        success: {
-          text: "Tu prends la mesure de sa puissance sans jamais te laisser vraiment toucher. Un début de respect mutuel s'installe.",
-          reward: { careerPoints: 6, reputationExternal: 5 },
-        },
-        criticalSuccess: {
-          text: "Tu le touches deux fois sans qu'il ne te touche une seule. Nurdin recule, visiblement surpris par ce qu'il vient de découvrir.",
-          reward: { careerPoints: 9, reputationExternal: 8 },
-        },
-      },
+  outcomes: {
+    criticalFailure: {
+      text: "Sa puissance dépasse tout ce que tu avais imaginé. Un coup au corps te coupe le souffle net.",
+      reward: { health: -8, coolness: -6 },
     },
-    {
-      id: 'g-repondre-nurdin',
-      label: "Répondre coup pour coup, dès le premier round",
-      statTested: 'puissance',
-      difficulty: 58,
-      eligibleTechniqueIds: GESTURE_TECHNIQUES.puissance,
-      outcomes: {
-        criticalFailure: {
-          text: "L'échange de puissance tourne largement à son avantage. Tu comprends vite pourquoi il est invaincu.",
-          reward: { health: -8, coolness: -6 },
-        },
-        failure: { text: "L'échange reste risqué pour les deux, sans avantage net.", reward: { fatigue: 6 } },
-        success: {
-          text: "Tu tiens l'échange de puissance sans reculer. Nurdin, surpris, revoit son jugement sur toi.",
-          reward: { careerPoints: 6, reputationExternal: 5 },
-        },
-        criticalSuccess: {
-          text: "Tu le touches plus fort qu'il ne t'a touché. Pour la première fois depuis longtemps, Nurdin recule.",
-          reward: { careerPoints: 9, reputationExternal: 8 },
-        },
-      },
+    failure: { text: "Tu encaisses plus que tu n'aurais voulu, mais tu tiens debout.", reward: { fatigue: 6 } },
+    success: {
+      text: "Tu prends la mesure de sa puissance sans jamais te laisser vraiment toucher. Un début de respect mutuel s'installe.",
+      reward: { careerPoints: 6, reputationExternal: 5 },
     },
-  ],
+    criticalSuccess: {
+      text: "Tu le touches deux fois sans qu'il ne te touche une seule. Nurdin recule, visiblement surpris par ce qu'il vient de découvrir.",
+      reward: { careerPoints: 9, reputationExternal: 8 },
+    },
+  },
 }
 
 const PREP: LifeMomentCard = {
@@ -170,55 +142,28 @@ const FINAL: FightCard = {
     "Le stade continental est comble. Wirawan Nurdin ne sourit pas cette fois — le gala est loin derrière vous deux. Ce combat-ci compte pour de vrai, et vous le savez tous les deux.",
   opponentName: 'Wirawan Nurdin',
   opponentTagline: '« Vent de Fer » — prétendant numéro 1 de l\'OPBF.',
+  opponentAggression: 'aggressive',
+  totalRounds: 5,
+  koThreshold: 5,
+  baseDifficulty: 66,
   requirement: {},
   arcId: 'arc-rivalite-opbf',
   isArcFinale: true,
-  gestures: [
-    {
-      id: 'g-encaisser-repondre',
-      label: 'Encaisser puis répondre',
-      statTested: 'endurance',
-      difficulty: 66,
-      eligibleTechniqueIds: GESTURE_TECHNIQUES.endurance,
-      outcomes: {
-        criticalFailure: {
-          text: "Sa puissance a toujours une longueur d'avance sur ta résistance. Le combat bascule nettement en sa faveur.",
-          reward: { health: -14, coolness: -8 },
-        },
-        failure: { text: "Tu tiens, difficilement, mais le combat reste équilibré au mieux.", reward: { fatigue: 10 } },
-        success: {
-          text: "Tu absorbes ce qu'il a de plus fort à offrir, et tu es toujours là pour répondre. Nurdin commence, pour la première fois, à douter.",
-          reward: { careerPoints: 24, reputationExternal: 14, reputationInternal: 10 },
-        },
-        criticalSuccess: {
-          text: "Le round bascule complètement. Nurdin, qui n'avait jamais eu à se battre pour de bon, découvre ce soir-là ce que ça signifie vraiment.",
-          reward: { careerPoints: 32, reputationExternal: 20, reputationInternal: 14 },
-        },
-      },
+  outcomes: {
+    criticalFailure: {
+      text: "Sa puissance a toujours une longueur d'avance sur ta résistance. Le combat bascule nettement en sa faveur.",
+      reward: { health: -14, coolness: -8 },
     },
-    {
-      id: 'g-vitesse-final',
-      label: "Rester hors de portée et grignoter les points",
-      statTested: 'vitesse',
-      difficulty: 66,
-      eligibleTechniqueIds: GESTURE_TECHNIQUES.vitesse,
-      outcomes: {
-        criticalFailure: {
-          text: "Il finit par te couper la route. Le coup qui suit résonne dans toute la salle.",
-          reward: { health: -14, coolness: -8 },
-        },
-        failure: { text: "Tu restes mobile, mais sans jamais vraiment marquer de points nets.", reward: { fatigue: 10 } },
-        success: {
-          text: "Round après round, tu grignotes l'avantage sans jamais lui laisser l'occasion de placer le grand coup.",
-          reward: { careerPoints: 24, reputationExternal: 14, reputationInternal: 10 },
-        },
-        criticalSuccess: {
-          text: "Il ne te touche quasiment jamais de tout le combat. Nurdin finit par lever les gants lui-même, davantage par admiration que par dépit.",
-          reward: { careerPoints: 32, reputationExternal: 20, reputationInternal: 14 },
-        },
-      },
+    failure: { text: "Tu tiens, difficilement, mais le combat reste équilibré au mieux.", reward: { fatigue: 10 } },
+    success: {
+      text: "Tu absorbes ce qu'il a de plus fort à offrir, et tu es toujours là pour répondre. Nurdin commence, pour la première fois, à douter.",
+      reward: { careerPoints: 24, reputationExternal: 14, reputationInternal: 10 },
     },
-  ],
+    criticalSuccess: {
+      text: "Le round bascule complètement. Nurdin, qui n'avait jamais eu à se battre pour de bon, découvre ce soir-là ce que ça signifie vraiment.",
+      reward: { careerPoints: 32, reputationExternal: 20, reputationInternal: 14 },
+    },
+  },
   rankUpOnWin: 'rank-champion-opbf',
 }
 

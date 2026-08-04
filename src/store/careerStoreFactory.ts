@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { CharacterState, GameCard, StatKey, CareerEndingType } from '../engine/types'
+import type { CharacterState, GameCard, StatKey, CareerEndingType, TacticalApproachId } from '../engine/types'
 import type { RollTier } from '../engine/rng'
 import { loadCharacter, saveCharacter, clearCharacter } from '../engine/saveEngine'
 import {
@@ -10,13 +10,15 @@ import {
 import {
   pickNextCard,
   resolveChoice,
-  resolveGesture,
+  resolveFightRound,
+  concludeFight,
   resolveDormantPotentialDoor,
   resolveTechniqueDiscovery,
   markCardSeen,
   advanceAfterCard,
   getPendingStyleDiscovery,
   type ResolutionResult,
+  type RoundResult,
 } from '../engine/cardEngine'
 import { CARD_MAP } from '../data/cards'
 import { tickCooldowns } from '../engine/techniqueEngine'
@@ -39,6 +41,11 @@ export type GamePhase =
   | 'point-allocation'
   | 'game-over'
 
+export interface FightRoundState {
+  roundIndex: number
+  momentum: number
+}
+
 export interface CareerStoreState {
   character: CharacterState | null
   phase: GamePhase
@@ -47,11 +54,14 @@ export interface CareerStoreState {
   pendingDiscoveryTechniqueId: string | null
   yearSummary: YearSummary | null
   endingType: CareerEndingType | null
+  fightRound: FightRoundState | null
+  lastRoundResult: RoundResult | null
 
   resumeIfAny: () => void
   startCareer: (choices: CreationChoices | 'random') => void
   chooseCardOption: (optionId: string) => void
-  chooseGesture: (gestureId: string, techniqueId?: string, useDormant?: boolean) => void
+  chooseTacticalApproach: (approachId: TacticalApproachId, techniqueId?: string, useDormant?: boolean) => void
+  acknowledgeRoundResult: () => void
   chooseDormantDoor: (doorId: 'force' | 'negotiate' | 'decline') => void
   chooseTechniqueDiscovery: (choice: 'witness' | 'secret') => void
   acknowledgeResolution: () => void
@@ -129,6 +139,8 @@ export function createCareerStore(isDestiny: boolean) {
       yearSummary: null,
       lastResolution: null,
       pendingDiscoveryTechniqueId: null,
+      fightRound: null,
+      lastRoundResult: null,
     })
   }
 
@@ -140,6 +152,8 @@ export function createCareerStore(isDestiny: boolean) {
     pendingDiscoveryTechniqueId: null,
     yearSummary: null,
     endingType: null,
+    fightRound: null,
+    lastRoundResult: null,
 
     resumeIfAny: () => {
       if (hasResumed) return
@@ -150,12 +164,12 @@ export function createCareerStore(isDestiny: boolean) {
         return
       }
       if (character.pendingCardId && CARD_MAP[character.pendingCardId]) {
-        set({ character, phase: 'card', currentCard: CARD_MAP[character.pendingCardId] })
+        set({ character, phase: 'card', currentCard: CARD_MAP[character.pendingCardId], fightRound: null, lastRoundResult: null })
         return
       }
       const next = computeNextStep(character)
       saveCharacter(character, isDestiny)
-      set({ character, ...next })
+      set({ character, fightRound: null, lastRoundResult: null, ...next })
     },
 
     startCareer: (choices) => {
@@ -165,7 +179,7 @@ export function createCareerStore(isDestiny: boolean) {
         choices === 'random' ? createRandomDestinyCharacter(equipped) : createCharacter(choices, equipped)
       const next = computeNextStep(character)
       saveCharacter(character, isDestiny)
-      set({ character, endingType: null, lastResolution: null, ...next })
+      set({ character, endingType: null, lastResolution: null, fightRound: null, lastRoundResult: null, ...next })
     },
 
     chooseCardOption: (optionId) => {
@@ -184,19 +198,43 @@ export function createCareerStore(isDestiny: boolean) {
       set({ character: { ...character }, lastResolution: result, phase: 'resolution' })
     },
 
-    chooseGesture: (gestureId, techniqueId, useDormant) => {
-      const { character, currentCard } = get()
+    chooseTacticalApproach: (approachId, techniqueId, useDormant) => {
+      const { character, currentCard, fightRound } = get()
       if (!character || !currentCard || currentCard.type !== 'fight') return
+      const round = fightRound ?? { roundIndex: 0, momentum: 0 }
       const wasUnleashed = useDormant && character.dormantPotential.mode === 'unleashed'
       const defensesBefore = character.titleDefenses
+
       tickCooldowns(character)
-      const result = resolveGesture(character, currentCard, gestureId, techniqueId, useDormant)
-      processResolution(character, currentCard, result, result.tier)
-      if (wasUnleashed && character.titleDefenses > defensesBefore) {
-        useMetaStore.getState().unlockTrophies(['mark-sacrifice'])
+      const result = resolveFightRound(character, currentCard, approachId, round.momentum, round.roundIndex, techniqueId, useDormant)
+
+      if (result.fightOver && result.outcomeKey) {
+        const finalResult = concludeFight(character, currentCard, result.outcomeKey)
+        processResolution(character, currentCard, finalResult, finalResult.tier)
+        if (wasUnleashed && character.titleDefenses > defensesBefore) {
+          useMetaStore.getState().unlockTrophies(['mark-sacrifice'])
+        }
+        saveCharacter(character, isDestiny)
+        set({
+          character: { ...character },
+          lastResolution: finalResult,
+          phase: 'resolution',
+          fightRound: null,
+          lastRoundResult: null,
+        })
+        return
       }
+
       saveCharacter(character, isDestiny)
-      set({ character: { ...character }, lastResolution: result, phase: 'resolution' })
+      set({
+        character: { ...character },
+        fightRound: { roundIndex: round.roundIndex + 1, momentum: result.momentum },
+        lastRoundResult: result,
+      })
+    },
+
+    acknowledgeRoundResult: () => {
+      set({ lastRoundResult: null })
     },
 
     chooseDormantDoor: (doorId) => {
@@ -278,6 +316,8 @@ export function createCareerStore(isDestiny: boolean) {
         yearSummary: null,
         pendingDiscoveryTechniqueId: null,
         endingType: null,
+        fightRound: null,
+        lastRoundResult: null,
       })
     },
   }))

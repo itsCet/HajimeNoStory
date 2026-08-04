@@ -1,5 +1,4 @@
 import type { CareerArc, LifeMomentCard, FightCard } from '../../../engine/types'
-import { GESTURE_TECHNIQUES } from '../gestureTechniques'
 
 // Trame obligatoire : l'éliminatoire mondial, dernière étape avant une tentative de
 // titre. Démarre une fois Champion OPBF et la trame secondaire résolue (acceptée ou déclinée).
@@ -53,49 +52,25 @@ const FINAL: FightCard = {
     "Le numéro 3 mondial n'a rien à perdre et tout à prouver. Ce combat n'offre aucune place à l'approximation — le vainqueur affrontera le champion du monde, le perdant devra tout recommencer.",
   opponentName: 'Le numéro 3 mondial',
   opponentTagline: "Rien à perdre, tout à prouver.",
+  opponentAggression: 'aggressive',
+  totalRounds: 5,
+  koThreshold: 5,
+  baseDifficulty: 68,
   requirement: {},
   arcId: 'arc-eliminatoire-mondial',
   isArcFinale: true,
-  gestures: [
-    {
-      id: 'g-elim-puissance',
-      label: "Chercher à conclure avant la limite",
-      statTested: 'puissance',
-      difficulty: 68,
-      eligibleTechniqueIds: GESTURE_TECHNIQUES.puissance,
-      outcomes: {
-        criticalFailure: { text: "Il retourne ton agressivité contre toi avec une précision redoutable.", reward: { health: -14, coolness: -8 } },
-        failure: { text: "Le combat reste indécis, chacun cherchant l'ouverture décisive.", reward: { fatigue: 10 } },
-        success: {
-          text: "Le combat penche clairement de ton côté. Le titre mondial n'a jamais été aussi proche.",
-          reward: { careerPoints: 26, reputationExternal: 16, reputationInternal: 10 },
-        },
-        criticalSuccess: {
-          text: "Une victoire sans appel. Le monde entier de la boxe commence, cette nuit-là, à prononcer ton nom différemment.",
-          reward: { careerPoints: 34, reputationExternal: 22, reputationInternal: 14 },
-        },
-      },
+  outcomes: {
+    criticalFailure: { text: "Il retourne ton agressivité contre toi avec une précision redoutable.", reward: { health: -14, coolness: -8 } },
+    failure: { text: "Le combat reste indécis, chacun cherchant l'ouverture décisive.", reward: { fatigue: 10 } },
+    success: {
+      text: "Le combat penche clairement de ton côté. Le titre mondial n'a jamais été aussi proche.",
+      reward: { careerPoints: 26, reputationExternal: 16, reputationInternal: 10 },
     },
-    {
-      id: 'g-elim-strategie',
-      label: 'Imposer un plan de combat rigoureux',
-      statTested: 'strategie',
-      difficulty: 68,
-      eligibleTechniqueIds: GESTURE_TECHNIQUES.strategie,
-      outcomes: {
-        criticalFailure: { text: "Il sort complètement de ce que tu avais préparé, et le plan s'effondre.", reward: { coolness: -8, fatigue: 10 } },
-        failure: { text: "Le plan tient à peu près, sans dominer réellement l'échange.", reward: { fatigue: 10 } },
-        success: {
-          text: "Le plan fonctionne round après round. La logique du combat t'appartient entièrement.",
-          reward: { careerPoints: 26, reputationExternal: 16, reputationInternal: 10 },
-        },
-        criticalSuccess: {
-          text: "Il n'a jamais existé de réponse à ce plan-là. Une démonstration presque totale, du début à la fin.",
-          reward: { careerPoints: 34, reputationExternal: 22, reputationInternal: 14 },
-        },
-      },
+    criticalSuccess: {
+      text: "Une victoire sans appel. Le monde entier de la boxe commence, cette nuit-là, à prononcer ton nom différemment.",
+      reward: { careerPoints: 34, reputationExternal: 22, reputationInternal: 14 },
     },
-  ],
+  },
   rankUpOnWin: 'rank-challenger-mondial',
 }
 

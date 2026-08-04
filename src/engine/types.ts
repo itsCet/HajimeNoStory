@@ -206,28 +206,42 @@ export interface TrainingCard extends BaseCard {
   approaches: CardChoice[]
 }
 
-export interface Gesture {
-  id: string
+// ── Combat round par round ─────────────────────────────────────────────
+
+export type TacticalApproachId = 'agresser' | 'temporiser' | 'contre-attaquer'
+export type OpponentAggression = 'aggressive' | 'balanced' | 'defensive'
+
+export interface TacticalApproachDef {
+  id: TacticalApproachId
   label: string
+  emoji: string
+  description: string
   statTested: StatKey
-  difficulty: number
-  eligibleTechniqueIds: string[]
-  outcomes: RollOutcomeSet
+  fatigueCost: number
 }
 
 export interface FightCard extends BaseCard {
   type: 'fight'
   opponentName: string
   opponentTagline: string
-  gestures: Gesture[]
+  /** Détermine quelle approche tactique est favorisée/pénalisée contre cet adversaire. */
+  opponentAggression: OpponentAggression
+  /** Nombre de rounds avant décision aux points si aucun KO n'a tranché avant. */
+  totalRounds: number
+  /** Écart de momentum absolu qui déclenche un arrêt anticipé (KO). */
+  koThreshold: number
+  /** Difficulté de base appliquée à chaque round, modulée par l'approche et l'adversaire. */
+  baseDifficulty: number
   arcId?: string
   arcStep?: number
   isArcFinale?: boolean
-  rewardOnWin?: Reward
-  rewardOnLoss?: Reward
-  winFlags?: string[]
-  lossFlags?: string[]
   rankUpOnWin?: string
+  /**
+   * Résolution finale, une fois le combat terminé (KO ou rounds épuisés) :
+   * criticalFailure = stoppé (KO subi) · failure = perdu aux points ·
+   * success = gagné aux points · criticalSuccess = KO infligé / victoire dominante.
+   */
+  outcomes: RollOutcomeSet
 }
 
 export interface LineageExclusiveCard extends BaseCard {

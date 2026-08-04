@@ -1,5 +1,4 @@
 import type { CareerArc, LifeMomentCard, FightCard } from '../../../engine/types'
-import { GESTURE_TECHNIQUES } from '../gestureTechniques'
 
 // Trame obligatoire : la tentative de titre mondial face au champion en titre.
 // Démarre à l'entrée dans le rang "Challenger mondial". Un échec ne ferme rien :
@@ -56,81 +55,41 @@ const FINAL: FightCard = {
     "L'arène est comble, les caméras du monde entier braquées sur le ring. Ramon Vasquez t'attend, la ceinture qu'il n'a jamais perdue posée sur son épaule. Quatorze défenses. Ce soir, tu comptes bien que ce chiffre s'arrête là.",
   opponentName: 'Ramon Vasquez',
   opponentTagline: '« El Huracán » — champion du monde invaincu depuis six ans.',
+  opponentAggression: 'aggressive',
+  totalRounds: 6,
+  koThreshold: 5,
+  baseDifficulty: 72,
   requirement: {},
   arcId: 'arc-titre-mondial',
   isArcFinale: true,
-  gestures: [
-    {
-      id: 'g-vasquez-sang-froid',
-      label: 'Garder ton sang-froid coûte que coûte',
-      statTested: 'mental',
-      difficulty: 72,
-      eligibleTechniqueIds: GESTURE_TECHNIQUES.mental,
-      outcomes: {
-        criticalFailure: {
-          text: "L'ampleur du moment finit par te submerger. Vasquez, expérimenté, ne laisse passer aucune de tes hésitations.",
-          reward: { health: -16, coolness: -10, setFlags: ['flag-lost-first-world-title'] },
-        },
-        failure: {
-          text: "Tu tiens debout, mais Vasquez impose son rythme sur l'essentiel du combat. La décision, aux points, lui revient.",
-          reward: { fatigue: 12, reputationExternal: 8, setFlags: ['flag-lost-first-world-title'] },
-        },
-        success: {
-          text: "Tu restes d'un calme absolu quand tout, autour de toi, s'emballe. Vasquez, pour la première fois en six ans, perd sa ceinture.",
-          reward: {
-            careerPoints: 40,
-            reputationExternal: 25,
-            reputationInternal: 18,
-            setFlags: ['flag-world-title-comeback-won'],
-          },
-        },
-        criticalSuccess: {
-          text: "Ta clarté d'esprit, cette nuit-là, restera dans les mémoires aussi longtemps que le combat lui-même. El Huracán s'incline, et le monde change de champion.",
-          reward: {
-            careerPoints: 50,
-            reputationExternal: 32,
-            reputationInternal: 22,
-            setFlags: ['flag-world-title-comeback-won'],
-          },
-        },
+  outcomes: {
+    criticalFailure: {
+      text: "L'ampleur du moment finit par te submerger. Vasquez, expérimenté, ne laisse passer aucune de tes hésitations.",
+      reward: { health: -16, coolness: -10, setFlags: ['flag-lost-first-world-title'] },
+    },
+    failure: {
+      text: "Tu tiens debout, mais Vasquez impose son rythme sur l'essentiel du combat. La décision, aux points, lui revient.",
+      reward: { fatigue: 12, reputationExternal: 8, setFlags: ['flag-lost-first-world-title'] },
+    },
+    success: {
+      text: "Tu restes d'un calme absolu quand tout, autour de toi, s'emballe. Vasquez, pour la première fois en six ans, perd sa ceinture.",
+      reward: {
+        careerPoints: 40,
+        reputationExternal: 25,
+        reputationInternal: 18,
+        setFlags: ['flag-world-title-comeback-won'],
       },
     },
-    {
-      id: 'g-vasquez-strategie',
-      label: 'Exécuter le plan préparé au millimètre',
-      statTested: 'strategie',
-      difficulty: 72,
-      eligibleTechniqueIds: GESTURE_TECHNIQUES.strategie,
-      outcomes: {
-        criticalFailure: {
-          text: "Vasquez brise ton plan dès les premiers échanges. Tu passes le reste du combat à courir après le rythme.",
-          reward: { health: -16, coolness: -10, setFlags: ['flag-lost-first-world-title'] },
-        },
-        failure: {
-          text: "Le plan tient un temps, puis s'effrite face à l'expérience de six années de défenses réussies.",
-          reward: { fatigue: 12, reputationExternal: 8, setFlags: ['flag-lost-first-world-title'] },
-        },
-        success: {
-          text: "Chaque étape du plan s'exécute exactement comme prévu. Vasquez, pour la première fois en six ans, perd sa ceinture.",
-          reward: {
-            careerPoints: 40,
-            reputationExternal: 25,
-            reputationInternal: 18,
-            setFlags: ['flag-world-title-comeback-won'],
-          },
-        },
-        criticalSuccess: {
-          text: "Une exécution parfaite, de la première à la dernière seconde. El Huracán s'incline, et le monde change de champion.",
-          reward: {
-            careerPoints: 50,
-            reputationExternal: 32,
-            reputationInternal: 22,
-            setFlags: ['flag-world-title-comeback-won'],
-          },
-        },
+    criticalSuccess: {
+      text: "Ta clarté d'esprit, cette nuit-là, restera dans les mémoires aussi longtemps que le combat lui-même. El Huracán s'incline, et le monde change de champion.",
+      reward: {
+        careerPoints: 50,
+        reputationExternal: 32,
+        reputationInternal: 22,
+        setFlags: ['flag-world-title-comeback-won'],
       },
     },
-  ],
+  },
   rankUpOnWin: 'rank-champion-monde',
 }
 

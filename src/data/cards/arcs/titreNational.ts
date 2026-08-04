@@ -1,5 +1,4 @@
 import type { CareerArc, LifeMomentCard, FightCard } from '../../../engine/types'
-import { GESTURE_TECHNIQUES } from '../gestureTechniques'
 
 // Trame obligatoire : le défi du champion du Japon en titre. Démarre automatiquement
 // à l'entrée dans le rang "Classé national".
@@ -125,55 +124,28 @@ const FINAL: FightCard = {
     "La salle est pleine à craquer. Kazuma Oda t'attend au centre du ring, la ceinture déjà autour de la taille — pour quelques rounds encore, du moins. Trois ans d'invincibilité commencent à peser sur ses épaules, et tu comptes bien lui faire sentir.",
   opponentName: 'Kazuma Oda',
   opponentTagline: 'Champion du Japon en titre depuis trois ans.',
+  opponentAggression: 'balanced',
+  totalRounds: 5,
+  koThreshold: 5,
+  baseDifficulty: 62,
   requirement: {},
   arcId: 'arc-titre-national',
   isArcFinale: true,
-  gestures: [
-    {
-      id: 'g-puissance',
-      label: 'Chercher à le faire plier',
-      statTested: 'puissance',
-      difficulty: 62,
-      eligibleTechniqueIds: GESTURE_TECHNIQUES.puissance,
-      outcomes: {
-        criticalFailure: {
-          text: "Oda encaisse et te punit immédiatement de t'être autant exposé.",
-          reward: { health: -10, coolness: -6 },
-        },
-        failure: { text: "Le coup touche sans vraiment l'ébranler. L'expérience d'Oda fait la différence.", reward: { fatigue: 8 } },
-        success: {
-          text: "Le coup fait vaciller Oda pour la première fois du combat. La salle retient son souffle.",
-          reward: { careerPoints: 20, reputationExternal: 10, reputationInternal: 8, unlockTrophyIds: ['mark-combat-legendaire'] },
-        },
-        criticalSuccess: {
-          text: "Oda touche le tapis. Il se relève, mais quelque chose dans son regard a changé — il sait, maintenant, que ce soir sera différent.",
-          reward: { careerPoints: 28, reputationExternal: 15, reputationInternal: 12 },
-        },
-      },
+  outcomes: {
+    criticalFailure: {
+      text: "Oda encaisse et te punit immédiatement de t'être autant exposé.",
+      reward: { health: -10, coolness: -6 },
     },
-    {
-      id: 'g-strategie',
-      label: "Exploiter la faille repérée à l'entraînement",
-      statTested: 'strategie',
-      difficulty: 60,
-      eligibleTechniqueIds: GESTURE_TECHNIQUES.strategie,
-      outcomes: {
-        criticalFailure: {
-          text: "Oda a corrigé cette habitude depuis vos recherches. Le plan s'effondre en plein combat.",
-          reward: { coolness: -8, fatigue: 8 },
-        },
-        failure: { text: "La faille est bien là, mais trop fine pour vraiment l'exploiter ce soir.", reward: { fatigue: 6 } },
-        success: {
-          text: "Exactement comme prévu : l'ouverture est là, et tu t'y engouffres.",
-          reward: { careerPoints: 20, reputationExternal: 10, reputationInternal: 8, unlockTrophyIds: ['mark-combat-legendaire'] },
-        },
-        criticalSuccess: {
-          text: "Le plan fonctionne à la perfection. Oda n'a tout simplement pas de réponse à ce qu'il n'a pas vu venir.",
-          reward: { careerPoints: 28, reputationExternal: 15, reputationInternal: 12 },
-        },
-      },
+    failure: { text: "Le coup touche sans vraiment l'ébranler. L'expérience d'Oda fait la différence.", reward: { fatigue: 8 } },
+    success: {
+      text: "Le coup fait vaciller Oda pour la première fois du combat. La salle retient son souffle.",
+      reward: { careerPoints: 20, reputationExternal: 10, reputationInternal: 8, unlockTrophyIds: ['mark-combat-legendaire'] },
     },
-  ],
+    criticalSuccess: {
+      text: "Oda touche le tapis. Il se relève, mais quelque chose dans son regard a changé — il sait, maintenant, que ce soir sera différent.",
+      reward: { careerPoints: 28, reputationExternal: 15, reputationInternal: 12 },
+    },
+  },
   rankUpOnWin: 'rank-champion-japon',
 }
 
