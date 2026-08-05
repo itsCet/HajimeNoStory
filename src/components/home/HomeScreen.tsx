@@ -32,10 +32,10 @@ export function HomeScreen() {
       </div>
 
       <div className="flex flex-wrap justify-center gap-3">
-        <QuickStatBadge emoji="🏆" label="Trophées" value={`${unlockedCount}/${ALL_TROPHIES.length}`} onClick={() => goTo('trophies')} />
-        <QuickStatBadge emoji="🛍️" label="Boutique" value={`${currency}`} onClick={() => goTo('shop')} />
-        <QuickStatBadge emoji="📜" label="Historique" value={`${historyCount}`} onClick={() => goTo('history')} />
-        <QuickStatBadge emoji="🗒️" label="Patch notes" value={`v${latestVersion}`} badge="MAJ" onClick={() => goTo('patchnotes')} />
+        <QuickStatBadge iconSrc="/icons/trophees.png" label="Trophées" value={`${unlockedCount}/${ALL_TROPHIES.length}`} onClick={() => goTo('trophies')} />
+        <QuickStatBadge iconSrc="/icons/boutique.png" label="Boutique" value={`${currency}`} onClick={() => goTo('shop')} />
+        <QuickStatBadge iconSrc="/icons/historique.png" label="Historique" value={`${historyCount}`} onClick={() => goTo('history')} />
+        <QuickStatBadge iconSrc="/icons/patchnotes.png" label="Patch notes" value={`v${latestVersion}`} badge="MAJ" onClick={() => goTo('patchnotes')} />
       </div>
 
       <div className="flex flex-col items-center gap-3 mt-2">

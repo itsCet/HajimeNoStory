@@ -1,11 +1,13 @@
 export function QuickStatBadge({
   emoji,
+  iconSrc,
   label,
   value,
   badge,
   onClick,
 }: {
-  emoji: string
+  emoji?: string
+  iconSrc?: string
   label: string
   value: string
   badge?: string
@@ -21,7 +23,11 @@ export function QuickStatBadge({
           {badge}
         </span>
       )}
-      <span className="text-2xl">{emoji}</span>
+      {iconSrc ? (
+        <img src={iconSrc} alt="" className="w-11 h-11 rounded-lg object-cover shadow-sm" />
+      ) : (
+        <span className="text-2xl">{emoji}</span>
+      )}
       <span className="text-xs opacity-70">{label}</span>
       <span className="text-sm font-bold">{value}</span>
     </button>
