@@ -584,6 +584,74 @@ const EARLY_LIFE_MOMENTS: LifeMomentCard[] = [
       },
     ],
   },
+  {
+    id: 'card-life-ami-abandon',
+    type: 'life-moment',
+    title: 'Celui qui arrête',
+    narrativeText:
+      "Un partenaire d'entraînement, celui avec qui tu as fait tes tout premiers rounds, annonce qu'il arrête la boxe. Rien de dramatique dans sa voix — juste une décision, prise calmement, qui te laisse un peu déstabilisé.",
+    requirement: { maxRankOrder: 3, weight: 2 },
+    choices: [
+      {
+        id: 'choice-soutenir-depart',
+        label: 'Le soutenir sincèrement dans ce choix',
+        statTested: 'mental',
+        difficulty: 38,
+        outcomes: {
+          criticalFailure: { text: "Tes mots sonnent creux, et il le sent.", reward: { coolness: -3 } },
+          failure: { text: "Le moment reste un peu gênant pour vous deux.", reward: {} },
+          success: { text: "Tu trouves les mots justes. Il repart léger, et toi aussi.", reward: { loyalty: 3, coolness: 2 } },
+          criticalSuccess: { text: "Cette conversation-là restera, pour lui comme pour toi, un souvenir sincère de cette salle.", reward: { loyalty: 5, coolness: 3 } },
+        },
+      },
+      {
+        id: 'choice-questionner-propre-motivation',
+        label: 'Te demander, un instant, ce qui vous différencie vraiment',
+        statTested: 'strategie',
+        difficulty: 38,
+        outcomes: {
+          criticalFailure: { text: "Le doute s'installe plus fort que prévu, sans réponse claire.", reward: { coolness: -4 } },
+          failure: { text: "La question reste sans réponse nette, pour l'instant.", reward: {} },
+          success: { text: "Tu identifies clairement ce qui te pousse encore, toi, à continuer. Ça clarifie tout.", reward: { stats: { strategie: 2 }, careerPoints: 4 } },
+          criticalSuccess: { text: "Cette clarté nouvelle sur tes propres raisons te donne une motivation presque neuve.", reward: { stats: { strategie: 3 }, careerPoints: 7 } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-life-premier-cachet',
+    type: 'life-moment',
+    title: 'Une première offre',
+    narrativeText:
+      "Un petit commerce du quartier propose de sponsoriser ton prochain combat amateur — un logo sur le short, quelques billets en échange. Modeste, mais c'est la première fois qu'on te propose quoi que ce soit.",
+    requirement: { minRankOrder: 1, maxRankOrder: 3, weight: 2 },
+    choices: [
+      {
+        id: 'choice-accepter-modeste',
+        label: 'Accepter, même si c\'est modeste',
+        statTested: 'strategie',
+        difficulty: 36,
+        outcomes: {
+          criticalFailure: { text: "L'accord, mal négocié, te coûte plus de temps qu'il ne rapporte.", reward: { fatigue: 4 } },
+          failure: { text: "L'arrangement reste sans grande conséquence.", reward: {} },
+          success: { text: "Le petit sponsor est ravi, et le bouche-à-oreille commence, modestement, à jouer pour toi.", reward: { careerPoints: 4, reputationExternal: 2 } },
+          criticalSuccess: { text: "Le commerçant, enthousiaste, parle de toi à tout le quartier. Une petite graine, plantée au bon moment.", reward: { careerPoints: 7, reputationExternal: 4 } },
+        },
+      },
+      {
+        id: 'choice-refuser-attendre',
+        label: 'Refuser poliment, en visant plus grand plus tard',
+        statTested: 'mental',
+        difficulty: 36,
+        outcomes: {
+          criticalFailure: { text: "Le refus, mal formulé, vexe inutilement un commerçant bien intentionné.", reward: { reputationExternal: -2 } },
+          failure: { text: "Le refus passe sans conséquence particulière.", reward: {} },
+          success: { text: "Tu restes libre de tout engagement, sans regret particulier.", reward: { coolness: 3 } },
+          criticalSuccess: { text: "Ta patience, à ce stade précoce, dénote une maturité que peu remarquent encore — sauf {{mentor}}.", reward: { coolness: 5, entourageDelta: [{ role: 'Mentor', delta: 1 }] } },
+        },
+      },
+    ],
+  },
 ]
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -914,6 +982,74 @@ const MID_LIFE_MOMENTS: LifeMomentCard[] = [
       },
     ],
   },
+  {
+    id: 'card-life-negociation-contrat',
+    type: 'life-moment',
+    title: 'La ligne en bas du contrat',
+    narrativeText:
+      "Ton promoteur pose un nouveau contrat sur la table — de meilleures bourses, mais aussi une clause d'exclusivité pour deux ans que {{mentor}} te conseille de lire deux fois avant de signer quoi que ce soit.",
+    requirement: { minRankOrder: 4, maxRankOrder: 8, weight: 2 },
+    choices: [
+      {
+        id: 'choice-negocier-dur',
+        label: 'Négocier ferme, quitte à faire traîner',
+        statTested: 'strategie',
+        difficulty: 50,
+        outcomes: {
+          criticalFailure: { text: "Le promoteur se braque, et l'offre initiale disparaît purement et simplement.", reward: { reputationExternal: -4 } },
+          failure: { text: "La négociation traîne sans grande avancée.", reward: { fatigue: 4 } },
+          success: { text: "Tu obtiens des termes nettement meilleurs que l'offre de départ.", reward: { careerPoints: 6, reputationInternal: 3 } },
+          criticalSuccess: { text: "Le promoteur, presque admiratif de ton aplomb, cède sur presque tous les points. {{mentor}} n'aurait pas fait mieux.", reward: { careerPoints: 10, reputationInternal: 5, entourageDelta: [{ role: 'Mentor', delta: 1 }] } },
+        },
+      },
+      {
+        id: 'choice-faire-confiance-mentor',
+        label: 'Laisser {{mentor}} superviser toute la négociation',
+        statTested: 'mental',
+        difficulty: 50,
+        outcomes: {
+          criticalFailure: { text: "Tu t'en désintéresses trop, et des détails t'échappent que tu regretteras plus tard.", reward: { coolness: -4 } },
+          failure: { text: "L'accord se signe sans éclat particulier.", reward: {} },
+          success: { text: "{{mentor}} négocie avec une expérience que tu n'as pas encore. Le contrat est solide.", reward: { careerPoints: 5, entourageDelta: [{ role: 'Mentor', delta: 1 }] } },
+          criticalSuccess: { text: "{{mentor}} arrache des conditions que tu n'aurais jamais imaginé demander toi-même. Sa confiance en toi transparaît dans chaque clause.", reward: { careerPoints: 8, loyalty: 3, entourageDelta: [{ role: 'Mentor', delta: 2 }] } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-life-double-vie',
+    type: 'life-moment',
+    title: 'Deux vies à la fois',
+    narrativeText:
+      "Entre les séances, les combats qui s'enchaînent et tout ce qui, en dehors de la salle, continue de réclamer ton attention, les journées commencent sérieusement à manquer d'heures.",
+    requirement: { minRankOrder: 4, maxRankOrder: 7, weight: 2 },
+    choices: [
+      {
+        id: 'choice-tout-sacrifier',
+        label: 'Tout réorganiser autour de la boxe',
+        statTested: 'endurance',
+        difficulty: 48,
+        outcomes: {
+          criticalFailure: { text: "Le rythme imposé finit par te briser, physiquement et moralement.", reward: { fatigue: 12, health: -5 } },
+          failure: { text: "Tu tiens, essoufflé, sans grande marge.", reward: { fatigue: 8 } },
+          success: { text: "Tu trouves un rythme intense mais tenable. Tout, pour l'instant, converge vers un seul objectif.", reward: { stats: { endurance: 2 }, careerPoints: 5 } },
+          criticalSuccess: { text: "Cette discipline totale, rare à ce stade, impressionne jusqu'à {{mentor}}.", reward: { stats: { endurance: 3 }, careerPoints: 8, reputationInternal: 3 } },
+        },
+      },
+      {
+        id: 'choice-equilibre',
+        label: 'Chercher un vrai équilibre plutôt que tout sacrifier',
+        statTested: 'mental',
+        difficulty: 48,
+        outcomes: {
+          criticalFailure: { text: "L'équilibre recherché échappe complètement, et les deux côtés en pâtissent.", reward: { fatigue: 8, coolness: -4 } },
+          failure: { text: "L'équilibre reste précaire, jour après jour.", reward: { fatigue: 5 } },
+          success: { text: "Tu trouves un rythme plus soutenable qui préserve l'essentiel des deux côtés de ta vie.", reward: { coolness: 4, stats: { mental: 2 } } },
+          criticalSuccess: { text: "Cet équilibre trouvé devient une vraie force — tu abordes chaque séance plus serein que jamais.", reward: { coolness: 7, stats: { mental: 3 }, loyalty: 2 } },
+        },
+      },
+    ],
+  },
 ]
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -984,6 +1120,244 @@ const LATE_LIFE_MOMENTS: LifeMomentCard[] = [
           failure: { text: "Le conseil de te tourner vers {{mentor}} tombe un peu à plat.", reward: {} },
           success: { text: "Tu reconnais que certaines réponses valent mieux venant de {{mentor}}. Le jeune boxeur apprécie l'honnêteté.", reward: { reputationInternal: 5, entourageDelta: [{ role: 'Mentor', delta: 1 }] } },
           criticalSuccess: { text: "Tu organises même la rencontre toi-même. {{mentor}} salue ton geste, et le jeune boxeur n'oubliera ni l'un ni l'autre.", reward: { reputationInternal: 8, entourageDelta: [{ role: 'Mentor', delta: 1 }], loyalty: 3 } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-life-poids-ceinture',
+    type: 'life-moment',
+    title: 'Le poids de la ceinture',
+    narrativeText:
+      "Chaque victoire, désormais, est jugée à l'aune de la précédente. Un round un peu terne, et les commentateurs parlent déjà de déclin. La pression ne vient plus d'un adversaire — elle vient de partout à la fois.",
+    requirement: { minRankOrder: 9, weight: 2 },
+    choices: [
+      {
+        id: 'choice-ignorer-critiques',
+        label: 'Rester concentré sur ta propre trajectoire',
+        statTested: 'mental',
+        difficulty: 55,
+        outcomes: {
+          criticalFailure: { text: "Les critiques finissent par s'infiltrer plus profondément que tu ne l'aurais voulu.", reward: { coolness: -6 } },
+          failure: { text: "Tu tiens, mais le bruit ambiant continue de te distraire un peu.", reward: {} },
+          success: { text: "Tu laisses le bruit extérieur glisser, concentré sur ce que toi seul sais avoir accompli.", reward: { coolness: 5, stats: { mental: 2 } } },
+          criticalSuccess: { text: "Plus rien de ce qui se dit à l'extérieur ne semble pouvoir t'atteindre. Une sérénité que peu de champions atteignent.", reward: { coolness: 8, stats: { mental: 3 }, reputationInternal: 4 } },
+        },
+      },
+      {
+        id: 'choice-repondre-publiquement',
+        label: 'Répondre publiquement, sur ton propre terrain',
+        statTested: 'strategie',
+        difficulty: 55,
+        outcomes: {
+          criticalFailure: { text: "La réponse tombe mal et alimente encore plus la controverse.", reward: { reputationExternal: -4 } },
+          failure: { text: "La sortie médiatique passe presque inaperçue.", reward: {} },
+          success: { text: "Tu recadres le débat avec des mots choisis, sans jamais paraître sur la défensive.", reward: { reputationExternal: 5, careerPoints: 4 } },
+          criticalSuccess: { text: "Ta réponse devient elle-même citée pendant des semaines. Le récit t'appartient de nouveau.", reward: { reputationExternal: 8, careerPoints: 6, reputationInternal: 3 } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-life-successeur-impatient',
+    type: 'life-moment',
+    title: 'Le successeur impatient',
+    narrativeText:
+      "Un jeune boxeur monté en flèche multiplie les déclarations : ton règne touche à sa fin, et il sera celui qui l'aura constaté le premier. Aucun combat n'est encore signé — pour l'instant, tout se joue dans les micros.",
+    requirement: { minRankOrder: 9, weight: 2 },
+    choices: [
+      {
+        id: 'choice-snober',
+        label: 'Le snober complètement, laisser le ring parler plus tard',
+        statTested: 'mental',
+        difficulty: 55,
+        outcomes: {
+          criticalFailure: { text: "Ton silence est interprété comme un aveu de faiblesse par la presse.", reward: { reputationExternal: -4 } },
+          failure: { text: "Le silence passe, sans plus.", reward: {} },
+          success: { text: "Ton indifférence tranquille en dit plus long que n'importe quelle réponse.", reward: { coolness: 5, reputationInternal: 4 } },
+          criticalSuccess: { text: "Ton calme absolu déstabilise visiblement le jeune prétendant, qui finit par en faire trop dans les médias.", reward: { coolness: 8, reputationInternal: 6 } },
+        },
+      },
+      {
+        id: 'choice-rencontre-privee',
+        label: 'Le croiser en salle, sans un mot, juste pour qu\'il comprenne',
+        statTested: 'puissance',
+        difficulty: 57,
+        outcomes: {
+          criticalFailure: { text: "La démonstration se retourne contre toi — le sparring tourne mal et alimente encore les rumeurs.", reward: { health: -6, coolness: -4 } },
+          failure: { text: "L'échange reste correct, sans message clair transmis.", reward: { fatigue: 5 } },
+          success: { text: "Quelques échanges suffisent. Le jeune prétendant repart nettement plus silencieux qu'il n'est arrivé.", reward: { careerPoints: 5, reputationInternal: 5 } },
+          criticalSuccess: { text: "La salle entière retient son souffle en te regardant faire. Le message, cette fois, est on ne peut plus clair.", reward: { careerPoints: 8, reputationInternal: 8, reputationExternal: 4 } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-life-dette-ancienne',
+    type: 'life-moment',
+    title: 'Une vieille dette',
+    narrativeText:
+      "{{rival}} refait surface, des années après vos derniers échanges — reconverti, plus posé qu'avant, cherchant visiblement à solder quelque chose qui n'a jamais vraiment été dit entre vous.",
+    requirement: { minRankOrder: 9, weight: 2 },
+    choices: [
+      {
+        id: 'choice-renouer',
+        label: 'Renouer sincèrement le contact',
+        statTested: 'mental',
+        difficulty: 50,
+        outcomes: {
+          criticalFailure: { text: "La conversation ravive plus de vieilles blessures qu'elle n'en referme.", reward: { coolness: -5 } },
+          failure: { text: "L'échange reste poli, sans grande sincérité de part et d'autre.", reward: {} },
+          success: { text: "Vous trouvez, enfin, les mots qui manquaient depuis toutes ces années.", reward: { loyalty: 4, entourageDelta: [{ role: 'Rival', delta: 2 }] } },
+          criticalSuccess: { text: "Ce que vous étiez l'un pour l'autre prend, ce jour-là, un tout autre sens — plus proche du respect que de la rivalité.", reward: { loyalty: 6, entourageDelta: [{ role: 'Rival', delta: 3 }], reputationInternal: 4 } },
+        },
+      },
+      {
+        id: 'choice-distance-pro',
+        label: 'Garder tes distances, cordial mais réservé',
+        statTested: 'strategie',
+        difficulty: 50,
+        outcomes: {
+          criticalFailure: { text: "La froideur affichée blesse plus que prévu, et se sait dans le milieu.", reward: { reputationInternal: -4 } },
+          failure: { text: "L'échange reste bref, sans conséquence particulière.", reward: {} },
+          success: { text: "Tu restes courtois sans t'ouvrir davantage. La rencontre se termine proprement.", reward: { coolness: 4 } },
+          criticalSuccess: { text: "Ta retenue, mesurée, force presque le respect de {{rival}} — qui repart sans rancune visible.", reward: { coolness: 6, reputationInternal: 3 } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-life-fortune-nouvelle',
+    type: 'life-moment',
+    title: "Ce que l'argent a changé",
+    narrativeText:
+      "Les bourses des combats de championnat ont changé quelque chose dans ton quotidien — et dans le regard des gens autour de toi. Des propositions d'investissement affluent, certaines sérieuses, d'autres beaucoup moins.",
+    requirement: { minRankOrder: 9, weight: 2 },
+    choices: [
+      {
+        id: 'choice-investir-serieux',
+        label: 'Prendre le temps d\'évaluer sérieusement chaque proposition',
+        statTested: 'strategie',
+        difficulty: 52,
+        outcomes: {
+          criticalFailure: { text: "L'analyse traîne en longueur et une opportunité sérieuse t'échappe.", reward: { fatigue: 4 } },
+          failure: { text: "Rien de concret n'en ressort pour l'instant.", reward: {} },
+          success: { text: "Un placement solide se dessine, géré avec la même rigueur que ta préparation physique.", reward: { careerPoints: 4, stats: { strategie: 2 } } },
+          criticalSuccess: { text: "L'investissement dépasse largement les attentes — de quoi assurer ton avenir bien au-delà du ring.", reward: { careerPoints: 7, stats: { strategie: 3 }, reputationExternal: 3 } },
+        },
+      },
+      {
+        id: 'choice-profiter',
+        label: 'Profiter, pour une fois, sans trop réfléchir',
+        statTested: 'mental',
+        difficulty: 52,
+        outcomes: {
+          criticalFailure: { text: "L'excès pèse plus lourd que prévu sur ta discipline des semaines suivantes.", reward: { fatigue: 10, health: -4 } },
+          failure: { text: "Le relâchement reste sans grande conséquence.", reward: { fatigue: 4 } },
+          success: { text: "Tu t'accordes un vrai moment de répit, sans culpabilité — et il te fait du bien.", reward: { coolness: 5, loyalty: 2 } },
+          criticalSuccess: { text: "Ce moment partagé avec tes proches restera, longtemps après, l'un de tes meilleurs souvenirs hors du ring.", reward: { coolness: 8, loyalty: 4, reputationInternal: 3 } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-life-record-en-vue',
+    type: 'life-moment',
+    title: 'Un chiffre qui se rapproche',
+    narrativeText:
+      "Un journaliste sportif calcule, dans un article partagé plus que les autres, qu'il ne te manque plus que quelques victoires pour approcher un record de la catégorie que l'on croyait intouchable.",
+    requirement: { minRankOrder: 9, weight: 2 },
+    choices: [
+      {
+        id: 'choice-viser-record',
+        label: 'Te fixer ouvertement cet objectif',
+        statTested: 'mental',
+        difficulty: 56,
+        outcomes: {
+          criticalFailure: { text: "Le chiffre devient une obsession qui pèse plus qu'il ne motive.", reward: { coolness: -6 } },
+          failure: { text: "L'objectif reste flou, ni vraiment assumé ni écarté.", reward: {} },
+          success: { text: "Tu transformes ce chiffre en moteur clair, sans qu'il ne devienne une pression étouffante.", reward: { stats: { mental: 2 }, careerPoints: 5 } },
+          criticalSuccess: { text: "Cet objectif affiché publiquement galvanise toute ta salle autour de toi.", reward: { stats: { mental: 3 }, careerPoints: 8, reputationInternal: 4 } },
+        },
+      },
+      {
+        id: 'choice-relativiser-record',
+        label: 'Refuser d\'y penser, un combat à la fois',
+        statTested: 'strategie',
+        difficulty: 56,
+        outcomes: {
+          criticalFailure: { text: "Ton indifférence affichée agace une partie des observateurs qui y voient un désintérêt.", reward: { reputationExternal: -3 } },
+          failure: { text: "Le sujet retombe sans grande conséquence.", reward: {} },
+          success: { text: "Ta capacité à ignorer les chiffres et rester concentré sur l'essentiel force le respect.", reward: { coolness: 4, reputationInternal: 3 } },
+          criticalSuccess: { text: "Cette sérénité affichée face à l'Histoire qui s'écrit devient, elle-même, un sujet d'admiration.", reward: { coolness: 7, reputationInternal: 6 } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-life-famille-eloignee',
+    type: 'life-moment',
+    title: 'Ceux qui attendent à la maison',
+    narrativeText:
+      "Un appel manqué, puis un second. Les camps d'entraînement à répétition et les déplacements pour les défenses de titre ont, sans que tu ne le décides vraiment, éloigné une partie de ceux qui comptent le plus.",
+    requirement: { minRankOrder: 9, weight: 2 },
+    choices: [
+      {
+        id: 'choice-faire-le-trajet',
+        label: 'Faire le trajet, quel qu\'en soit le coût sur ta préparation',
+        statTested: 'endurance',
+        difficulty: 54,
+        outcomes: {
+          criticalFailure: { text: "Le voyage, épuisant, entame sérieusement ta préparation pour rien.", reward: { fatigue: 12, health: -4 } },
+          failure: { text: "Le trajet te coûte plus d'énergie qu'il n'apporte de réconfort.", reward: { fatigue: 8 } },
+          success: { text: "Le temps passé ensemble, même bref, répare quelque chose d'important.", reward: { loyalty: 4, coolness: 3 } },
+          criticalSuccess: { text: "Ce geste, malgré le calendrier chargé, marque durablement ceux qui l'ont reçu.", reward: { loyalty: 7, coolness: 5, reputationInternal: 3 } },
+        },
+      },
+      {
+        id: 'choice-appel-honnete',
+        label: 'Prendre le temps d\'un vrai appel, honnête sur tes limites',
+        statTested: 'mental',
+        difficulty: 54,
+        outcomes: {
+          criticalFailure: { text: "L'honnêteté, mal reçue sur le moment, crée plus de distance encore.", reward: { coolness: -5 } },
+          failure: { text: "L'appel reste correct, sans vraiment combler le manque.", reward: {} },
+          success: { text: "Ta sincérité sur les sacrifices que tout ça demande est, finalement, bien reçue.", reward: { loyalty: 3, coolness: 3 } },
+          criticalSuccess: { text: "Cette conversation honnête change durablement la façon dont vous vivez, ensemble, cette carrière.", reward: { loyalty: 6, coolness: 5 } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-life-tentation-retraite-doree',
+    type: 'life-moment',
+    title: 'Partir au sommet',
+    narrativeText:
+      "Tout ce que tu pouvais raisonnablement viser est, plus ou moins, déjà accompli. Une petite voix, de plus en plus difficile à ignorer, se demande s'il ne vaudrait pas mieux partir maintenant, invaincu dans les mémoires, plutôt que de risquer d'user la légende.",
+    requirement: { minRankOrder: 9, weight: 2 },
+    choices: [
+      {
+        id: 'choice-repousser-tentation',
+        label: 'Repousser cette pensée, il reste des combats à mener',
+        statTested: 'mental',
+        difficulty: 55,
+        outcomes: {
+          criticalFailure: { text: "Le doute revient plus fort dès la séance suivante, difficile à vraiment chasser.", reward: { coolness: -6 } },
+          failure: { text: "La pensée s'éloigne, provisoirement.", reward: {} },
+          success: { text: "Tu retrouves une clarté simple : tant qu'il reste envie et santé, la question ne se pose pas encore.", reward: { coolness: 5, stats: { mental: 2 } } },
+          criticalSuccess: { text: "Cette envie intacte, à ce stade de carrière, est peut-être ta plus grande force restante.", reward: { coolness: 8, stats: { mental: 3 }, reputationInternal: 3 } },
+        },
+      },
+      {
+        id: 'choice-accepter-doute',
+        label: 'Accepter honnêtement d\'y réfléchir vraiment',
+        statTested: 'strategie',
+        difficulty: 55,
+        outcomes: {
+          criticalFailure: { text: "La réflexion tourne en rond, sans rien clarifier, et te laisse simplement plus fatigué.", reward: { fatigue: 6 } },
+          failure: { text: "La question reste ouverte, sans réponse pour l'instant.", reward: {} },
+          success: { text: "Tu poses, honnêtement, les critères qui détermineront le bon moment — sans précipitation ni déni.", reward: { stats: { strategie: 2 }, coolness: 3 } },
+          criticalSuccess: { text: "Cette lucidité rare sur ta propre trajectoire impressionne jusqu'à {{mentor}}, qui n'a pas souvent vu ça.", reward: { stats: { strategie: 3 }, coolness: 5, entourageDelta: [{ role: 'Mentor', delta: 2 }] } },
         },
       },
     ],

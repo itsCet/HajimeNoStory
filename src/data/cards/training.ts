@@ -300,6 +300,40 @@ const EARLY_TRAINING: TrainingCard[] = [
       },
     ],
   },
+  {
+    id: 'card-train-corde-a-sauter',
+    type: 'training',
+    title: 'La corde, encore et toujours',
+    narrativeText:
+      "Un exercice aussi vieux que la boxe elle-même : la corde à sauter, séance après séance. Simple en apparence, redoutable pour qui cherche vraiment à progresser dessus.",
+    requirement: { maxRankOrder: 3, weight: 2 },
+    approaches: [
+      {
+        id: 'approach-corde-vitesse',
+        label: 'Accélérer le rythme au maximum',
+        statTested: 'vitesse',
+        difficulty: 34,
+        outcomes: {
+          criticalFailure: { text: "Le pied se prend dans la corde à répétition — frustrant, mais sans gravité.", reward: { fatigue: 5 } },
+          failure: { text: "Le rythme reste correct, sans réel progrès.", reward: { fatigue: 3 } },
+          success: { text: "Tes appuis gagnent nettement en vivacité, séance après séance.", reward: { stats: { vitesse: 2 } } },
+          criticalSuccess: { text: "Le rythme devient presque hypnotique. {{mentor}} n'a jamais vu quelqu'un tenir une telle cadence aussi tôt.", reward: { stats: { vitesse: 3 }, reputationInternal: 2 } },
+        },
+      },
+      {
+        id: 'approach-corde-endurance',
+        label: 'Tenir le plus longtemps possible, sans t\'arrêter',
+        statTested: 'endurance',
+        difficulty: 34,
+        outcomes: {
+          criticalFailure: { text: "Les jambes lâchent bien avant la fin de la séance prévue.", reward: { fatigue: 6 } },
+          failure: { text: "Tu tiens, tant bien que mal, sans grand progrès.", reward: { fatigue: 4 } },
+          success: { text: "Ton souffle tient nettement plus longtemps qu'à tes débuts.", reward: { stats: { endurance: 2 } } },
+          criticalSuccess: { text: "Tu enchaînes largement au-delà de ce que {{mentor}} avait prévu, sans jamais ralentir.", reward: { stats: { endurance: 3 }, reputationInternal: 2 } },
+        },
+      },
+    ],
+  },
 ]
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -512,6 +546,40 @@ const MID_TRAINING: TrainingCard[] = [
       },
     ],
   },
+  {
+    id: 'card-train-sparring-elite',
+    type: 'training',
+    title: 'Sparring de haut niveau',
+    narrativeText:
+      "{{mentor}} a fait venir un partenaire de sparring d'un tout autre calibre, habitué aux salles nationales — l'occasion de tester, en conditions réelles, tout ce que tu penses avoir progressé.",
+    requirement: { minRankOrder: 4, maxRankOrder: 8, weight: 2 },
+    approaches: [
+      {
+        id: 'approach-sparring-technique',
+        label: 'Chercher à égaler sa précision plutôt que sa puissance',
+        statTested: 'technique',
+        difficulty: 52,
+        outcomes: {
+          criticalFailure: { text: "L'écart de niveau se fait sentir immédiatement, et la séance tourne à sens unique.", reward: { fatigue: 8 } },
+          failure: { text: "Tu tiens l'échange, sans jamais vraiment rivaliser.", reward: { fatigue: 5 } },
+          success: { text: "Tu tiens tête à un niveau bien supérieur au tien — un vrai signe de progression.", reward: { stats: { technique: 3 }, reputationInternal: 2 } },
+          criticalSuccess: { text: "Le partenaire de sparring, visiblement surpris, complimente {{mentor}} sur ce qu'il a construit avec toi.", reward: { stats: { technique: 4 }, reputationInternal: 4 } },
+        },
+      },
+      {
+        id: 'approach-sparring-reflexes',
+        label: 'Miser sur tes réflexes pour éviter l\'échange direct',
+        statTested: 'reflexes',
+        difficulty: 52,
+        outcomes: {
+          criticalFailure: { text: "Ses coups arrivent plus vite que tu ne les anticipes, séance après séance.", reward: { fatigue: 8 } },
+          failure: { text: "Tu esquives par intermittence, sans grand contrôle.", reward: { fatigue: 5 } },
+          success: { text: "Tes réflexes tiennent la comparaison avec un niveau bien supérieur au tien.", reward: { stats: { reflexes: 3 }, reputationInternal: 2 } },
+          criticalSuccess: { text: "Tu esquives presque tout ce soir-là. {{mentor}} note, satisfait, un vrai palier franchi.", reward: { stats: { reflexes: 4 }, reputationInternal: 4 } },
+        },
+      },
+    ],
+  },
 ]
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -560,6 +628,176 @@ const LATE_TRAINING: TrainingCard[] = [
             text: "{{mentor}} n'a plus rien à ajouter — le corps a fini par apprendre ce que les mots ne pouvaient plus enseigner.",
             reward: { stats: { reflexes: 4 }, unlockTechniqueIds: ['tech-generic-radar-combat'], setFlags: ['discovered:tech-generic-radar-combat'], reputationInternal: 3 },
           },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-training-transmission',
+    type: 'training',
+    title: 'Former sans se former',
+    narrativeText:
+      "{{mentor}} te confie, de plus en plus souvent, un œil sur les débutants de la salle pendant les séances. Corriger un geste chez quelqu'un d'autre demande une clarté différente de celle qu'exige ton propre entraînement.",
+    requirement: { minRankOrder: 9, weight: 2 },
+    approaches: [
+      {
+        id: 'approach-transmission-pedagogie',
+        label: 'Décomposer patiemment chaque geste pour eux',
+        statTested: 'technique',
+        difficulty: 54,
+        outcomes: {
+          criticalFailure: { text: "Tes explications les embrouillent plus qu'elles ne les aident.", reward: { fatigue: 5 } },
+          failure: { text: "Le message passe à moitié, sans grande clarté.", reward: {} },
+          success: { text: "Expliquer à voix haute ce que tu fais depuis des années t'en révèle, à toi aussi, de nouveaux détails.", reward: { stats: { technique: 2 }, reputationInternal: 3 } },
+          criticalSuccess: { text: "Un débutant reproduit soudain, presque parfaitement, un geste que tu croyais impossible à transmettre en une séance. La fierté est partagée.", reward: { stats: { technique: 3 }, reputationInternal: 6, loyalty: 2 } },
+        },
+      },
+      {
+        id: 'approach-transmission-exemple',
+        label: "Leur montrer, encore et encore, par l'exemple",
+        statTested: 'endurance',
+        difficulty: 54,
+        outcomes: {
+          criticalFailure: { text: "Répéter le geste autant de fois t'épuise plus que prévu.", reward: { fatigue: 10 } },
+          failure: { text: "Les répétitions passent, sans effet particulier sur eux ni sur toi.", reward: { fatigue: 6 } },
+          success: { text: "À force de répétitions, ton propre geste gagne encore en régularité — un effet secondaire inattendu.", reward: { stats: { endurance: 2 }, reputationInternal: 3 } },
+          criticalSuccess: { text: "Ta rigueur devient contagieuse. Toute la salle semble s'entraîner un cran plus sérieusement, toi y compris.", reward: { stats: { endurance: 3 }, reputationInternal: 6, loyalty: 2 } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-training-signature',
+    type: 'training',
+    title: 'Le geste qui devient une signature',
+    narrativeText:
+      "Après tant de combats, un enchaînement revient plus souvent que les autres dans ton style — quelque chose d'unique à toi, que {{mentor}} propose de raffiner jusqu'à ce qu'il devienne réellement redoutable.",
+    requirement: { minRankOrder: 9, weight: 2 },
+    approaches: [
+      {
+        id: 'approach-signature-puissance',
+        label: 'Y ajouter encore plus de poids',
+        statTested: 'puissance',
+        difficulty: 58,
+        outcomes: {
+          criticalFailure: { text: "Le geste, trop chargé, perd toute la fluidité qui le rendait dangereux.", reward: { fatigue: 8 } },
+          failure: { text: "Le geste reste efficace, sans réel progrès notable.", reward: { fatigue: 5 } },
+          success: { text: "Le geste gagne en impact sans rien perdre de sa vitesse d'exécution.", reward: { stats: { puissance: 3 } } },
+          criticalSuccess: { text: "Ce geste devient, ce jour-là, véritablement le tien — personne d'autre ne le porte avec cette intensité.", reward: { stats: { puissance: 4 }, reputationExternal: 3 } },
+        },
+      },
+      {
+        id: 'approach-signature-vitesse',
+        label: "Le rendre encore plus difficile à anticiper",
+        statTested: 'vitesse',
+        difficulty: 58,
+        outcomes: {
+          criticalFailure: { text: "En cherchant plus de vitesse, le geste perd toute sa précision.", reward: { fatigue: 8 } },
+          failure: { text: "Le geste reste efficace, sans réel progrès notable.", reward: { fatigue: 5 } },
+          success: { text: "Le geste devient plus vif, plus difficile à lire dès sa préparation.", reward: { stats: { vitesse: 3 } } },
+          criticalSuccess: { text: "Le geste devient si rapide qu'il semble surprendre même ceux qui savent qu'il arrive. Une vraie signature.", reward: { stats: { vitesse: 4 }, reputationExternal: 3 } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-training-corps-elite',
+    type: 'training',
+    title: "Entretenir la machine",
+    narrativeText:
+      "Un préparateur physique spécialisé, habitué aux champions en fin de carrière, propose un protocole entièrement repensé — moins de volume, beaucoup plus de précision dans chaque séance.",
+    requirement: { minRankOrder: 9, weight: 2 },
+    approaches: [
+      {
+        id: 'approach-elite-recuperation',
+        label: 'Adopter le protocole de récupération avancée',
+        statTested: 'endurance',
+        difficulty: 55,
+        outcomes: {
+          criticalFailure: { text: "Le nouveau protocole perturbe tes repères, et tu t'en trouves plus fatigué que d'habitude.", reward: { fatigue: 8 } },
+          failure: { text: "L'adaptation prend du temps, sans bénéfice immédiat.", reward: { fatigue: 4 } },
+          success: { text: "Ton corps récupère nettement mieux d'un combat à l'autre. Un vrai gain, à ce stade de carrière.", reward: { health: 5, stats: { endurance: 2 } } },
+          criticalSuccess: { text: "Le préparateur physique n'a jamais vu un corps de cet âge répondre aussi bien. Tu te sens, littéralement, rajeuni.", reward: { health: 9, stats: { endurance: 3 }, reputationInternal: 3 } },
+        },
+      },
+      {
+        id: 'approach-elite-mental',
+        label: "Miser sur la préparation mentale plutôt que physique",
+        statTested: 'mental',
+        difficulty: 55,
+        outcomes: {
+          criticalFailure: { text: "Le protocole mental, mal suivi, te laisse plus tendu qu'apaisé.", reward: { coolness: -5 } },
+          failure: { text: "L'effet reste discret, difficile à mesurer.", reward: {} },
+          success: { text: "Tu abordes chaque séance avec une clarté d'esprit renouvelée, presque neuve.", reward: { coolness: 4, stats: { mental: 2 } } },
+          criticalSuccess: { text: "Le protocole change littéralement ton rapport à l'entraînement. Plus jamais une séance ne te pèsera de la même façon.", reward: { coolness: 7, stats: { mental: 3 }, reputationInternal: 3 } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-train-contre-jeune-garde',
+    type: 'training',
+    title: 'Le sparring qui te garde honnête',
+    narrativeText:
+      "{{mentor}} invite, une fois par mois désormais, un espoir de la salle à venir te donner la réplique — assez jeune pour n'avoir aucun respect particulier pour ta réputation, ce qui, justement, en fait tout l'intérêt.",
+    requirement: { minRankOrder: 9, weight: 2 },
+    approaches: [
+      {
+        id: 'approach-jeune-garde-puissance',
+        label: 'Répondre à sa fougue par ton expérience',
+        statTested: 'puissance',
+        difficulty: 58,
+        outcomes: {
+          criticalFailure: { text: "Sa fraîcheur physique te pousse à forcer plus que de raison, pour un résultat décevant.", reward: { fatigue: 9 } },
+          failure: { text: "L'échange reste équilibré, sans grand enseignement.", reward: { fatigue: 6 } },
+          success: { text: "Tu canalises sa fougue sans jamais paraître dépassé — un rappel utile de ce que tu sais encore faire.", reward: { stats: { puissance: 2 }, reputationInternal: 2 } },
+          criticalSuccess: { text: "Le jeune espoir repart visiblement marqué par la séance. {{mentor}} sourit, satisfait de son idée.", reward: { stats: { puissance: 3 }, reputationInternal: 4 } },
+        },
+      },
+      {
+        id: 'approach-jeune-garde-strategie',
+        label: 'En profiter pour tester de nouveaux ajustements',
+        statTested: 'strategie',
+        difficulty: 58,
+        outcomes: {
+          criticalFailure: { text: "Les ajustements testés se révèlent, face à sa vitesse brute, complètement inadaptés.", reward: { fatigue: 7 } },
+          failure: { text: "Les essais restent peu concluants.", reward: { fatigue: 5 } },
+          success: { text: "Ce laboratoire improvisé te permet d'affiner un détail utile pour la suite.", reward: { stats: { strategie: 2 } } },
+          criticalSuccess: { text: "L'ajustement testé ce jour-là deviendra, tu le sens déjà, une vraie arme pour tes prochains combats.", reward: { stats: { strategie: 3 }, careerPoints: 4 } },
+        },
+      },
+    ],
+  },
+  {
+    id: 'card-train-rituel-avant-titre',
+    type: 'training',
+    title: "Le rituel d'avant-titre",
+    narrativeText:
+      "Au fil des défenses, une routine précise s'est installée avant chaque combat de championnat — un enchaînement de gestes que tu répètes presque religieusement, jusqu'à ce que {{mentor}} propose d'y toucher.",
+    requirement: { minRankOrder: 9, weight: 2 },
+    approaches: [
+      {
+        id: 'approach-rituel-garder',
+        label: 'Garder le rituel intact, il a fait ses preuves',
+        statTested: 'mental',
+        difficulty: 56,
+        outcomes: {
+          criticalFailure: { text: "Le rituel, cette fois, semble sonner creux — un signe que rien n'est jamais acquis.", reward: { coolness: -5 } },
+          failure: { text: "Le rituel se déroule sans grand effet particulier.", reward: {} },
+          success: { text: "Le rituel te met, comme toujours, dans les meilleures dispositions possibles.", reward: { coolness: 4, stats: { mental: 2 } } },
+          criticalSuccess: { text: "Ce rituel, affiné au fil des années, est devenu une vraie arme mentale — {{mentor}} le sait aussi bien que toi.", reward: { coolness: 7, stats: { mental: 3 }, entourageDelta: [{ role: 'Mentor', delta: 1 }] } },
+        },
+      },
+      {
+        id: 'approach-rituel-renouveler',
+        label: 'Accepter de le renouveler, quitte à sortir de ta zone de confort',
+        statTested: 'reflexes',
+        difficulty: 56,
+        outcomes: {
+          criticalFailure: { text: "Le changement de repères te déstabilise plus que prévu, juste avant l'échéance.", reward: { coolness: -6 } },
+          failure: { text: "Le nouveau rituel reste, pour l'instant, moins naturel que l'ancien.", reward: { fatigue: 4 } },
+          success: { text: "Le nouveau rituel t'apporte une fraîcheur inattendue, loin de l'automatisme installé.", reward: { stats: { reflexes: 2 }, coolness: 3 } },
+          criticalSuccess: { text: "Ce renouveau, risqué sur le papier, se révèle être exactement ce qu'il te fallait à ce stade de carrière.", reward: { stats: { reflexes: 3 }, coolness: 5, reputationInternal: 3 } },
         },
       },
     ],

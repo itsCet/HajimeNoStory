@@ -22,6 +22,9 @@ import { DORMANT_POTENTIAL } from '../data/dormantPotential'
 import { TACTICAL_APPROACHES, matchupModifier } from '../data/tacticalApproaches'
 import { ROUND_COMMENTARY } from '../data/roundCommentary'
 
+// Nombre de dernières cartes de pioche à exclure d'un nouveau tirage (voir pickNextCard).
+const RECENT_CARDS_WINDOW = 5
+
 export function renderText(character: CharacterState, text: string): string {
   const rival = character.entourage.find((m) => m.role === 'Rival')?.npcName ?? 'ton rival'
   const mentor = character.entourage.find((m) => m.role === 'Mentor')?.npcName ?? 'ton mentor'
@@ -124,9 +127,19 @@ export function pickNextCard(character: CharacterState): GameCard | null {
   const eligible = POOL_CARDS.filter((c) => cardMeetsRequirement(character, c, c.requirement))
   if (eligible.length === 0) return null
 
+  // Exclut les cartes vues très récemment pour éviter l'impression de répétition,
+  // sauf si le pool éligible est trop réduit pour se le permettre (paliers de fin
+  // de carrière notamment) — dans ce cas on retombe sur le pool complet.
+  const notRecent = eligible.filter((c) => !character.recentCardIds.includes(c.id))
+  const pool = notRecent.length > 0 ? notRecent : eligible
+
   const rng = new Rng(character.seed)
-  const picked = rng.weightedPick(eligible, (c) => c.requirement.weight ?? 1)
+  const picked = rng.weightedPick(pool, (c) => c.requirement.weight ?? 1)
   character.seed = rng.getState()
+
+  character.recentCardIds.push(picked.id)
+  if (character.recentCardIds.length > RECENT_CARDS_WINDOW) character.recentCardIds.shift()
+
   return picked
 }
 

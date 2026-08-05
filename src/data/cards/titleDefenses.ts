@@ -154,4 +154,56 @@ export const TITLE_DEFENSE_CARDS: FightCard[] = [
       criticalSuccess: { text: "Tu donnes ce soir-là une véritable leçon au prodige — celle que seule l'expérience peut enseigner.", reward: { careerPoints: 32, reputationExternal: 22, titleDefenseWin: true } },
     },
   },
+  {
+    id: 'card-fight-defense-technicien',
+    type: 'fight',
+    title: 'Défense de titre — le technicien',
+    narrativeText:
+      "Un prétendant réputé pour ne jamais commettre la même erreur deux fois, capable de corriger son style en plein combat comme personne d'autre sur le circuit.",
+    opponentName: 'Un technicien redouté',
+    opponentTagline: "Il ne fait jamais la même erreur deux fois.",
+    opponentAggression: 'balanced',
+    totalRounds: 6,
+    koThreshold: 5,
+    baseDifficulty: 75,
+    requirement: { minRankOrder: CHAMPION_ORDER, weight: 2 },
+    outcomes: {
+      criticalFailure: { text: "Il corrige sa lecture de ton style plus vite que tu ne peux varier le tien. Le combat lui échappe complètement en ta défaveur.", reward: { health: -15, coolness: -7 } },
+      failure: { text: "Il s'adapte round après round, et le combat penche lentement de son côté.", reward: { fatigue: 11 } },
+      success: {
+        text: "Tu varies suffisamment ton approche pour qu'il ne puisse jamais vraiment s'ajuster. Sa réputation d'adaptation parfaite trouve, ce soir, sa limite.",
+        reward: { careerPoints: 23, reputationExternal: 15, titleDefenseWin: true },
+      },
+      criticalSuccess: {
+        text: "Chaque correction qu'il tente arrive un coup trop tard. Une démonstration presque clinique, de ta part comme de la sienne.",
+        reward: { careerPoints: 31, reputationExternal: 21, titleDefenseWin: true },
+      },
+    },
+  },
+  {
+    id: 'card-fight-defense-outsider',
+    type: 'fight',
+    title: 'Défense de titre — l\'outsider',
+    narrativeText:
+      "Peu de monde donnait cet outsider gagnant de son éliminatoire. Il monte sur le ring sans rien à perdre, et cette légèreté-là, paradoxalement, le rend imprévisible.",
+    opponentName: 'Un outsider inattendu',
+    opponentTagline: 'Personne ne le voyait arriver jusqu\'ici. Lui non plus, peut-être.',
+    opponentAggression: 'defensive',
+    totalRounds: 6,
+    koThreshold: 5,
+    baseDifficulty: 73,
+    requirement: { minRankOrder: CHAMPION_ORDER, weight: 2 },
+    outcomes: {
+      criticalFailure: { text: "Son absence totale d'enjeu apparent te déstabilise plus que n'importe quelle stratégie affichée. Il en profite pleinement.", reward: { health: -14, coolness: -8 } },
+      failure: { text: "Son imprévisibilité rend chaque échange plus incertain que prévu.", reward: { fatigue: 10 } },
+      success: {
+        text: "Tu finis par imposer ta rigueur à son style improvisé. L'expérience, une fois de plus, fait la différence.",
+        reward: { careerPoints: 21, reputationExternal: 13, titleDefenseWin: true },
+      },
+      criticalSuccess: {
+        text: "Ce qui semblait imprévisible devient, sous tes yeux, parfaitement lisible. L'outsider repart avec une leçon qu'il n'attendait pas.",
+        reward: { careerPoints: 29, reputationExternal: 19, titleDefenseWin: true },
+      },
+    },
+  },
 ]

@@ -4,9 +4,10 @@ const KEY_CAREER = 'hajime-no-story:career'
 const KEY_DESTINY_CAREER = 'hajime-no-story:destiny-career'
 const KEY_META = 'hajime-no-story:meta'
 
-// v2 : rééquilibrage à 5 évènements/an (seuils de rang, points à répartir).
-// Les sauvegardes v1 sont invalidées plutôt que migrées à moitié.
-const SAVE_VERSION = 2
+// v3 : ajout de recentCardIds (anti-répétition de la pioche). Comme pour les
+// versions précédentes, les sauvegardes plus anciennes sont invalidées plutôt
+// que migrées à moitié.
+const SAVE_VERSION = 3
 const META_VERSION = 1
 
 function safeParse<T>(raw: string | null): T | null {

@@ -408,6 +408,9 @@ export interface CharacterState {
   entourage: EntourageMember[]
   flags: string[]
   totalEventsSeen: number
+  // Historique court des dernières cartes de pioche (pool) présentées, pour éviter
+  // qu'une même carte revienne trop vite quand le pool éligible est réduit.
+  recentCardIds: string[]
 
   unlockedTechniqueIds: string[]
   techniqueCooldowns: Record<string, number>

@@ -119,6 +119,7 @@ function baseCharacterFields() {
     fatigue: 0,
     flags: [] as string[],
     totalEventsSeen: 0,
+    recentCardIds: [] as string[],
     unlockedTechniqueIds: [] as string[],
     techniqueCooldowns: {} as Record<string, number>,
     fightWinStreak: 0,
