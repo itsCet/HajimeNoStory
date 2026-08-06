@@ -41,7 +41,10 @@ export function GameScreen({ useStore }: { useStore: UseBoundStore<StoreApi<Care
   return (
     <div className="min-h-screen px-4 py-6 flex flex-col items-center gap-4 pb-24">
       <div className="w-full max-w-xl flex justify-between items-center">
-        <button onClick={() => goTo('home')} className="text-xs opacity-50 hover:opacity-90">
+        <button
+          onClick={() => goTo('home')}
+          className="inline-flex items-center min-h-[44px] px-3 -ml-3 text-xs opacity-70 hover:opacity-100 cursor-pointer rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring-500"
+        >
           ← Accueil
         </button>
       </div>

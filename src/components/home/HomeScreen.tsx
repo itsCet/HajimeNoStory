@@ -82,9 +82,8 @@ export function HomeScreen() {
         </div>
       </Card>
 
-      <div className="mt-auto pt-8 text-xs opacity-50 text-center">
+      <div className="mt-auto pt-8 text-xs opacity-70 text-center">
         <p>Développé avec Claude Code</p>
-        <button className="underline mt-1">☕ Soutenir le projet</button>
       </div>
     </div>
   )

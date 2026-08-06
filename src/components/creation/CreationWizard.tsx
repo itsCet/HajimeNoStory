@@ -285,7 +285,7 @@ function SummaryStep({
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Prénom Nom (laisser vide pour un tirage)"
-          className="flex-1 rounded-xl px-3 py-2 bg-black/5 dark:bg-white/10 outline-none text-sm"
+          className="flex-1 min-h-[44px] rounded-xl px-3 py-2 bg-black/5 dark:bg-white/10 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring-500"
         />
         <Button
           variant="ghost"

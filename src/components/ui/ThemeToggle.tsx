@@ -6,7 +6,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="app-card rounded-full w-10 h-10 flex items-center justify-center text-lg"
+      className="app-card rounded-full w-11 h-11 flex items-center justify-center text-lg cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring-500"
       aria-label="Changer de thème"
       title="Changer de thème"
     >

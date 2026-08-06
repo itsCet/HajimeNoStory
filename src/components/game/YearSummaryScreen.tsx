@@ -40,7 +40,10 @@ export function YearSummaryScreen({
       </Button>
 
       {canRetireVoluntarily(character) && (
-        <button onClick={onRetire} className="w-full text-center text-xs opacity-50 hover:opacity-90 mt-3 underline">
+        <button
+          onClick={onRetire}
+          className="w-full min-h-[44px] text-center text-xs opacity-75 hover:opacity-100 mt-3 underline cursor-pointer rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring-500"
+        >
           Raccrocher les gants dès maintenant
         </button>
       )}
