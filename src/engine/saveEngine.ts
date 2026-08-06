@@ -44,6 +44,7 @@ const DEFAULT_META: MetaState = {
   equippedPerkStatChoices: {},
   unlockedTrophyIds: [],
   history: [],
+  lastSeenPatchVersion: '',
   settings: { theme: 'dark' },
 }
 

@@ -68,6 +68,10 @@ function applyEquippedPerks(stats: Record<StatKey, number>, disciplineBoostedSta
   let reputationExternal = 0
   let coolness = 0
   let loyalty = 0
+  let careerPoints = 0
+  let bonusEventsPerYear = 0
+  let dormantChanceBonus = 0
+  const startingTechniqueIds: string[] = []
 
   for (const perkId of equipped.perkIds) {
     const perk = SHOP_PERK_MAP[perkId]
@@ -86,9 +90,28 @@ function applyEquippedPerks(stats: Record<StatKey, number>, disciplineBoostedSta
       const chosen = equipped.statChoices[perk.id]
       if (chosen) stats[chosen] += perk.statChoiceAmount ?? 6
     }
+
+    const extras = perk.extras
+    if (extras) {
+      careerPoints += extras.careerPoints ?? 0
+      bonusEventsPerYear += extras.bonusEventsPerYear ?? 0
+      dormantChanceBonus += extras.dormantChanceBonus ?? 0
+      for (const t of extras.startingTechniqueIds ?? []) {
+        if (!startingTechniqueIds.includes(t)) startingTechniqueIds.push(t)
+      }
+    }
   }
 
-  return { reputationInternal, reputationExternal, coolness, loyalty }
+  return {
+    reputationInternal,
+    reputationExternal,
+    coolness,
+    loyalty,
+    careerPoints,
+    bonusEventsPerYear,
+    dormantChanceBonus,
+    startingTechniqueIds,
+  }
 }
 
 function buildEntourage(rng: Rng, isAutodidact: boolean, mentorNameFromLineage: string, playerGender: Gender) {
@@ -161,7 +184,10 @@ export function createCharacter(choices: CreationChoices, equipped: EquippedPerk
   const name = choices.name?.trim() || generateRandomName(rng, gender)
   const entourage = buildEntourage(rng, lineage.isAutodidact, lineage.mentorName, gender)
 
-  const dormantEligible = rng.chance(DORMANT_POTENTIAL.chanceAtCreation)
+  const dormantChance = Math.min(1, DORMANT_POTENTIAL.chanceAtCreation + perkBonuses.dormantChanceBonus)
+  const dormantEligible = rng.chance(dormantChance)
+
+  const eventsPerYear = STARTING_EVENTS_PER_YEAR + perkBonuses.bonusEventsPerYear
 
   const character: CharacterState = {
     ...baseCharacterFields(),
@@ -180,6 +206,13 @@ export function createCharacter(choices: CreationChoices, equipped: EquippedPerk
     reputationInternal: 10 + perkBonuses.reputationInternal,
     reputationExternal: 5 + perkBonuses.reputationExternal,
     loyalty: 20 + perkBonuses.loyalty,
+    careerPoints: perkBonuses.careerPoints,
+    eventsPerYear,
+    eventsRemainingThisYear: eventsPerYear,
+    unlockedTechniqueIds: [...perkBonuses.startingTechniqueIds],
+    // Marquer les techniques offertes comme déjà découvertes : sans ça, la carte
+    // qui les enseigne resterait éligible et rejouerait une découverte inutile.
+    flags: perkBonuses.startingTechniqueIds.map((t) => `discovered:${t}`),
     dormantPotential: {
       eligible: dormantEligible,
       eventsSinceStart: 0,

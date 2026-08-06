@@ -1,4 +1,6 @@
+import { useEffect } from 'react'
 import { useNavStore } from '../../store/navStore'
+import { useMetaStore } from '../../store/metaStore'
 import { PATCH_NOTES } from '../../data/patchNotes'
 import { Card } from '../ui/Card'
 import { Button } from '../ui/Button'
@@ -6,6 +8,13 @@ import { PatchNoteAccordionItem } from './PatchNoteAccordionItem'
 
 export function PatchNotesScreen() {
   const goTo = useNavStore((s) => s.goTo)
+  const markPatchNotesSeen = useMetaStore((s) => s.markPatchNotesSeen)
+  const latestVersion = PATCH_NOTES[0]?.version
+
+  // Consulter l'écran éteint la pastille « MAJ » jusqu'à la prochaine version.
+  useEffect(() => {
+    if (latestVersion) markPatchNotesSeen(latestVersion)
+  }, [latestVersion, markPatchNotesSeen])
 
   return (
     <div className="min-h-screen px-4 py-8 flex flex-col items-center gap-4">

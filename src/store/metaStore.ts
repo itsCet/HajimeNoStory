@@ -13,8 +13,10 @@ interface MetaStoreState {
   equippedPerkStatChoices: Partial<Record<string, StatKey>>
   unlockedTrophyIds: string[]
   history: CareerHistoryEntry[]
+  lastSeenPatchVersion: string
   theme: 'light' | 'dark'
 
+  markPatchNotesSeen: (version: string) => void
   toggleTheme: () => void
   unlockTrophies: (ids: string[]) => void
   addCurrency: (amount: number) => void
@@ -33,6 +35,7 @@ function persist(state: MetaStoreState) {
     equippedPerkStatChoices: state.equippedPerkStatChoices,
     unlockedTrophyIds: state.unlockedTrophyIds,
     history: state.history,
+    lastSeenPatchVersion: state.lastSeenPatchVersion,
     settings: { theme: state.theme },
   })
 }
@@ -44,7 +47,14 @@ export const useMetaStore = create<MetaStoreState>((set, get) => ({
   equippedPerkStatChoices: initialMeta.equippedPerkStatChoices,
   unlockedTrophyIds: initialMeta.unlockedTrophyIds,
   history: initialMeta.history,
+  lastSeenPatchVersion: initialMeta.lastSeenPatchVersion,
   theme: initialMeta.settings.theme,
+
+  markPatchNotesSeen: (version) => {
+    if (get().lastSeenPatchVersion === version) return
+    set({ lastSeenPatchVersion: version })
+    persist(get())
+  },
 
   toggleTheme: () => {
     const next = get().theme === 'dark' ? 'light' : 'dark'

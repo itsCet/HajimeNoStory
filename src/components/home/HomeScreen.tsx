@@ -17,7 +17,9 @@ export function HomeScreen() {
   const currency = useMetaStore((s) => s.currency)
   const unlockedCount = useMetaStore((s) => s.unlockedTrophyIds.length)
   const historyCount = useMetaStore((s) => s.history.length)
+  const lastSeenPatchVersion = useMetaStore((s) => s.lastSeenPatchVersion)
   const latestVersion = PATCH_NOTES[0]?.version
+  const hasUnreadPatch = latestVersion !== undefined && lastSeenPatchVersion !== latestVersion
 
   return (
     <div className="min-h-screen flex flex-col items-center px-4 py-10 gap-8">
@@ -35,7 +37,13 @@ export function HomeScreen() {
         <QuickStatBadge iconSrc="/icons/trophees.png" label="Trophées" value={`${unlockedCount}/${ALL_TROPHIES.length}`} onClick={() => goTo('trophies')} />
         <QuickStatBadge iconSrc="/icons/boutique.png" label="Boutique" value={`${currency}`} onClick={() => goTo('shop')} />
         <QuickStatBadge iconSrc="/icons/historique.png" label="Historique" value={`${historyCount}`} onClick={() => goTo('history')} />
-        <QuickStatBadge iconSrc="/icons/patchnotes.png" label="Patch notes" value={`v${latestVersion}`} badge="MAJ" onClick={() => goTo('patchnotes')} />
+        <QuickStatBadge
+          iconSrc="/icons/patchnotes.png"
+          label="Patch notes"
+          value={`v${latestVersion}`}
+          badge={hasUnreadPatch ? 'MAJ' : undefined}
+          onClick={() => goTo('patchnotes')}
+        />
       </div>
 
       <div className="flex flex-col items-center gap-3 mt-2">

@@ -305,6 +305,23 @@ export interface Trophy {
 
 // ── Boutique / historique / patch notes ────────────────────────────────
 
+/**
+ * Effets d'avantage qui ne se réduisent pas à une Reward classique : ils touchent
+ * la structure même de la carrière (rythme, points de départ, techniques connues).
+ * Tous sont appliqués à la CRÉATION du personnage — aucun ne modifie la forme de
+ * la sauvegarde, donc ajouter un avantage n'invalide jamais les parties en cours.
+ */
+export interface ShopPerkExtras {
+  /** Points de carrière offerts au départ (avance sur la progression de rang). */
+  careerPoints?: number
+  /** Évènements supplémentaires chaque année. */
+  bonusEventsPerYear?: number
+  /** Techniques déjà connues au premier jour. */
+  startingTechniqueIds?: string[]
+  /** Ajouté à la probabilité de porter le Potentiel dormant (0-1). */
+  dormantChanceBonus?: number
+}
+
 export interface ShopPerk {
   id: string
   name: string
@@ -314,6 +331,7 @@ export interface ShopPerk {
   /** Si vrai, le joueur choisit la statistique concernée au moment d'équiper l'avantage. */
   statChoice?: boolean
   statChoiceAmount?: number
+  extras?: ShopPerkExtras
 }
 
 export type CareerEndingType = 'retirement' | 'glory' | 'tragic'
@@ -449,5 +467,7 @@ export interface MetaState {
   equippedPerkStatChoices: Partial<Record<string, StatKey>>
   unlockedTrophyIds: string[]
   history: CareerHistoryEntry[]
+  /** Dernière version de patch notes consultée, pour n'afficher la pastille « MAJ » qu'une fois. */
+  lastSeenPatchVersion: string
   settings: MetaSettings
 }
