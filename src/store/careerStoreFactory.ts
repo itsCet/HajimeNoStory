@@ -79,10 +79,9 @@ interface NextStep {
 }
 
 function computeNextStep(character: CharacterState): NextStep {
-  if (character.health <= 0) {
-    return { phase: 'game-over', currentCard: null, pendingDiscoveryTechniqueId: null, yearSummary: null }
-  }
-
+  // La santé à 0 est traitée en amont par endIfDead() : si on arrive ici avec 0,
+  // c'est un état incohérent, mais on ne renvoie surtout pas 'game-over' sans
+  // endingType — l'écran de fin ne s'afficherait pas et la partie serait bloquée.
   const discoveryId = getPendingStyleDiscovery(character)
   if (discoveryId) {
     character.pendingCardId = null
@@ -144,6 +143,16 @@ export function createCareerStore(isDestiny: boolean) {
     })
   }
 
+  /**
+   * Clôt la carrière si le boxeur ne tient plus debout. Renvoie true si c'est le
+   * cas, auquel cas l'appelant ne doit plus rien faire : la partie est terminée.
+   */
+  function endIfDead(character: CharacterState, set: (partial: Partial<CareerStoreState>) => void): boolean {
+    if (character.health > 0) return false
+    endCareer(character, 'tragic', set)
+    return true
+  }
+
   return create<CareerStoreState>((set, get) => ({
     character: null,
     phase: 'no-character',
@@ -163,6 +172,9 @@ export function createCareerStore(isDestiny: boolean) {
         set({ character: null, phase: 'no-character' })
         return
       }
+      // Une sauvegarde d'avant le correctif peut contenir une santé à 0 : on la
+      // clôt proprement au lieu de rouvrir un écran bloqué.
+      if (endIfDead(character, set)) return
       if (character.pendingCardId && CARD_MAP[character.pendingCardId]) {
         set({ character, phase: 'card', currentCard: CARD_MAP[character.pendingCardId], fightRound: null, lastRoundResult: null })
         return
@@ -268,6 +280,9 @@ export function createCareerStore(isDestiny: boolean) {
     acknowledgeResolution: () => {
       const { character } = get()
       if (!character) return
+      // Le joueur vient de lire le résultat qui l'a mis à terre : la carrière
+      // s'arrête ici, sur l'écran de fin tragique.
+      if (endIfDead(character, set)) return
       const next = computeNextStep(character)
       saveCharacter(character, isDestiny)
       set({ lastResolution: null, ...next })
@@ -295,6 +310,7 @@ export function createCareerStore(isDestiny: boolean) {
       }
       character.pendingPointsToAllocate -= total
       startNewYear(character)
+      if (endIfDead(character, set)) return
       const next = computeNextStep(character)
       saveCharacter(character, isDestiny)
       set({ character: { ...character }, ...next })

@@ -48,10 +48,24 @@ export function finalizeYear(character: CharacterState): YearSummary {
   return summary
 }
 
+/**
+ * Récupération entre deux saisons. Sans elle, la santé ne fait que descendre :
+ * les cartes offrent trois fois plus de pertes que de gains, et chaque round de
+ * combat coûte des points. Une intersaison de repos rend la carrière longue
+ * jouable, sans annuler l'usure — la récupération diminue avec l'âge.
+ */
+export function computeYearlyHealthRecovery(character: CharacterState): number {
+  if (character.age < 25) return 22
+  if (character.age < 30) return 18
+  if (character.age < 35) return 13
+  return 8
+}
+
 export function startNewYear(character: CharacterState) {
   character.yearIndex += 1
   character.age += 1
   character.fatigue = 0
+  character.health = Math.min(100, character.health + computeYearlyHealthRecovery(character))
   character.eventsRemainingThisYear = character.eventsPerYear
   character.yearStats = { trainings: 0, lifeMoments: 0, fights: 0, successes: 0, failures: 0, pointsEarned: 0 }
 }

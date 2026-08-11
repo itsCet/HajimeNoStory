@@ -214,9 +214,11 @@ const MOMENTUM_DELTA: Record<RollTier, number> = {
   'critical-success': 2,
 }
 
+// Coût par round. Volontairement modéré : un combat peut durer 6 rounds, et la
+// résolution finale prélève déjà sa propre part de santé.
 const ROUND_HEALTH_COST: Record<RollTier, number> = {
-  'critical-failure': -8,
-  failure: -3,
+  'critical-failure': -6,
+  failure: -2,
   success: -1,
   'critical-success': 0,
 }

@@ -51,11 +51,23 @@ export function CharacterSheet({ character }: { character: CharacterState }) {
       </div>
 
       <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <ProgressBar value={character.health} color="#3fae5b" label="Santé" emoji="❤️" />
+        <ProgressBar
+          value={character.health}
+          // La barre vire à l'orange puis au rouge : la santé à 0 met fin à la
+          // carrière, le joueur doit pouvoir le voir venir.
+          color={character.health <= 20 ? '#dc2626' : character.health <= 40 ? '#e87a00' : '#3fae5b'}
+          label="Santé"
+          emoji="❤️"
+        />
         <ProgressBar value={character.fatigue} color="#c9a15a" label="Fatigue" emoji="🥱" />
         <ProgressBar value={character.coolness} color="#a35bc9" label="Sang-froid" emoji="🧘" />
       </div>
-      <div className="mt-2 text-xs opacity-60">{character.eventsRemainingThisYear} évènement(s) restant(s) cette année</div>
+      {character.health <= 20 && (
+        <div className="mt-2 text-xs font-semibold text-red-500">
+          ⚠️ Santé critique — un combat de plus peut mettre fin à ta carrière.
+        </div>
+      )}
+      <div className="mt-2 text-xs opacity-70">{character.eventsRemainingThisYear} évènement(s) restant(s) cette année</div>
 
       {expanded && (
         <div className="mt-5 space-y-4 border-t border-black/10 dark:border-white/10 pt-4">
